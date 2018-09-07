@@ -5,14 +5,27 @@
     </div>
     <div class="search">
       <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixIconButton">
-        <input type="text" [(ngModel)]="value" nz-input placeholder="输入书籍名称或作者名搜索" (focus)="searchFocus($event)">
+        <input type="text"
+          [(ngModel)]="value"
+          nz-input
+          placeholder="输入书籍名称或作者名搜索"
+          (keydown.enter)="onEnter($event)"
+          (focus)="searchFocus($event)">
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSize="large" nzSearch><i class="anticon anticon-search"></i></button>
+        <button nz-button
+          nzType="primary"
+          nzSize="large"
+          (click)="search()"
+          nzSearch>
+          <i class="anticon anticon-search"></i>
+        </button>
       </ng-template>
     </div>
     <div class="result">
-      <app-book-list [bookList]="bookList"></app-book-list>
+          <app-book-list [bookList]="bookList"></app-book-list>
     </div>
+    <nz-spin [nzSpinning]="isSpinning" [ngClass]="{'loading': isSpinning}">
+    </nz-spin>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="book-list">
   <div class="list" *ngFor="let item of bookList; index as i">
-    <div class="number">{{i}}</div>
+    <div class="number">{{i + 1}}</div>
     <div class="detail">
       <div class="name">{{item.name}}</div>
       <div class="info">{{item.category}} | {{item.author}} | {{item.state}}</div>
