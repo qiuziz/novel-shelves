@@ -1,5 +1,5 @@
 <div class="book-list">
-  <div class="list" *ngFor="let item of bookList; index as i">
+  <div class="list" (click)="getBookDetail(item)" *ngFor="let item of bookList; index as i">
     <div class="number">{{i + 1}}</div>
     <div class="detail">
       <div class="name">{{item.name}}</div>

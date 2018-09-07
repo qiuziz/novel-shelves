@@ -4,7 +4,7 @@
  * */
 
 const MongoClient = require('mongodb').MongoClient,
-DB_CONN_STR = 'mongodb://localhost:27017/photo';
+DB_CONN_STR = 'mongodb://localhost:27017/novel';
 
 function connect(callback) {
   MongoClient.connect(DB_CONN_STR, function(err, db) {

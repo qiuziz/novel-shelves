@@ -1,7 +1,8 @@
 const PROXY_CONFIG = [
   {
       context: [
-          "/novel/"
+          "/search/",
+          "/book/"
       ],
       target: "http://localhost:8080",
       secure: false
