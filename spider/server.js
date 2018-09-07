@@ -4,6 +4,7 @@
  * */
 
 const express = require('express'),
+    http = require('http'),
 		novel = require('./novel.js');
 
 const app = express();
@@ -11,8 +12,6 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 
-novel();
-
-// app.use('/jandan/images', require('./utils/jandan-api.js'));
+app.use('/novel/', require('./router.js'));
 
 http.createServer(app).listen(port);

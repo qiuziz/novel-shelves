@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:48:51
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-06 15:27:45
+ * @Last Modified time: 2018-09-06 18:05:54
  */
 const http = require('http'),
     cheerio = require("cheerio"),
@@ -20,7 +20,7 @@ function random(m, n) {
 	return Math.floor(Math.random() * i + m);
 }
 
-const pageUrl = 'https://sou.xanbhx.com/search?siteid=qula&q=%E5%A5%B6%E7%88%B8%E7%9A%84%E6%96%87%E8%89%BA%E4%BA%BA%E7%94%9F';
+const pageUrl = 'https://sou.xanbhx.com/search?siteid=qula&q=';
 
 
 
@@ -33,11 +33,13 @@ function killPlantomJs() {
   });
 }
 
-function novel(url) {
+function novel(name) {
+  const url = pageUrl + encodeURI(name);
+  let search_results = [];
 
-	phantom.create().then(function(ph) {
+	return phantom.create().then(function(ph) {
 
-		ph.createPage().then(function(page) {
+		return ph.createPage().then(function(page) {
 			page.property('userAgent', USER_AGENTS[random(0, LEN)]);
       page.property('resourceTimeout', 10000); // 10 seconds
       page.on('onResourceTimeout', function(e) {
@@ -46,14 +48,14 @@ function novel(url) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			page.open(url).then(function(status) {
+			return page.open(url).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
           novel(url);
 					return;
 				}
-				page.property('content').then(function(content) {
+				return page.property('content').then(function(content) {
           const
             $ = cheerio.load(content)
             , results = $('.search-list > ul > li');
@@ -61,12 +63,21 @@ function novel(url) {
           results.each((index, item) => {
             if (index > 0) {
               const spans = $(item).find('span');
-              novels.push({name: spans.eq(1).text().trim(), author: spans.eq(3).text(), updateTime: spans.eq(5).text(), state: spans.eq(6).text()});
+              novels.push({
+                name: spans.eq(1).text().trim(),
+                author: spans.eq(3).text(),
+                updateTime: spans.eq(5).text(),
+                state: spans.eq(6).text(),
+                category: spans.eq(0).text(),
+                lastChapter: spans.eq(2).text()
+              });
             }
           })
           console.log(novels);
+          search_results = novels;
 					page.close();
-					ph.exit();
+          ph.exit();
+          return search_results;
 				})
 			})
 		})
@@ -78,7 +89,9 @@ function novel(url) {
 	.catch(error => {
 		console.log(error);
 		ph.exit();
-	});
+  });
+
+  // return search_results;
 }
-novel(pageUrl);
+
 module.exports = novel;

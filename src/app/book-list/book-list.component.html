@@ -1,0 +1,10 @@
+<div class="book-list">
+  <div class="list" *ngFor="let item of bookList; index as i">
+    <div class="number">{{i}}</div>
+    <div class="detail">
+      <div class="name">{{item.name}}</div>
+      <div class="info">{{item.category}} | {{item.author}} | {{item.state}}</div>
+      <div class="last-update">最新：{{item.lastChapter}}</div>
+    </div>
+  </div>
+</div>
