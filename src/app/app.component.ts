@@ -18,4 +18,8 @@ export class AppComponent {
       this.bookList = res;
     });
   }
+
+  searchFocus(): void {
+    window.scrollTo(0, 130);
+  }
 }

@@ -4,11 +4,11 @@
       <h1>Novel</h1>
     </div>
     <div class="search">
-      <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
-        <input type="text" [(ngModel)]="value" nz-input placeholder="输入书籍名称或作者名搜索">
+      <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixIconButton">
+        <input type="text" [(ngModel)]="value" nz-input placeholder="输入书籍名称或作者名搜索" (focus)="searchFocus($event)">
       </nz-input-group>
-      <ng-template #suffixButton>
-        <button nz-button nzType="primary" nzSize="large" nzSearch (click)="search()">Search</button>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSize="large" nzSearch><i class="anticon anticon-search"></i></button>
       </ng-template>
     </div>
     <div class="result">
