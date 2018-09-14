@@ -1,0 +1,37 @@
+.book-detail {
+  .info {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 1rem;
+    transition: padding-left .15s;
+
+    .cover {
+      width: 5.25rem;
+      height: 7rem;
+      border-radius: 2px;
+      box-shadow: none;
+      font-size: 0;
+      float: left;
+      margin-right: .5rem;
+    }
+
+    .cell {
+      line-height: 1.4rem;
+      .title {
+        line-height: 1.4;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .author {
+        font-size: .8125rem;
+      }
+
+      .book-meta {
+        font-size: 0.75rem;
+        overflow: hidden;
+      }
+    }
+  }
+}

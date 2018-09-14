@@ -3,12 +3,12 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 18:16:48
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-07 23:26:05
+ * @Last Modified time: 2018-09-14 17:14:24
  */
 
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Novels } from '../novels';
-import { BookService } from './book.service';
+import { Novels } from '../../novels';
+import { Router, Route } from '@angular/router';
 
 
 @Component({
@@ -17,8 +17,8 @@ import { BookService } from './book.service';
   styleUrls: ['./book-list.component.less']
 })
 export class BookListComponent implements OnInit, OnChanges {
-   @Input() bookList: Novels[];
-  constructor(private bookService: BookService) { }
+  @Input() bookList: Novels[];
+  constructor(private router: Router) { }
 
   ngOnInit() {
     console.log(this.bookList);
@@ -30,11 +30,8 @@ export class BookListComponent implements OnInit, OnChanges {
     console.log(this.bookList);
   }
 
-  getBookDetail(data): void {
-    this.bookService.getBook(data.id).subscribe(res => {
-      console.log(res);
-    });
-
+  lookBookDetail(data): void {
+    this.router.navigate([`/book/${data.id}`]);
   }
 
 }

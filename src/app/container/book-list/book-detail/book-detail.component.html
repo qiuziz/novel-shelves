@@ -1,0 +1,18 @@
+<div class="book-detail">
+  <div class="info">
+    <img class="cover" [src]="book.cover" alt="{{book.name}}">
+    <div class="cell">
+      <h2 class="title">{{book.name}}</h2>
+      <p class="author book-meta">{{book.author}}</p>
+      <p class="category book-meta">{{book.category}}</p>
+      <p class="state book-meta">{{book.state}}</p>
+    </div>
+  </div>
+  <div class="btn">
+    <button nz-button nzType="primary">开始阅读</button>
+    <button nz-button nzType="default">加入书架</button>
+    <button nz-button nzType="default">目录</button>
+  </div>
+  <div class="intro" [innerHTML]="book.intro">
+  </div>
+</div>

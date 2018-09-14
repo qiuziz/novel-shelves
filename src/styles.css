@@ -5,3 +5,8 @@ body {
   height: 100%;
   font-size: calc(16px + 2 * (100vw - 375px)/ 39);
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
