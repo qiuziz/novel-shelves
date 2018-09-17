@@ -6,6 +6,10 @@
 
   <ol class="contents">
     <li class="chapter-bar">正文卷</li>
-    <li *ngFor="let item of bookCatalog" class="chapter-li">{{item.chapter}}</li>
+    <li *ngFor="let item of bookCatalog"
+      class="chapter-li"
+      (click)="readChapter(item.id)">
+      {{item.chapter}}
+    </li>
   </ol>
 </div>

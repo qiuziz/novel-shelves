@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 15:29:17
+ * @Last Modified time: 2018-09-17 17:34:55
  */
 
 const http = require('http'),
@@ -63,7 +63,7 @@ function getBook(data) {
             } else if (dtCount >= 2){
               let dt = $(child);
               contents.push({
-                id: contents.length,
+                id: contents.length.toString(),
                 chapter: dt.text().trim(),
                 src: 'https://www.qu.la' + $('a', dt).attr('href')
               });

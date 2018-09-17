@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book-list/book.service';
 
 @Component({
@@ -9,12 +9,12 @@ import { BookService } from '../book-list/book.service';
 })
 export class CatalogComponent implements OnInit {
   bookCatalog = [];
-
-  constructor(private route: ActivatedRoute, private bookService: BookService) { }
+  bookId = '';
+  constructor(private route: ActivatedRoute, private router: Router, private bookService: BookService) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-    this.getCatalog(id);
+    this.bookId = this.route.snapshot.params['id'];
+    this.getCatalog(this.bookId);
   }
 
   getCatalog(id): void {
@@ -22,6 +22,10 @@ export class CatalogComponent implements OnInit {
       .subscribe(res => {
         this.bookCatalog = res;
       });
+  }
+
+  readChapter(chapterId): void {
+    this.router.navigate([`/book/${this.bookId}/${chapterId}`]);
   }
 
 }

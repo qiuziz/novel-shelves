@@ -5,6 +5,7 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { HomeComponent } from './home/home.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { ChapterComponent } from './chapter/chapter.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     BookListComponent,
     BookDetailComponent,
     HomeComponent,
-    CatalogComponent
+    CatalogComponent,
+    ChapterComponent
   ],
   imports: [
     ContainerRoutingModule,

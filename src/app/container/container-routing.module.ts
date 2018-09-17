@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { ChapterComponent } from './chapter/chapter.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -17,8 +18,11 @@ const routes: Routes = [
       },
       {
         path: 'catalog',
-        component: CatalogComponent,
-        data: {isContent: true}
+        component: CatalogComponent
+      },
+      {
+        path: ':chapterId',
+        component: ChapterComponent
       }
     ]
   },

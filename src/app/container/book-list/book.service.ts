@@ -17,4 +17,8 @@ export class BookService {
   getBookCatalog(id: string): Observable<Array<any>> {
     return this.http.get<Array<any>>(`${this.baseUrl}/catalog/${id}/`);
   }
+
+  getChapter(bookId: string, chapterId: string): Observable<Object> {
+    return this.http.get<Object>(`${this.baseUrl}/chapter/${bookId}/${chapterId}/`);
+  }
 }

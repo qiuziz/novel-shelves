@@ -3,14 +3,15 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 14:47:05
+ * @Last Modified time: 2018-09-17 17:34:04
  */
 
 const express = require("express"),
 		router = express(),
     connect = require("./db.js")
     search = require('./search-novel.js'),
-    getBook = require('./book');
+    getBook = require('./book'),
+    getChapter = require('./chapter');
 
 
  router.get("/search", async (req, res) => {
@@ -87,6 +88,29 @@ router.get("/catalog/:id", async (req, res) => {
     } else {
       res.send([]);
     }
+});
+
+router.get("/chapter/:bookId/:chapterId", async (req, res) => {
+  const bookId = req.params.bookId, chapterId = req.params.chapterId;
+  if (!bookId || !chapterId) {
+    res.send({});
+    return;
+  }
+  if (global.book && global.book.id === bookId) {
+
+    if (global.chapter) {
+      res.send(global.chapter);
+      return;
+    }
+    const chapter = global.book.book.contents.filter(item => item.id === chapterId);
+    console.log(chapter);
+    const doc = await getChapter(chapter[0]);
+    global.chapter = doc;
+    res.send(doc);
+    return;
+  } else {
+    res.send({});
+  }
 })
 
 module.exports = router;

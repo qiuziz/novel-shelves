@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 17:18:55
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-07 22:52:43
+ * @Last Modified time: 2018-09-17 17:33:19
  */
 
 
@@ -17,8 +17,9 @@ const http = require('http'),
     process = require('child_process');
 
 const url = 'https://www.qu.la/book/80600/4242452.html';
-function getBookContents(url) {
-  let search_results = [];
+function getBookContents(chapter) {
+  console.log(chapter)
+  let result = {};
 
 	return phantom.create().then(function(ph) {
 
@@ -31,7 +32,7 @@ function getBookContents(url) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			return page.open(url).then(function(status) {
+			return page.open(chapter.src).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
@@ -43,10 +44,14 @@ function getBookContents(url) {
             , chapterContent = $('#content');
             $(chapterContent).children().remove('script,div');
 
-          saveToDB(''chapterContent.html());
+          // saveToDB(chapterContent.html());
+          result = {
+            title: chapter.chapter,
+            content: chapterContent.html()
+          };
 					page.close();
           ph.exit();
-          return search_results;
+          return result;
 				})
 			})
 		})
