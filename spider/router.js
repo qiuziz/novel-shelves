@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 17:34:04
+ * @Last Modified time: 2018-09-17 20:13:05
  */
 
 const express = require("express"),
@@ -32,7 +32,7 @@ const express = require("express"),
 })
 
 router.get("/book/:id", async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     console.log(id)
     if (!id) {
       res.send({});
@@ -77,7 +77,7 @@ router.get("/book/:id", async (req, res) => {
 	// })
 })
 router.get("/catalog/:id", async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     if (!id) {
       res.send([]);
       return;
@@ -91,14 +91,13 @@ router.get("/catalog/:id", async (req, res) => {
 });
 
 router.get("/chapter/:bookId/:chapterId", async (req, res) => {
-  const bookId = req.params.bookId, chapterId = req.params.chapterId;
+  const bookId = parseInt(req.params.bookId), chapterId = parseInt(req.params.chapterId);
   if (!bookId || !chapterId) {
     res.send({});
     return;
   }
   if (global.book && global.book.id === bookId) {
-
-    if (global.chapter) {
+    if (global.chapter && global.chapter.id === chapterId) {
       res.send(global.chapter);
       return;
     }

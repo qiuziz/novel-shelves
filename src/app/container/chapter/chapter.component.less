@@ -1,4 +1,6 @@
 .chapter {
+  background: url(/assets/skin-default-t.ece62.jpg) no-repeat center top,url(/assets/skin-default-b.79f06.jpg) no-repeat center bottom,url(/assets/skin-default-m.35905.jpg) repeat-y center 119px;
+  background-size: 100%;
   .page-header {
     position: fixed;
     top: 0;
@@ -6,6 +8,8 @@
     left: 0;
     height: 44px;
     background: #fff;
+    background: url(/assets/skin-default-t.ece62.jpg) no-repeat center top;
+    background-size: 100%;
     p {
       font-size: .75rem;
       font-weight: 400;
@@ -24,5 +28,20 @@
     min-height: calc(100vh - 44px);
     margin: 0 16px;
     text-align: justify;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-top: 0.5rem;
+
+    button {
+      width: 90%;
+      color: #fff;
+      background-color: #ed424b;
+      border-color: #ed424b;
+      border-radius: 5px;
+    }
   }
 }

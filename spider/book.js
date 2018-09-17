@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 17:34:55
+ * @Last Modified time: 2018-09-17 19:42:09
  */
 
 const http = require('http'),
@@ -38,7 +38,7 @@ function getBook(data) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			return page.open(data.src).then(function(status) {
+			return page.open(data.url).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
@@ -61,11 +61,16 @@ function getBook(data) {
             if (child.tagName === 'dt') {
               dtCount++;
             } else if (dtCount >= 2){
-              let dt = $(child);
+              let dt = $(child)
+                , url = $('a', dt).attr('href')
+                , id = data.id * 10;
               contents.push({
-                id: contents.length.toString(),
+                id: id + index,
+                bookId: data.id,
+                prev: index > 0 ? id + index - 1 : null,
+                next: id + index + 1,
                 chapter: dt.text().trim(),
-                src: 'https://www.qu.la' + $('a', dt).attr('href')
+                url: 'https://www.qu.la' + url
               });
             }
           })

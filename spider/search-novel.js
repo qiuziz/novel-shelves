@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:48:51
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-07 22:50:57
+ * @Last Modified time: 2018-09-17 19:56:31
  */
 const http = require('http'),
     cheerio = require("cheerio"),
@@ -66,8 +66,8 @@ function novel(name) {
                 id = url.substring(23, url.length - 1);
 
               novels.push({
-                id: id,
-                src: url,
+                id: parseInt(id),
+                url: url,
                 name: spans.eq(1).text().trim(),
                 author: spans.eq(3).text(),
                 updateTime: spans.eq(5).text(),

@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 17:18:55
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 17:33:19
+ * @Last Modified time: 2018-09-17 20:12:54
  */
 
 
@@ -32,7 +32,7 @@ function getBookContents(chapter) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			return page.open(chapter.src).then(function(status) {
+			return page.open(chapter.url).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
@@ -46,6 +46,10 @@ function getBookContents(chapter) {
 
           // saveToDB(chapterContent.html());
           result = {
+            id: chapter.id,
+            bookId: chapter.bookId,
+            prev: chapter.prev,
+            next: chapter.next,
             title: chapter.chapter,
             content: chapterContent.html()
           };
