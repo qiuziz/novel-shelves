@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Book } from '../book';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from '../book.service';
+import { BookService } from '../book-list/book.service';
 
 @Component({
   selector: 'app-book-detail',

@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 13:14:13
+ * @Last Modified time: 2018-09-17 14:47:05
  */
 
 const express = require("express"),
@@ -30,7 +30,7 @@ const express = require("express"),
   }
 })
 
-  router.get("/book/:id", async (req, res) => {
+router.get("/book/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id)
     if (!id) {
@@ -38,11 +38,18 @@ const express = require("express"),
       return;
     }
     if (global.search_results) {
-      const book = global.book ? global.book : await getBook({
+      if (global.book && global.book.id === id) {
+        res.send(global.book.book);
+        return;
+      }
+      const book = await getBook({
         ...global.search_results.results.filter(book => book.id === id)[0],
         ...global.search_results.urls.filter(book => book.id === id)[0]
       });
-      global.book = book;
+      global.book = {
+        id: id,
+        book: book
+      };
       res.send(book);
       return;
     } else {
@@ -67,6 +74,19 @@ const express = require("express"),
 	// 		res.send(doc);
   //   })
 	// })
+})
+router.get("/catalog/:id", async (req, res) => {
+    const id = req.params.id;
+    if (!id) {
+      res.send([]);
+      return;
+    }
+    if (global.book && global.book.id === id) {
+      res.send(global.book.book.contents);
+      return;
+    } else {
+      res.send([]);
+    }
 })
 
 module.exports = router;

@@ -1,0 +1,44 @@
+.catalog {
+  .header {
+    line-height: 28px;
+    padding: 8px 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .contents {
+    list-style: none;
+    padding: 0;
+
+    .chapter-bar {
+      font-size: 13px;
+      line-height: 28px;
+      padding: 8px 1rem 0;
+      color: #969ba3;
+      background-color: #f6f7f9;
+    }
+
+    .chapter-li {
+      line-height: 1.5;
+      padding-right: 2rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font: 14px/20px a;
+      display: block;
+      overflow: hidden;
+      padding: 12px 0;
+      margin: 0 1rem;
+      font-weight: 500;
+      color: inherit;
+
+      border-bottom: 1px solid #f0f1f2;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+
+  }
+
+}

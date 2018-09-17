@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BookDetailComponent } from './book-list/book-detail/book-detail.component';
-import { BookListComponent } from './book-list/book-list.component';
+import { BookDetailComponent } from './book-detail/book-detail.component';
+import { CatalogComponent } from './catalog/catalog.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -9,11 +9,18 @@ const routes: Routes = [
     path: '',
     component: HomeComponent
   },
-  { path: 'book',
-    component: BookListComponent
-  },
   { path: 'book/:id',
-    component: BookDetailComponent
+    children: [
+      {
+        path: '',
+        component: BookDetailComponent
+      },
+      {
+        path: 'catalog',
+        component: CatalogComponent,
+        data: {isContent: true}
+      }
+    ]
   },
   { path: 'home',
     component: HomeComponent

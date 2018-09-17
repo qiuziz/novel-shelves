@@ -7,10 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { AppRoutingModule } from './/app-routing.module';
-import { ContainerModule } from './container/container.module';
-import { BookDetailComponent } from './container/book-list/book-detail/book-detail.component';
-import { BookListComponent } from './container/book-list/book-list.component';
+import { AppRoutingModule } from './app-routing.module';
 registerLocaleData(zh);
 
 @NgModule({

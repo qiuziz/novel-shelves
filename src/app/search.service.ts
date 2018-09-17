@@ -16,10 +16,10 @@ const NOVELS = [
   providedIn: 'root'
 })
 export class SearchService {
-  private baseUrl = '/search/';
+  private baseUrl = '/api/';
   constructor(private http: HttpClient) { }
 
   getNovels(name: string): Observable<Novels[]> {
-    return this.http.get<Novels[]>(`${this.baseUrl}?name=${name}`);
+    return this.http.get<Novels[]>(`${this.baseUrl}search/?name=${name}`);
   }
 }

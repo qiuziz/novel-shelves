@@ -1,0 +1,11 @@
+<div class="catalog">
+  <div class="header">
+    <div>共{{bookCatalog.length}}章</div>
+    <div>倒序</div>
+  </div>
+
+  <ol class="contents">
+    <li class="chapter-bar">正文卷</li>
+    <li *ngFor="let item of bookCatalog" class="chapter-li">{{item.chapter}}</li>
+  </ol>
+</div>
