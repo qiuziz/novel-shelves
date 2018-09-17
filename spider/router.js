@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-14 17:30:32
+ * @Last Modified time: 2018-09-17 13:14:13
  */
 
 const express = require("express"),
@@ -38,14 +38,15 @@ const express = require("express"),
       return;
     }
     if (global.search_results) {
-      const book = await getBook({
+      const book = global.book ? global.book : await getBook({
         ...global.search_results.results.filter(book => book.id === id)[0],
         ...global.search_results.urls.filter(book => book.id === id)[0]
       });
-      console.log(book)
+      global.book = book;
       res.send(book);
       return;
     } else {
+      global.book = '';
       res.send({});
     }
 
