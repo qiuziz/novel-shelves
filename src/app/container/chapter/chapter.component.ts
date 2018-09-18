@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { BookService } from '../book-list/book.service';
 import { filter } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './chapter.component.html',
   styleUrls: ['./chapter.component.less']
 })
-export class ChapterComponent implements OnInit, AfterViewInit {
+export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
   chapter = {};
 
   constructor(private route: ActivatedRoute, private router: Router, private bookService: BookService) { }
@@ -17,6 +17,7 @@ export class ChapterComponent implements OnInit, AfterViewInit {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
+    document.body.style.backgroundColor = '#c4b395';
   }
 
 
@@ -36,5 +37,9 @@ export class ChapterComponent implements OnInit, AfterViewInit {
         this.chapter = res;
         window.scrollTo(0, 0);
       });
+  }
+
+  ngOnDestroy() {
+    document.body.style.backgroundColor = '';
   }
 }
