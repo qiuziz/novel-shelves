@@ -19,7 +19,6 @@ export class BookDetailComponent implements OnInit {
   getBookDetail(id): void {
     this.httpService.get('getBook', {id}).subscribe(res => {
       this.book = res;
-      console.log(this.book);
     });
   }
 }
