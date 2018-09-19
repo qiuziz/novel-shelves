@@ -2,23 +2,28 @@
     <div class="page-header">
       <p>{{chapter.title}}</p>
     </div>
-    <div class="content" [innerHTML]="chapter.content" [ngStyle]="{'font-size': fontSize}"></div>
+    <div class="content" [innerHTML]="chapter.content" [ngStyle]="{'font-size': fontSize + 'px'}"></div>
 
     <div class="btn" *ngIf="chapter.content">
       <button nz-button [routerLink]=" '/book/' + chapter.bookId + '/' + chapter.next">下一章</button>
     </div>
 
     <div class="page-config" *ngIf="pageConfig">
-      <header class="header">
+      <header class="header" (click)="stop($event)">
         <a href="javascript:" class="header-back">
             <i class="anticon anticon-left"></i>
         </a>
       </header>
 
-      <div class="page-option">
+      <div class="page-option" *ngIf="pageSetting">
           <div class="read-set-font">
               <i class="novel novel-font-down"></i>
-              <nz-slider [nzMin]="12" [nzMax]="30" [(ngModel)]="fontValue" (ngModelChange)="changeFontSize($event)"></nz-slider>
+              <nz-slider
+                [nzMin]="12"
+                [nzMax]="30"
+                [(ngModel)]="fontSize"
+                (ngModelChange)="changeFontSize($event)">
+              </nz-slider>
               <i class="novel novel-font-up"></i>
           </div>
           <!-- <div id="readSetSkin" class="read-set-skin">
@@ -64,7 +69,7 @@
                 <i class="novel novel-progress"></i>
                 <h4 class="read-opt-footer-h">进度</h4>
             </a>
-            <a href="javascript:">
+            <a href="javascript:" (click)="pageSet()">
                 <i class="novel novel-font"></i>
                 <h4 class="read-opt-footer-h">设置</h4>
             </a>

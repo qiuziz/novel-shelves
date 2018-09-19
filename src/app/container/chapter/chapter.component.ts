@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
 import { fromEvent, Observable, merge } from 'rxjs';
 import { LocalStorage } from '../../common/local-storage';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chapter',
@@ -13,8 +14,8 @@ import { LocalStorage } from '../../common/local-storage';
 export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
   chapter = {};
   pageConfig = false;
-  fontValue = 16;
-  fontSize = (LocalStorage.getItem('fontSize') || 16) + 'px';
+  fontSize = LocalStorage.getItem('fontSize') || 16;
+  pageSetting = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,10 +29,15 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-    merge(fromEvent(document, 'click'), fromEvent(document, 'touch'))
-      .subscribe(event => {
-        console.log(event);
-        if (Math.abs(document.documentElement.clientHeight / 2 - (<any>event).clientY) <= 30) {
+    const click = fromEvent(document, 'touchstart').pipe(map(event => (<any>event).changedTouches[0].clientY));
+    const touch = fromEvent(document, 'click').pipe(map(event => (<any>event).clientY));
+    merge(touch, click)
+      .subscribe(y => {
+        console.log(y);
+        if (this.pageConfig) {
+          document.body.style.overflow = 'hidden';
+        }
+        if (event.type === 'click' && Math.abs(document.documentElement.clientHeight / 2 - y) <= 50) {
           console.log('点击屏幕中间');
           this.pageConfig = !this.pageConfig;
         }
@@ -61,6 +67,14 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(value);
     this.el.nativeElement.querySelector('.content').style.fontSize = value + 'px';
     LocalStorage.setItem('fontSize', value);
+  }
+
+  stop(event) {
+    event.preventDefault();
+  }
+
+  pageSet() {
+    this.pageSetting = !this.pageSetting;
   }
 
   ngOnDestroy() {
