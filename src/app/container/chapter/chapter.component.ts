@@ -37,7 +37,7 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.pageConfig) {
           document.body.style.overflow = 'hidden';
         }
-        if (event.type === 'click' && Math.abs(document.documentElement.clientHeight / 2 - y) <= 50) {
+        if (Math.abs(document.documentElement.clientHeight / 2 - y) <= 50) {
           console.log('点击屏幕中间');
           this.pageConfig = !this.pageConfig;
         }
