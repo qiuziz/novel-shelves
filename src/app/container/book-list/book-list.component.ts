@@ -3,12 +3,12 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 18:16:48
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-14 17:14:24
+ * @Last Modified time: 2018-09-19 21:05:48
  */
 
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Novels } from '../../novels';
-import { Router, Route } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({

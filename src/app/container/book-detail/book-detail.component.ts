@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from '../book-list/book.service';
 import { HttpService } from '../../core/http/http.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { HttpService } from '../../core/http/http.service';
 })
 export class BookDetailComponent implements OnInit {
   book = {};
-  constructor(private httpService: HttpService, private route: ActivatedRoute, private bookService: BookService) { }
+  constructor(private httpService: HttpService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];

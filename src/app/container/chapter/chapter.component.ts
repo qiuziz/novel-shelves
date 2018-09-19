@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { BookService } from '../book-list/book.service';
 import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
 
