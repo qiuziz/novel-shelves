@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
 import { fromEvent } from 'rxjs';
+import { LocalStorage } from '../../common/local-storage';
 
 @Component({
   selector: 'app-chapter',
@@ -12,8 +13,15 @@ import { fromEvent } from 'rxjs';
 export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
   chapter = {};
   pageConfig = false;
+  fontValue = 16;
+  fontSize = (LocalStorage.getItem('fontSize') || 16) + 'px';
 
-  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private httpService: HttpService,
+    private el: ElementRef
+   ) { }
 
   ngOnInit() {
     const bookId = this.route.snapshot.params['id'],
@@ -48,6 +56,12 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.chapter = res;
         window.scrollTo(0, 0);
       });
+  }
+
+  changeFontSize(value) {
+    console.log(value);
+    this.el.nativeElement.querySelector('.content').style.fontSize = value + 'px';
+    LocalStorage.setItem('fontSize', value);
   }
 
   ngOnDestroy() {

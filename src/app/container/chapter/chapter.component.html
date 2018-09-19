@@ -2,7 +2,7 @@
     <div class="page-header">
       <p>{{chapter.title}}</p>
     </div>
-    <div class="content" [innerHTML]="chapter.content"></div>
+    <div class="content" [innerHTML]="chapter.content" [ngStyle]="{'font-size': fontSize}"></div>
 
     <div class="btn" *ngIf="chapter.content">
       <button nz-button [routerLink]=" '/book/' + chapter.bookId + '/' + chapter.next">下一章</button>
@@ -14,6 +14,46 @@
             <i class="anticon anticon-left"></i>
         </a>
       </header>
+
+      <div class="page-option">
+          <div class="read-set-font">
+              <i class="novel novel-font-down"></i>
+              <nz-slider [nzMin]="12" [nzMax]="30" [(ngModel)]="fontValue" (ngModelChange)="changeFontSize($event)"></nz-slider>
+              <i class="novel novel-font-up"></i>
+          </div>
+          <!-- <div id="readSetSkin" class="read-set-skin">
+              <ul class="btn-group" role="radiogroup">
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="skinDefault" name="skin" value="default" checked="" data-index="0" data-eid="mqd_R23" title="默认皮肤">
+                      <label class="read-skin-default" for="skinDefault" title="默认皮肤"><svg class="icon icon-ok center"><use xlink:href="#icon-ok"></use></svg></label>
+                  </li>
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="skinBlue" name="skin" value="blue" data-index="1" data-eid="mqd_R24" title="蓝色皮肤">
+                      <label class="read-skin-blue" for="skinBlue" title="蓝色皮肤"><svg class="icon icon-ok center"><use xlink:href="#icon-ok"></use></svg></label>
+                  </li>
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="skinGreen" name="skin" value="green" data-index="2" data-eid="mqd_R25" title="绿色皮肤">
+                      <label class="read-skin-green" for="skinGreen" title="绿色皮肤"><svg class="icon icon-ok center"><use xlink:href="#icon-ok"></use></svg></label>
+                  </li>
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="skinLight" name="skin" value="light" data-index="3" data-eid="mqd_R26" title="浅色皮肤">
+                      <label class="read-skin-light" for="skinLight" title="浅色皮肤"><svg class="icon icon-ok center"><use xlink:href="#icon-ok"></use></svg></label>
+                  </li>
+              </ul>
+          </div>
+          <div id="readSetLayout" class="read-set-layout">
+              <ul class="btn-group">
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="layoutV" name="layout" value="v" checked="" data-eid="mqd_R28">
+                      <label class="read-btn-layout" for="layoutV">上下滑动</label>
+                  </li>
+                  <li class="btn-group-cell read-set-cell">
+                      <input type="radio" id="layoutH" name="layout" value="h" data-eid="mqd_R27">
+                      <label class="read-btn-layout" for="layoutH">左右滑动</label>
+                  </li>
+              </ul>
+          </div> -->
+      </div>
       <footer class="footer">
         <div class="btn-group">
             <a href="javascript:">
