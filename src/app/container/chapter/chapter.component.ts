@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/cor
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { BookService } from '../book-list/book.service';
 import { filter } from 'rxjs/operators';
+import { HttpService } from '../../core/http/http.service';
 
 @Component({
   selector: 'app-chapter',
@@ -11,7 +12,7 @@ import { filter } from 'rxjs/operators';
 export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
   chapter = {};
 
-  constructor(private route: ActivatedRoute, private router: Router, private bookService: BookService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
     const bookId = this.route.snapshot.params['id'],
@@ -32,7 +33,7 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
 }
 
   getChapter(bookId, chapterId): void {
-    this.bookService.getChapter(bookId, chapterId)
+    this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
         window.scrollTo(0, 0);

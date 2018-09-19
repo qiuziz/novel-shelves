@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 20:13:05
+ * @Last Modified time: 2018-09-19 16:25:02
  */
 
 const express = require("express"),
@@ -14,8 +14,8 @@ const express = require("express"),
     getChapter = require('./chapter');
 
 
- router.get("/search", async (req, res) => {
-  const name = req.query.name;
+ router.get("/search/:name", async (req, res) => {
+  const name = req.params.name;
   if (!name) {
     res.send([]);
     return;

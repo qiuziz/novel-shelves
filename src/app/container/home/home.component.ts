@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { SearchService } from '../../search.service';
 import { Novels } from '../../novels';
+import { HttpService } from '../../core/http/http.service';
+import { GlobalsService } from '../../common/globals.service';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,12 @@ import { Novels } from '../../novels';
 export class HomeComponent {
   value: string;
   bookList: Novels[] = [];
-  isSpinning = false;
 
-  constructor(private searchService: SearchService) { }
+  constructor(private httpService: HttpService, private globals: GlobalsService) { }
 
   search(): void {
-    this.isSpinning = true;
-    this.searchService.getNovels(this.value).subscribe(res => {
+    this.httpService.get('search', {name: this.value}).subscribe(res => {
       this.bookList = res;
-      this.isSpinning = false;
     });
   }
 

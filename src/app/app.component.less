@@ -1,31 +1,32 @@
-.app-content {
-  text-align: center;
-  width: 100%;
 
-  .main {
-    margin-top: 130px;
-    .logo {
-      font-size: 20px;
-    }
-    .search {
-      width: 90%;
-      display: inline-block;
-    }
-    .result {
-      width: 90%;
-      display: inline-block;
-    }
-    .loading {
-      left: 0;
-      top: 0;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-    }
-  }
-
+:host /deep/ .ant-spin-spinning {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(224, 224, 224, 0.8);
+    color: #666666;
+    border-radius: 5px;
 }
+
+:host /deep/ .loading {
+  left: 0;
+  top: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+
+  .ant-spin-spinning {
+    display: '';
+  }
+}
+
+:host /deep/ .hidden {
+  display: none;
+}
+
