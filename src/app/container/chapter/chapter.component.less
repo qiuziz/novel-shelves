@@ -40,4 +40,80 @@
       border-radius: 5px;
     }
   }
+
+  .page-config {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .header {
+      transition: opacity .15s,transform .15s,visibility .15s;
+      color: #fff;
+      border-bottom: 0;
+      background-color: rgba(0,0,0,.9);
+      position: relative;
+      box-sizing: border-box;
+      height: 2.75rem;
+      padding-top: .6875rem;
+      padding-bottom: .625rem;
+
+      .header-back {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: .625rem .8125rem .625rem .875rem;
+
+        .anticon-left {
+          font-size: 18px;
+          color: #fff;
+        }
+      }
+    }
+
+    .footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 3rem;
+      text-align: center;
+      transition: opacity .15s,transform .15s,visibility .15s;
+      color: #fff;
+      border-bottom: 0;
+      background-color: rgba(0,0,0,.9);
+
+      .btn-group {
+        display: table;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        table-layout: fixed;
+
+        a {
+          font-size: 16px;
+          padding-top: .375rem;
+          /* font-size: 100%; */
+          font-weight: 400;
+          display: table-cell;
+          text-decoration: none;
+          color: #fff;
+          outline: 0;
+
+          .novel {
+            font-weight: 600;
+          }
+        }
+
+        h4 {
+          font-size: 10px;
+          font-weight: 200;
+          line-height: 1;
+          position: relative;
+          color: #fff;
+        }
+      }
+    }
+  }
 }

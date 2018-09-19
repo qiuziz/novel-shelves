@@ -1,10 +1,39 @@
 <div class="chapter">
     <div class="page-header">
-        <p>{{chapter.title}}</p>
+      <p>{{chapter.title}}</p>
     </div>
     <div class="content" [innerHTML]="chapter.content"></div>
 
-    <div class="btn">
-        <button nz-button [routerLink]=" '/book/' + chapter.bookId + '/' + chapter.next">下一章</button>
+    <div class="btn" *ngIf="chapter.content">
+      <button nz-button [routerLink]=" '/book/' + chapter.bookId + '/' + chapter.next">下一章</button>
+    </div>
+
+    <div class="page-config" *ngIf="pageConfig">
+      <header class="header">
+        <a href="javascript:" class="header-back">
+            <i class="anticon anticon-left"></i>
+        </a>
+      </header>
+      <footer class="footer">
+        <div class="btn-group">
+            <a href="javascript:">
+                <i class="novel novel-catalog"></i>
+                <h4 class="read-opt-footer-h">目录</h4>
+            </a>
+            <a href="javascript:">
+                <i class="novel novel-progress"></i>
+                <h4 class="read-opt-footer-h">进度</h4>
+            </a>
+            <a href="javascript:">
+                <i class="novel novel-font"></i>
+                <h4 class="read-opt-footer-h">设置</h4>
+            </a>
+
+            <a href="javascript:">
+                <i class="novel novel-night"></i>
+                <h4 class="read-opt-footer-h">夜间</h4>
+            </a>
+        </div>
+      </footer>
     </div>
 </div>
