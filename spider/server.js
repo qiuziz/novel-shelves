@@ -12,6 +12,6 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 
-app.use('/api', require('./router.js'));
+app.use(require('./router.js'));
 
 http.createServer(app).listen(port);

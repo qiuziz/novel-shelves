@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-19 16:25:02
+ * @Last Modified time: 2018-09-19 21:22:35
  */
 
 const express = require("express"),
@@ -11,10 +11,11 @@ const express = require("express"),
     connect = require("./db.js")
     search = require('./search-novel.js'),
     getBook = require('./book'),
-    getChapter = require('./chapter');
+    getChapter = require('./chapter'),
+    basePrefix = '/api';
 
 
- router.get("/search/:name", async (req, res) => {
+ router.get(`${basePrefix}/search/:name`, async (req, res) => {
   const name = req.params.name;
   if (!name) {
     res.send([]);
@@ -31,7 +32,7 @@ const express = require("express"),
   }
 })
 
-router.get("/book/:id", async (req, res) => {
+router.get(`${basePrefix}/book/:id`, async (req, res) => {
     const id = parseInt(req.params.id);
     console.log(id)
     if (!id) {
@@ -76,7 +77,7 @@ router.get("/book/:id", async (req, res) => {
   //   })
 	// })
 })
-router.get("/catalog/:id", async (req, res) => {
+router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
     const id = parseInt(req.params.id);
     if (!id) {
       res.send([]);
@@ -90,7 +91,7 @@ router.get("/catalog/:id", async (req, res) => {
     }
 });
 
-router.get("/chapter/:bookId/:chapterId", async (req, res) => {
+router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
   const bookId = parseInt(req.params.bookId), chapterId = parseInt(req.params.chapterId);
   if (!bookId || !chapterId) {
     res.send({});
