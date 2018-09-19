@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy } from '@angula
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable, merge } from 'rxjs';
 import { LocalStorage } from '../../common/local-storage';
 
 @Component({
@@ -28,8 +28,7 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-
-    fromEvent(document, 'click')
+    merge(fromEvent(document, 'click'), fromEvent(document, 'touch'))
       .subscribe(event => {
         console.log(event);
         if (Math.abs(document.documentElement.clientHeight / 2 - (<any>event).clientY) <= 30) {
