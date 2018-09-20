@@ -1,26 +1,22 @@
 /*
  * @Author: qiuz
  * @Github: <https://github.com/qiuziz>
- * @Date: 2018-09-07 17:18:55
+ * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 20:12:54
+ * @Last Modified time: 2018-09-20 20:39:37
  */
-
 
 const http = require('http'),
     cheerio = require("cheerio"),
 		phantom = require('phantom'),
-		USER_AGENTS = require('./user-agents'),
+		USER_AGENTS = require('../user-agents'),
     LEN = USER_AGENTS.length - 1,
-    random = require('./util').random,
     saveToDB = require('./save'),
+    random = require('../util').random,
     process = require('child_process');
 
-const url = 'https://www.qu.la/book/80600/4242452.html';
-function getBookContents(chapter) {
-  console.log(chapter)
-  let result = {};
-
+function getBook(data) {
+  console.log(data);
 	return phantom.create().then(function(ph) {
 
 		return ph.createPage().then(function(page) {
@@ -32,30 +28,25 @@ function getBookContents(chapter) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			return page.open(chapter.url).then(function(status) {
+			return page.open(data.url).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
 					return;
 				}
 				return page.property('content').then(function(content) {
-          let
+          const
             $ = cheerio.load(content)
-            , chapterContent = $('#content');
-            $(chapterContent).children().remove('script,div');
+            , dls = $('#list > dl')
+            , cover = $('#fmimg')
+            , intro = $('#intro');
 
-          // saveToDB(chapterContent.html());
-          result = {
-            id: chapter.id,
-            bookId: chapter.bookId,
-            prev: chapter.prev,
-            next: chapter.next,
-            title: chapter.chapter,
-            content: chapterContent.html()
-          };
+          data.intro = intro.html();
+          data.cover = 'https://www.qu.la' + $('img', cover).attr('src');
+
 					page.close();
           ph.exit();
-          return result;
+          return data;
 				})
 			})
 		})
@@ -69,8 +60,6 @@ function getBookContents(chapter) {
 		ph.exit();
   });
 
-  // return search_results;
 }
-getBookContents(url);
 
-module.exports = getBookContents;
+module.exports = getBook;

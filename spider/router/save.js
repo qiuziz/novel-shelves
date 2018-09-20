@@ -3,10 +3,10 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 19:17:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-07 23:39:24
+ * @Last Modified time: 2018-09-20 18:55:41
  */
 
-const connect = require('./db.js');
+const connect = require('../db.js');
 
 function saveToMongoDB(collectionName, data) {
 

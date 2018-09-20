@@ -1,34 +1,32 @@
 /*
  * @Author: qiuz
  * @Github: <https://github.com/qiuziz>
- * @Date: 2018-09-07 15:14:58
+ * @Date: 2018-09-20 18:31:33
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 19:42:09
+ * @Last Modified time: 2018-09-20 21:00:13
  */
 
 const http = require('http'),
     cheerio = require("cheerio"),
 		phantom = require('phantom'),
-		USER_AGENTS = require('./user-agents'),
+		USER_AGENTS = require('../user-agents'),
     LEN = USER_AGENTS.length - 1,
     saveToDB = require('./save'),
-    random = require('./util').random,
+    random = require('../util').random,
     process = require('child_process');
 
-// const data = {
-//   author: "七十柒",
-// category: "[女生频道]",
-// id: "80600",
-// lastChapter: "198 我的全部",
-// name: "AA制婚约：试婚100天",
-// src: "https://www.qu.la/book/80600/",
-// state: "连载",
-// updateTime: "2018-05-27 00:00:00"
-// };
-function getBook(data) {
-  console.log(data);
-	return phantom.create().then(function(ph) {
 
+function getBookCatalog(bookId) {
+  let book = bookId === BOOK.id
+    ? BOOK
+    : {
+        ...SEARCH_RESULTS.results.filter(book => book.id === bookId)[0],
+        ...SEARCH_RESULTS.urls.filter(book => book.id === bookId)[0]
+      };
+  if (!book) {
+    return [];
+  }
+	return phantom.create().then(function(ph) {
 		return ph.createPage().then(function(page) {
 			page.property('userAgent', USER_AGENTS[random(0, LEN)]);
       page.property('resourceTimeout', 10000); // 10 seconds
@@ -38,7 +36,7 @@ function getBook(data) {
         console.log(e.url);         // the url whose request timed out
         ph.exit(1);
       });
-			return page.open(data.url).then(function(status) {
+			return page.open(book.url).then(function(status) {
 				if (status !== 'success') {
           page.close();
 					ph.exit();
@@ -47,12 +45,7 @@ function getBook(data) {
 				return page.property('content').then(function(content) {
           const
             $ = cheerio.load(content)
-            , dls = $('#list > dl')
-            , cover = $('#fmimg')
-            , intro = $('#intro');
-
-          data.intro = intro.html();
-          data.cover = 'https://www.qu.la' + $('img', cover).attr('src');
+            , dls = $('#list > dl');
 
           let contents = [];
 
@@ -63,10 +56,10 @@ function getBook(data) {
             } else if (dtCount >= 2){
               let dt = $(child)
                 , url = $('a', dt).attr('href')
-                , id = data.id * 10;
+                , id = book.id * 10;
               contents.push({
                 id: id + index,
-                bookId: data.id,
+                bookId: book.id,
                 prev: index > 0 ? id + index - 1 : null,
                 next: id + index + 1,
                 chapter: dt.text().trim(),
@@ -74,11 +67,11 @@ function getBook(data) {
               });
             }
           })
-          data.contents = contents;
-          // saveToDB('books', data);
+          book.contents = contents;
+          // saveToDB('books', book);
 					page.close();
           ph.exit();
-          return data;
+          return book;
 				})
 			})
 		})
@@ -94,4 +87,4 @@ function getBook(data) {
 
 }
 
-module.exports = getBook;
+module.exports = getBookCatalog;

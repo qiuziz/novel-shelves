@@ -3,14 +3,14 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:48:51
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-17 19:56:31
+ * @Last Modified time: 2018-09-20 20:39:10
  */
 const http = require('http'),
     cheerio = require("cheerio"),
 		phantom = require('phantom'),
-		USER_AGENTS = require('./user-agents'),
+		USER_AGENTS = require('../user-agents'),
     LEN = USER_AGENTS.length - 1,
-    random = require('./util').random,
+    random = require('../util').random,
     process = require('child_process');
 
 const imagesArray = [], urls = [];
@@ -67,7 +67,6 @@ function novel(name) {
 
               novels.push({
                 id: parseInt(id),
-                url: url,
                 name: spans.eq(1).text().trim(),
                 author: spans.eq(3).text(),
                 updateTime: spans.eq(5).text(),
@@ -75,14 +74,13 @@ function novel(name) {
                 category: spans.eq(0).text(),
                 lastChapter: spans.eq(2).text()
               });
-              global.search_results.urls.push({
-                id: id,
-                src: url
+              SEARCH_RESULTS.urls.push({
+                id: parseInt(id),
+                url: url
               })
             }
           })
-          console.log(novels);
-          global.search_results.results = novels;
+          SEARCH_RESULTS.results = novels;
 					page.close();
           ph.exit();
           return novels;
