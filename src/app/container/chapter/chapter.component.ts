@@ -2,9 +2,8 @@ import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy } from '@angula
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
-import { fromEvent, Observable, merge } from 'rxjs';
 import { LocalStorage } from '../../common/local-storage';
-import { map } from 'rxjs/operators';
+import { tap } from '../../common/tap';
 
 @Component({
   selector: 'app-chapter',
@@ -29,19 +28,24 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-    const click = fromEvent(document, 'touchstart').pipe(map(event => (<any>event).changedTouches[0].clientY));
-    const touch = fromEvent(document, 'click').pipe(map(event => (<any>event).clientY));
-    merge(touch, click)
-      .subscribe(y => {
-        console.log(y);
-        if (this.pageConfig) {
-          document.body.style.overflow = 'hidden';
-        }
-        if (Math.abs(document.documentElement.clientHeight / 2 - y) <= 50) {
-          console.log('点击屏幕中间');
-          this.pageConfig = !this.pageConfig;
-        }
-      });
+
+    tap(document, event => {
+      const x = (<any>event).changedTouches[0].pageX;
+      const y = (<any>event).changedTouches[0].pageY - window.scrollY;
+      if (this.isClickCenter(x, y)) {
+        console.log('点击屏幕中间');
+        this.pageConfig = !this.pageConfig;
+        document.body.style.overflow = this.pageConfig ? 'hidden' : '';
+      }
+    });
+  }
+
+  isClickCenter (x, y) {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const isXCenter = ( x < (centerX + 40) ) && ( x > (centerX - 40) );
+    const isYCenter = ( y < (centerY + 100) ) && ( y > (centerY - 100) );
+    return isXCenter && isYCenter;
   }
 
 
