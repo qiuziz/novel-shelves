@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 23:48:54
+ * @Last Modified time: 2018-09-22 23:51:21
  */
 
 const express = require("express"),
@@ -56,6 +56,7 @@ router.get(`${basePrefix}/book/:id`, async (req, res) => {
       handleToMongoDB.insert('book', book_detail);
     }
   }
+  NEXT_START = 0;
   res.send(book_detail);
 })
 
@@ -81,6 +82,7 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
       handleToMongoDB.update('book', {id: BOOK.id}, {catalog: BOOK.catalog});
     }
     catalog = BOOK.catalog;
+    NEXT_START = 0;
     res.send(catalog);
 });
 
@@ -125,7 +127,7 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
 })
 
 async function getLastFive(chapter) {
-  if (NEXT_START && NEXT_START >= chapter.id) return;
+  if (NEXT_START > 0 && NEXT_START >= chapter.id) return;
   NEXT_START = chapter.next + 4;
   for (let i = chapter.next; i <= NEXT_START; i++) {
     let nextChapter = BOOK.catalog.filter(item => item.id === i)[0];
