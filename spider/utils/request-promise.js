@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 18:08:15
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-21 18:34:07
+ * @Last Modified time: 2018-09-22 21:04:32
  */
 
 const rp = require("request-promise"),
@@ -19,7 +19,7 @@ function request(url, options = {}) {
       },
       body: JSON.stringify({url}),
       transform: function (body) {
-        return cheerio.load(body);
+        return cheerio.load(body || '<div></div>');
       },
       ...options
     });

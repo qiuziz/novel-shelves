@@ -3,13 +3,16 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 16:08:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-21 18:42:25
+ * @Last Modified time: 2018-09-22 20:57:26
  */
+var USER_AGENTS = require('./user-agents')
+    , LEN = USER_AGENTS.length
+    , random = require('./util').random
+    , system = require('system') //get args
+    , args = system.args
+    , port = 8081;
 
-var system=require('system');  //get args
-var args=system.args;
-var port = 8081;
-if (args.length === 2 ){
+if (args.length === 2 ) {
     port = Number(args[1]);
 }
 
@@ -17,13 +20,13 @@ var webserver = require('webserver');
 
 webserver.create().listen(port, function(request, response) {
   try {
-      var bodyParams = JSON.parse(JSON.parse(request.post));
+    var bodyParams = JSON.parse(JSON.parse(request.post));
       url= bodyParams.url;
-      // console.log(url)
       // 创建page
       var webPage = require('webpage');
       var page = webPage.create();
-      page.settings.resourceTimeout = 20000;//timeout is 20s
+      page.settings.userAgent = USER_AGENTS[random(0, LEN)];
+      page.settings.resourceTimeout = 10000;//timeout is 10s
       // 页面错误捕捉
       page.onError = function(msg, trace) {
           console.log("[Warning]This is page.onError");
@@ -51,7 +54,7 @@ webserver.create().listen(port, function(request, response) {
       };
       // 打开网页，获取源码
       page.open(url, function (status) {
-          // console.log('Target_url is ' + url);  //输出待检测的网站url
+          console.log('Target_url is ' + url);  //输出待检测的网站url
           var body = '';
           if(status === 'success') {
               body= page.content;

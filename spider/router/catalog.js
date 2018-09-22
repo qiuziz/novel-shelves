@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-20 18:31:33
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-21 18:32:52
+ * @Last Modified time: 2018-09-22 22:04:30
  */
 
 const request = require("../utils/request-promise");
@@ -41,7 +41,7 @@ function getBookCatalog(bookId) {
           });
         }
       })
-      book.contents = contents;
+      book.catalog = contents;
       // saveToDB('books', book);
       return book;
 		});

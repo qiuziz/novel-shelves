@@ -3,11 +3,10 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-21 18:28:03
+ * @Last Modified time: 2018-09-22 21:34:23
  */
 
-const saveToDB = require('./save'),
-    request = require("../utils/request-promise");
+const request = require("../utils/request-promise");
 
 function getBook(data) {
   return request(data.url).then($ => {
