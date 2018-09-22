@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 22:13:30
+ * @Last Modified time: 2018-09-22 23:17:18
  */
 
 const express = require("express"),
@@ -92,22 +92,46 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
     res.send(chapter);
     return;
   }
-  if (BOOK.id === bookId) {
-    if (CHAPTER.id === chapterId) {
-      chapter = CHAPTER;
+  if (BOOK.id === bookId && CHAPTER.id === chapterId) {
+    chapter = CHAPTER;
+    res.send(chapter);
+    return;
+  }
+  if (!BOOK.id) {
+    const book = await handleToMongoDB.find('book', {id: bookId});
+    if (book) {
+      BOOK = book;
     } else {
-      const findChapter = await handleToMongoDB.find(bookId.toString(), {chapterId});
-      if (findChapter) {
-        chapter = CHAPTER = findChapter;
-        console.log(333);
-      } else {
-        const data = BOOK.catalog.filter(item => item.id === chapterId)[0];
-        chapter = CHAPTER = await getChapter(data);
-        handleToMongoDB.insert(bookId.toString(), {...chapter, _id:chapter.id});
-      }
+      BOOK = await getBookCatalog(bookId);
     }
   }
+  const findChapter = await handleToMongoDB.find(bookId.toString(), {id: chapterId});
+  if (findChapter) {
+    if (findChapter.content) {
+      chapter = CHAPTER = findChapter;
+      console.log(333);
+    } else {
+      const data = BOOK.catalog.filter(item => item.id === chapterId)[0];
+      chapter = CHAPTER = await getChapter(data);
+      handleToMongoDB.update(bookId.toString(), {_id: chapter.id}, {content: chapter.content});
+    }
+  } else {
+    const data = BOOK.catalog.filter(item => item.id === chapterId)[0];
+    chapter = CHAPTER = await getChapter(data);
+    handleToMongoDB.insert(bookId.toString(), {...chapter, _id:chapter.id});
+  }
   res.send(chapter);
+  getLastFive(chapter);
 })
+
+async function getLastFive(chapter) {
+  if (NEXT_START && NEXT_START >= chapter.id) return;
+  NEXT_START = chapter.next + 4;
+  for (let i = chapter.id + 1; i < NEXT_START; i++) {
+    let nextChapter = BOOK.catalog.filter(item => item.id === i)[0];
+    let result = await getChapter(nextChapter);
+    handleToMongoDB.insert(result.bookId.toString(), {...result, _id:result.id});
+  }
+}
 
 module.exports = router;

@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 16:08:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 20:57:26
+ * @Last Modified time: 2018-09-22 23:02:13
  */
 var USER_AGENTS = require('./user-agents')
     , LEN = USER_AGENTS.length
@@ -29,14 +29,7 @@ webserver.create().listen(port, function(request, response) {
       page.settings.resourceTimeout = 10000;//timeout is 10s
       // 页面错误捕捉
       page.onError = function(msg, trace) {
-          console.log("[Warning]This is page.onError");
-          var msgStack = ['ERROR: ' + msg];
-          if (trace && trace.length) {
-              msgStack.push('TRACE:');
-              trace.forEach(function(t) {
-                msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
-              });
-          }
+          console.log("[Warning]This is page.onError", msg);
           // console.error(msgStack.join('\n'));
       };
       // phantomjs错误捕捉
@@ -49,8 +42,8 @@ webserver.create().listen(port, function(request, response) {
               msgStack.push(' -> ' + (t.file || t.sourceURL) + ': ' + t.line + (t.function ? ' (in function ' + t.function +')' : ''));
             });
           }
-            console.error(msgStack.join('\n'));
-            phantom.exit(1);
+          console.error(msgStack.join('\n'));
+          phantom.exit(1);
       };
       // 打开网页，获取源码
       page.open(url, function (status) {

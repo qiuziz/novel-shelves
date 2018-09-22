@@ -4,4 +4,5 @@ global.SEARCH_RESULTS = {
 };
 global.BOOK = {};
 global.CHAPTER = {};
+global.NEXT_START = 0;
 
