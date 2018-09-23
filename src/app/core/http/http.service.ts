@@ -35,7 +35,6 @@ export class HttpService {
   private headers;
   private options;
   constructor(private http: HttpClient, private globals: GlobalsService) {
-    console.log(this.http);
     this.headers = new HttpHeaders();
     this.options = {headers: this.headers};
    }
