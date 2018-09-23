@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 23:54:15
+ * @Last Modified time: 2018-09-23 12:16:09
  */
 
 const express = require("express"),
@@ -120,7 +120,7 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
   } else {
     const data = BOOK.catalog.filter(item => item.id === chapterId)[0];
     chapter = CHAPTER = await getChapter(data);
-    handleToMongoDB.insert(bookId.toString(), {...chapter, _id:chapter.id});
+    chapter && handleToMongoDB.insert(bookId.toString(), {...chapter, _id:chapter.id});
   }
   res.send(chapter);
   getLastFive(chapter);

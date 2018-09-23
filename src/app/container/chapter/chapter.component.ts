@@ -53,6 +53,9 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
+        if (!(<any>this.chapter).content) {
+          (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
+        }
         window.scrollTo(0, 0);
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
