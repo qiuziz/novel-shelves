@@ -72,7 +72,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   }
 
   goCatalog() {
-    this.router.navigate([`/book/${(<any>this.chapter).bookId}`]);
+    this.router.navigate([`/book/${(<any>this.chapter).bookId}/catalog`]);
   }
 
   goBack() {

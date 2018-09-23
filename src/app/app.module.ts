@@ -9,6 +9,8 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorInterceptor } from './core/http/error.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(zh);
 
@@ -21,7 +23,8 @@ registerLocaleData(zh);
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true })
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
