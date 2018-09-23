@@ -1,6 +1,6 @@
 <div class="book-detail">
   <div class="info">
-    <img class="cover" [src]="book.cover" alt="{{book.name}}">
+    <img class="cover" [src]="book.cover || ''" alt="{{book.name}}">
     <div class="cell">
       <h2 class="title">{{book.name}}</h2>
       <p class="author book-meta">{{book.author}}</p>
