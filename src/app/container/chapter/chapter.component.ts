@@ -15,6 +15,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
+  day = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,12 +67,24 @@ export class ChapterComponent implements OnInit, OnDestroy {
     LocalStorage.setItem('fontSize', value);
   }
 
-  stop(event) {
-    event.preventDefault();
-  }
-
   pageSet() {
     this.pageSetting = !this.pageSetting;
+  }
+
+  goCatalog() {
+    this.router.navigate([`/book/${(<any>this.chapter).bookId}`]);
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  dayNight() {
+    this.day = !this.day;
+    document.body.style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
+    this.el.nativeElement.querySelector('.page-header').style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
+    document.body.style.color = this.day ? 'rgba(255,255,255,.5)' : '#33373d';
+    this.el.nativeElement.querySelector('.page-header').style.color = this.day ? 'rgba(255,255,255,.5)' : 'rgba(0,0,0,.4)';
   }
 
   ngOnDestroy() {

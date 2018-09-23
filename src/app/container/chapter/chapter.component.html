@@ -9,8 +9,8 @@
     </div>
 
     <div class="page-config" *ngIf="pageConfig">
-      <header class="header" (click)="stop($event)">
-        <a href="javascript:" class="header-back">
+      <header class="header">
+        <a href="javascript:" class="header-back" (click)="goBack()">
             <i class="anticon anticon-left"></i>
         </a>
       </header>
@@ -61,7 +61,7 @@
       </div>
       <footer class="footer">
         <div class="btn-group">
-            <a href="javascript:">
+            <a href="javascript:" (click)="goCatalog()">
                 <i class="novel novel-catalog"></i>
                 <h4 class="read-opt-footer-h">目录</h4>
             </a>
@@ -74,9 +74,11 @@
                 <h4 class="read-opt-footer-h">设置</h4>
             </a>
 
-            <a href="javascript:">
-                <i class="novel novel-night"></i>
-                <h4 class="read-opt-footer-h">夜间</h4>
+            <a href="javascript:" (click)="dayNight()">
+                <i class="novel novel-night" *ngIf="!day"></i>
+                <i class="novel novel-day" *ngIf="day"></i>
+                <h4 class="read-opt-footer-h" *ngIf="!day">夜间</h4>
+                <h4 class="read-opt-footer-h" *ngIf="day">日间</h4>
             </a>
         </div>
       </footer>
