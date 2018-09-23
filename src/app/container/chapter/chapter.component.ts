@@ -1,16 +1,16 @@
-import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { HttpService } from '../../core/http/http.service';
 import { LocalStorage } from '../../common/local-storage';
 import { tap } from '../../common/tap';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-chapter',
   templateUrl: './chapter.component.html',
   styleUrls: ['./chapter.component.less']
 })
-export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ChapterComponent implements OnInit, OnDestroy {
   chapter = {};
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
@@ -20,7 +20,8 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private httpService: HttpService,
-    private el: ElementRef
+    private el: ElementRef,
+    private location: Location
    ) { }
 
   ngOnInit() {
@@ -48,27 +49,16 @@ export class ChapterComponent implements OnInit, AfterViewInit, OnDestroy {
     return isXCenter && isYCenter;
   }
 
-
-  ngAfterViewInit() {
-
-  this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
-    .subscribe(() => {
-      const bookId = this.route.snapshot.params['id'],
-        chapterId = this.route.snapshot.params['chapterId'];
-      this.getChapter(bookId, chapterId);
-    });
-}
-
   getChapter(bookId, chapterId): void {
     this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
         window.scrollTo(0, 0);
+        this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
   }
 
   changeFontSize(value) {
-    console.log(value);
     this.el.nativeElement.querySelector('.content').style.fontSize = value + 'px';
     LocalStorage.setItem('fontSize', value);
   }

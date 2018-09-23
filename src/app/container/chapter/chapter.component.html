@@ -5,7 +5,7 @@
     <div class="content" [innerHTML]="chapter.content" [ngStyle]="{'font-size': fontSize + 'px'}"></div>
 
     <div class="btn" *ngIf="chapter.content">
-      <button nz-button [routerLink]=" '/book/' + chapter.bookId + '/' + chapter.next">下一章</button>
+      <button nz-button (click)="getChapter(chapter.bookId, chapter.next)">下一章</button>
     </div>
 
     <div class="page-config" *ngIf="pageConfig">
