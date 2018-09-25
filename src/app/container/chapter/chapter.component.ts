@@ -33,6 +33,8 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
     tap(document, event => {
+      event.stopPropagation();
+      event.preventDefault();
       const x = (<any>event).changedTouches[0].pageX;
       const y = (<any>event).changedTouches[0].pageY - window.scrollY;
       if (this.isClickCenter(x, y)) {
@@ -42,11 +44,11 @@ export class ChapterComponent implements OnInit, OnDestroy {
       }
     });
 
-    tap(this.el.nativeElement.querySelector('.content'), event => {
+    tap(this.el.nativeElement.querySelector('.chapter'), event => {
       this.next();
     });
 
-    move(this.el.nativeElement.querySelector('.content'), event => {
+    move(this.el.nativeElement.querySelector('.chapter'), event => {
       this.next('prev');
     });
   }
@@ -64,10 +66,11 @@ export class ChapterComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.chapter = res;
         this.page = 0;
+        this.pageSize = 0;
         if (!(<any>this.chapter).content) {
           (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
-        this.pageTransform();
+        this.pageTransform(this.page);
         window.scrollTo(0, 0);
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
@@ -76,9 +79,12 @@ export class ChapterComponent implements OnInit, OnDestroy {
   changeFontSize(value) {
     this.el.nativeElement.querySelector('.content').style.fontSize = value + 'px';
     LocalStorage.setItem('fontSize', value);
+    this.adjustPageSize();
   }
 
-  pageSet() {
+  pageSet(event) {
+    event.stopPropagation();
+    event.preventDefault();
     this.pageSetting = !this.pageSetting;
   }
 
@@ -99,20 +105,25 @@ export class ChapterComponent implements OnInit, OnDestroy {
   }
 
   next(type?: string) {
-    if (this.pageSize === 0) {
-      this.pageSize = Math.floor(document.body.querySelector('.content').scrollWidth / (window.innerWidth - 16));
-    }
+    this.adjustPageSize();
     if (this.page === this.pageSize) {
       this.getChapter((<any>this.chapter).bookId, (<any>this.chapter).next);
       return;
     }
     type === 'prev' ? this.page-- : this.page++;
-    this.pageTransform();
+    this.pageTransform(this.page);
   }
 
-  pageTransform() {
-    const x = (window.innerWidth - 16) * this.page;
+  pageTransform(page) {
+    console.log(this.page, this.pageSize);
+    const x = (window.innerWidth - 16) * page;
     this.el.nativeElement.querySelector('.content').style.transform = `translateX(-${x}px)`;
+  }
+
+  adjustPageSize() {
+    if (this.pageSize === 0) {
+      this.pageSize = Math.floor(document.body.querySelector('.content').scrollWidth / (window.innerWidth - 16));
+    }
   }
 
   ngOnDestroy() {
