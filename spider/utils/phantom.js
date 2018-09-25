@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 16:08:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 23:02:13
+ * @Last Modified time: 2018-09-24 10:05:48
  */
 var USER_AGENTS = require('./user-agents')
     , LEN = USER_AGENTS.length
@@ -18,7 +18,7 @@ if (args.length === 2 ) {
 
 var webserver = require('webserver');
 
-webserver.create().listen(port, function(request, response) {
+webserver.create().listen(port, { keepAlive: true }, function(request, response) {
   try {
     var bodyParams = JSON.parse(JSON.parse(request.post));
       url= bodyParams.url;
