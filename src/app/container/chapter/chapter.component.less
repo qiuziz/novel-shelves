@@ -1,4 +1,10 @@
 .chapter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   .page-header {
     position: fixed;
     top: 0;
@@ -20,10 +26,14 @@
     padding-top: 2.75rem;
     font-size: 1rem;
     line-height: 1.8;
-    overflow: hidden;
     min-height: calc(100vh - 44px);
     margin: 0 16px;
     text-align: justify;
+    overflow: visible;
+    height: 100%;
+    columns: calc(100vw - 32px) 1;
+    column-gap: 16px;
+    word-break: break-all;
   }
 
   .btn {
