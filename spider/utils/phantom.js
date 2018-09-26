@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 16:08:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-24 10:05:48
+ * @Last Modified time: 2018-09-26 09:37:56
  */
 var USER_AGENTS = require('./user-agents')
     , LEN = USER_AGENTS.length
@@ -34,7 +34,7 @@ webserver.create().listen(port, { keepAlive: true }, function(request, response)
       };
       // phantomjs错误捕捉
       phantom.onError = function(msg, trace) {
-          console.log("[Warning]This is phantom.onError");
+          console.log(new Date().toLocaleString("CST"), "[Warning]This is phantom.onError");
           var msgStack = ['PHANTOM ERROR: ' + msg];
           if (trace && trace.length) {
             msgStack.push('TRACE:');
@@ -47,7 +47,7 @@ webserver.create().listen(port, { keepAlive: true }, function(request, response)
       };
       // 打开网页，获取源码
       page.open(url, function (status) {
-          console.log('Target_url is ' + url);  //输出待检测的网站url
+          console.log(new Date().toLocaleString("CST"), 'Target_url is ' + url);  //输出待检测的网站url
           var body = '';
           if(status === 'success') {
               body= page.content;
