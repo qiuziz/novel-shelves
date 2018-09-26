@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 16:08:57
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-26 09:37:56
+ * @Last Modified time: 2018-09-26 09:45:12
  */
 var USER_AGENTS = require('./user-agents')
     , LEN = USER_AGENTS.length
@@ -34,28 +34,30 @@ webserver.create().listen(port, { keepAlive: true }, function(request, response)
       };
       // phantomjs错误捕捉
       phantom.onError = function(msg, trace) {
-          console.log(new Date().toLocaleString("CST"), "[Warning]This is phantom.onError");
-          var msgStack = ['PHANTOM ERROR: ' + msg];
-          if (trace && trace.length) {
-            msgStack.push('TRACE:');
-            trace.forEach(function(t) {
-              msgStack.push(' -> ' + (t.file || t.sourceURL) + ': ' + t.line + (t.function ? ' (in function ' + t.function +')' : ''));
-            });
-          }
-          console.error(msgStack.join('\n'));
-          phantom.exit(1);
+        console.log(new Date().toLocaleString("CST"));
+        console.log("[Warning]This is phantom.onError");
+        var msgStack = ['PHANTOM ERROR: ' + msg];
+        if (trace && trace.length) {
+          msgStack.push('TRACE:');
+          trace.forEach(function(t) {
+            msgStack.push(' -> ' + (t.file || t.sourceURL) + ': ' + t.line + (t.function ? ' (in function ' + t.function +')' : ''));
+          });
+        }
+        console.error(msgStack.join('\n'));
+        phantom.exit(1);
       };
       // 打开网页，获取源码
       page.open(url, function (status) {
-          console.log(new Date().toLocaleString("CST"), 'Target_url is ' + url);  //输出待检测的网站url
-          var body = '';
-          if(status === 'success') {
-              body= page.content;
-          }
-          response.status=200;
-          response.write(body);  //返回获取到的网页源码
-          page.close();
-          response.close();
+        console.log(new Date().toLocaleString("CST"));
+        console.log('Target_url is ' + url);  //输出待检测的网站url
+        var body = '';
+        if(status === 'success') {
+            body= page.content;
+        }
+        response.status=200;
+        response.write(body);  //返回获取到的网页源码
+        page.close();
+        response.close();
       });
   } catch(e) {
     console.log('[Error]'+e.message+'happen'+e.lineNumber+'line');
