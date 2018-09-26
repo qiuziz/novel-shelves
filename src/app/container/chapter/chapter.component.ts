@@ -18,7 +18,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
   day = false;
-  page = 0;
+  page = LocalStorage.getItem('page') || 0;
   pageSize = 0;
   transformX = 0;
   moveStart = 0;
@@ -46,7 +46,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
     fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchmove')
       .subscribe(event => {
-        if ((<any>event).target.className !== 'page-config') {
+        if ((<any>event).target.className === 'inner' || (<any>event).target.className === 'content') {
           this.moveDistance = this.moveStart - (<any>event).changedTouches[0].clientX;
           this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX + this.moveDistance}px)`;
         }
@@ -96,16 +96,22 @@ export class ChapterComponent implements OnInit, OnDestroy {
     return isXLeft && isYTop;
   }
 
-  getChapter(bookId, chapterId): void {
+  getChapter(bookId, chapterId, type?: string): void {
     this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
-        this.page = 0;
-        this.pageSize = 0;
+        this.page =  LocalStorage.getItem('page') || 0;
+        if (type === 'next') {
+          this.page =  0;
+        }
+        if (type === 'prev') {
+          this.page =  this.pageSize;
+        }
         if (!(<any>this.chapter).content) {
           (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
         this.pageTransform(this.page);
+        this.adjustPageSize();
         window.scrollTo(0, 0);
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
@@ -138,10 +144,17 @@ export class ChapterComponent implements OnInit, OnDestroy {
   }
 
   next(type?: string) {
-    this.adjustPageSize();
+    if (this.page === 0 && type === 'prev') {
+      if (!(<any>this.chapter).prev) {
+        console.log('当前已是第一章');
+        return;
+      }
+      this.getChapter((<any>this.chapter).bookId, (<any>this.chapter).prev, 'prev');
+      return;
+    }
     type === 'prev' ? this.page-- : this.page++;
     if (this.page > this.pageSize) {
-      this.getChapter((<any>this.chapter).bookId, (<any>this.chapter).next);
+      this.getChapter((<any>this.chapter).bookId, (<any>this.chapter).next, 'next');
       return;
     }
     this.pageTransform(this.page);
@@ -149,6 +162,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   pageTransform(page) {
     console.log(this.page, this.pageSize);
+    LocalStorage.setItem('page', page);
     this.transformX = (window.innerWidth - 16) * page;
     this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX}px)`;
   }
@@ -157,27 +171,6 @@ export class ChapterComponent implements OnInit, OnDestroy {
     if (this.pageSize === 0) {
       this.pageSize = Math.floor(document.body.querySelector('.inner').scrollWidth / (window.innerWidth - 16));
     }
-  }
-
-  // @HostListener('touchstart', ['$event'])
-  // getMoveStart(event) {
-
-  // }
-
-  // @HostListener('touchmove', ['$event'])
-  // swipeLeft(event) {
-  //   this.moveDistance = this.moveStart - event.changedTouches[0].clientX;
-  //   this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX + this.moveDistance}px)`;
-  //   console.log(event);
-  // }
-
-  // @HostListener('touchend', ['$event'])
-  // moveEnd(event) {
-  //   this.next(this.moveDistance > 0 ? '' : 'prev');
-  // }
-
-  startAnimation(type) {
-    console.log(type);
   }
 
   ngOnDestroy() {
