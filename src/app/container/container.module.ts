@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContainerRoutingModule } from './container-routing.module';
+import { ContainerComponent } from './container.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { HomeComponent } from './home/home.component';
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     BookDetailComponent,
     HomeComponent,
     CatalogComponent,
-    ChapterComponent
+    ChapterComponent,
+    ContainerComponent
   ],
   imports: [
     ContainerRoutingModule,
