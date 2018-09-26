@@ -1,9 +1,11 @@
-import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { HttpService } from '../../core/http/http.service';
 import { LocalStorage } from '../../common/local-storage';
-import { tap, move } from '../../common/tap';
+import { touch, move, click } from '../../common/touch';
 import {Location} from '@angular/common';
+import { fromEvent } from 'rxjs';
+import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chapter',
@@ -18,6 +20,9 @@ export class ChapterComponent implements OnInit, OnDestroy {
   day = false;
   page = 0;
   pageSize = 0;
+  transformX = 0;
+  moveStart = 0;
+  moveDistance = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,25 +37,47 @@ export class ChapterComponent implements OnInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-    tap(document, event => {
-      event.stopPropagation();
-      event.preventDefault();
-      const x = (<any>event).changedTouches[0].pageX;
-      const y = (<any>event).changedTouches[0].pageY - window.scrollY;
-      if (this.isClickCenter(x, y)) {
-        console.log('点击屏幕中间');
-        this.pageConfig = !this.pageConfig;
-        document.body.style.overflow = this.pageConfig ? 'hidden' : '';
-      }
+
+    fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
+    .subscribe(event => {
+      this.moveDistance = 0;
+      this.moveStart = (<any>event).changedTouches[0].clientX;
     });
 
-    tap(this.el.nativeElement.querySelector('.chapter'), event => {
-      this.next();
-    });
-
-    move(this.el.nativeElement.querySelector('.chapter'), event => {
-      this.next('prev');
-    });
+    fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchmove')
+      .subscribe(event => {
+        if ((<any>event).target.className === 'content') {
+          this.moveDistance = this.moveStart - (<any>event).changedTouches[0].clientX;
+          this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX + this.moveDistance}px)`;
+        }
+      });
+    fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchend')
+      .pipe(map(event => {
+        const x = (<any>event).changedTouches[0].pageX;
+        const y = (<any>event).changedTouches[0].pageY - window.scrollY;
+        return (this.pageConfig && !this.isClickCenter(x, y)) ? {stop: true} : event;
+      }))
+      .subscribe(event => {
+        if ((<any>event).stop) {
+          return;
+        }
+        const x = (<any>event).changedTouches[0].pageX;
+        const y = (<any>event).changedTouches[0].pageY - window.scrollY;
+        console.log(x, y);
+        if (this.isClickCenter(x, y) && this.moveDistance === 0) {
+          console.log('点击屏幕中间');
+          this.pageConfig = !this.pageConfig;
+          if (!this.pageConfig) {
+            this.pageSetting = false;
+          }
+          document.body.style.overflow = this.pageConfig ? 'hidden' : '';
+        } else if (this.isClickLeftTop(x, y)) {
+          console.log('点击屏幕左上');
+          this.next('prev');
+        } else {
+          this.next(this.moveDistance >= 0 ? '' : 'prev');
+        }
+      });
   }
 
   isClickCenter (x, y) {
@@ -59,6 +86,14 @@ export class ChapterComponent implements OnInit, OnDestroy {
     const isXCenter = ( x < (centerX + 40) ) && ( x > (centerX - 40) );
     const isYCenter = ( y < (centerY + 100) ) && ( y > (centerY - 100) );
     return isXCenter && isYCenter;
+  }
+
+  isClickLeftTop (x, y) {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const isXLeft = x < (centerX);
+    const isYTop = y < (centerY - 40);
+    return isXLeft && isYTop;
   }
 
   getChapter(bookId, chapterId): void {
@@ -77,14 +112,12 @@ export class ChapterComponent implements OnInit, OnDestroy {
   }
 
   changeFontSize(value) {
-    this.el.nativeElement.querySelector('.content').style.fontSize = value + 'px';
+    this.el.nativeElement.querySelector('.inner').style.fontSize = value + 'px';
     LocalStorage.setItem('fontSize', value);
     this.adjustPageSize();
   }
 
   pageSet(event) {
-    event.stopPropagation();
-    event.preventDefault();
     this.pageSetting = !this.pageSetting;
   }
 
@@ -116,14 +149,35 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   pageTransform(page) {
     console.log(this.page, this.pageSize);
-    const x = (window.innerWidth - 16) * page;
-    this.el.nativeElement.querySelector('.content').style.transform = `translateX(-${x}px)`;
+    this.transformX = (window.innerWidth - 16) * page;
+    this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX}px)`;
   }
 
   adjustPageSize() {
     if (this.pageSize === 0) {
-      this.pageSize = Math.floor(document.body.querySelector('.content').scrollWidth / (window.innerWidth - 16));
+      this.pageSize = Math.floor(document.body.querySelector('.inner').scrollWidth / (window.innerWidth - 16));
     }
+  }
+
+  // @HostListener('touchstart', ['$event'])
+  // getMoveStart(event) {
+
+  // }
+
+  // @HostListener('touchmove', ['$event'])
+  // swipeLeft(event) {
+  //   this.moveDistance = this.moveStart - event.changedTouches[0].clientX;
+  //   this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX + this.moveDistance}px)`;
+  //   console.log(event);
+  // }
+
+  // @HostListener('touchend', ['$event'])
+  // moveEnd(event) {
+  //   this.next(this.moveDistance > 0 ? '' : 'prev');
+  // }
+
+  startAnimation(type) {
+    console.log(type);
   }
 
   ngOnDestroy() {

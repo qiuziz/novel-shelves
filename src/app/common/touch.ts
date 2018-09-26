@@ -3,13 +3,14 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-21 13:32:49
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-25 20:55:17
+ * @Last Modified time: 2018-09-26 13:09:57
  */
 
 import { fromEvent } from 'rxjs';
-import { throttleTime, debounceTime } from 'rxjs/operators';
+import { throttleTime, debounceTime, tap } from 'rxjs/operators';
+import { pipe } from '@angular/core/src/render3/pipe';
 
-export const tap = (ele = document, callback) => {
+export const touch = (ele = document, callback) => {
   let moved = false, start = 0;
   const delay = 200;
   fromEvent(ele, 'touchstart')
@@ -27,6 +28,13 @@ export const tap = (ele = document, callback) => {
       if (moved) { return; } // 滑动则不触发tap
       const cur = +new Date();
       if (cur - start > delay) { return; } // 长按超时则不触发tap
+      callback(event);
+    });
+};
+export const click = (ele = document, callback) => {
+  fromEvent(ele, 'click')
+    .pipe(throttleTime(200))
+    .subscribe(event => {
       callback(event);
     });
 };

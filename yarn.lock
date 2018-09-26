@@ -84,12 +84,28 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
+"@angular-devkit/core@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.3.tgz#a7158195dc90997de62ec0b12af3325870182c3b"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "~6.2.0"
+    source-map "^0.5.6"
+
 "@angular-devkit/schematics@0.6.8":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.6.8.tgz#6360a0271f1f422862bf932a03b3741e76ac5ff0"
   dependencies:
     "@angular-devkit/core" "0.6.8"
     rxjs "^6.0.0"
+
+"@angular-devkit/schematics@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.3.tgz#32f2e99b43c39864ec63301963329c9190d7c5d2"
+  dependencies:
+    "@angular-devkit/core" "0.8.3"
+    rxjs "~6.2.0"
 
 "@angular/animations@^6.0.3":
   version "6.1.7"
@@ -175,9 +191,24 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/pwa@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.8.3.tgz#b511f817d2add75bf22b590086a5e0fd998b91aa"
+  dependencies:
+    "@angular-devkit/core" "0.8.3"
+    "@angular-devkit/schematics" "0.8.3"
+    "@schematics/angular" "0.8.3"
+    typescript "~2.6.2"
+
 "@angular/router@^6.0.3":
   version "6.1.7"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-6.1.7.tgz#90294b2497649fd6d6d1507e6e447d9c153e8db8"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/service-worker@^6.0.3":
+  version "6.1.8"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-6.1.8.tgz#1f8be0db90d28a019cfeaa684ff00bfe739f3dda"
   dependencies:
     tslib "^1.9.0"
 
@@ -275,6 +306,14 @@
     "@angular-devkit/schematics" "0.6.8"
     typescript ">=2.6.2 <2.8"
 
+"@schematics/angular@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.8.3.tgz#f4b661c5a196a06c050c0ae56809e6dbcfbf9f98"
+  dependencies:
+    "@angular-devkit/core" "0.8.3"
+    "@angular-devkit/schematics" "0.8.3"
+    typescript ">=2.6.2 <2.10"
+
 "@schematics/update@0.6.8":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.6.8.tgz#3b4f897dd3b28335acc53a49d9f0dc10ebd934a7"
@@ -285,6 +324,10 @@
     rxjs "^6.0.0"
     semver "^5.3.0"
     semver-intersect "^1.1.2"
+
+"@types/fastclick@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@types/fastclick/-/fastclick-1.0.28.tgz#db4b3f6f079235324b264338e229f9cdd98a6c4e"
 
 "@types/jasmine@*", "@types/jasmine@~2.8.6":
   version "2.8.8"
@@ -2348,6 +2391,10 @@ fast-safe-stringify@^2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
 
+fastclick@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/fastclick/-/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a"
+
 fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
@@ -2725,6 +2772,10 @@ globule@^1.0.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
 handle-thing@^1.2.5:
   version "1.2.5"
@@ -5350,6 +5401,12 @@ rxjs@^6.0.0:
   dependencies:
     tslib "^1.9.0"
 
+rxjs@~6.2.0:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
+  dependencies:
+    tslib "^1.9.0"
+
 safe-buffer@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -6270,13 +6327,17 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
+"typescript@>=2.6.2 <2.10", typescript@~2.9.1:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+
 "typescript@>=2.6.2 <2.8", typescript@~2.7.2:
   version "2.7.2"
   resolved "http://registry.npmjs.org/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
-typescript@~2.9.1:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@~2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
 uglify-es@^3.3.4:
   version "3.3.9"

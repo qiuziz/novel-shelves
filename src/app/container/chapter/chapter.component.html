@@ -2,10 +2,11 @@
     <div class="page-header">
       <p>{{chapter.title}}</p>
     </div>
-    <div class="content" [innerHTML]="chapter.content" [ngStyle]="{'font-size': fontSize + 'px'}"></div>
-
-    <div class="btn" *ngIf="chapter.content">
-      <button nz-button (click)="getChapter(chapter.bookId, chapter.next)">下一章</button>
+    <div class="content"
+      [ngStyle]="{'font-size': fontSize + 'px'}"
+      >
+      <article class="inner" [innerHTML]="chapter.content">
+      </article>
     </div>
 
     <div class="page-config" *ngIf="pageConfig">
