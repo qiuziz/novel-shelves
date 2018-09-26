@@ -23,6 +23,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   transformX = 0;
   moveStart = 0;
   moveDistance = 0;
+  book = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,9 @@ export class ChapterComponent implements OnInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
+
+    this.book = LocalStorage.getItem('book') || {};
+    document.title = (<any>this.book).name || 'NovelShelves';
 
     fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
     .subscribe(event => {

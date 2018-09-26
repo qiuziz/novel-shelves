@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../core/http/http.service';
+import { LocalStorage } from '../../common/local-storage';
 
 @Component({
   selector: 'app-book-detail',
@@ -19,6 +20,8 @@ export class BookDetailComponent implements OnInit {
   getBookDetail(id): void {
     this.httpService.get('getBook', {id}).subscribe(res => {
       this.book = res;
+      LocalStorage.setItem('book', this.book);
+      document.title = (<any>this.book).name;
     });
   }
 }
