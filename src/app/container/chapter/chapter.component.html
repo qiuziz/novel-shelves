@@ -2,10 +2,11 @@
     <div class="page-header">
       <p>{{chapter.title}}</p>
     </div>
-    <div class="content"
-      [ngStyle]="{'font-size': fontSize + 'px'}"
-      >
-      <article class="inner" [innerHTML]="chapter.content">
+    <div class="content">
+      <article
+        [ngStyle]="{'font-size': fontSize + 'px'}"
+        class="inner"
+        [innerHTML]="chapter.content">
       </article>
     </div>
 

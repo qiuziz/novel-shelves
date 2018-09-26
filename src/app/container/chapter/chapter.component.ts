@@ -46,7 +46,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
     fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchmove')
       .subscribe(event => {
-        if ((<any>event).target.className === 'content') {
+        if ((<any>event).target.className !== 'page-config') {
           this.moveDistance = this.moveStart - (<any>event).changedTouches[0].clientX;
           this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX + this.moveDistance}px)`;
         }
@@ -139,11 +139,11 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   next(type?: string) {
     this.adjustPageSize();
-    if (this.page === this.pageSize) {
+    type === 'prev' ? this.page-- : this.page++;
+    if (this.page > this.pageSize) {
       this.getChapter((<any>this.chapter).bookId, (<any>this.chapter).next);
       return;
     }
-    type === 'prev' ? this.page-- : this.page++;
     this.pageTransform(this.page);
   }
 
