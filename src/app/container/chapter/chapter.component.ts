@@ -101,21 +101,18 @@ export class ChapterComponent implements OnInit, OnDestroy {
   }
 
   getChapter(bookId, chapterId, type?: string): void {
+    this.el.nativeElement.querySelector('.inner').style.transition = '';
+
     this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
-        this.page =  LocalStorage.getItem('page') || 0;
         if (type === 'next') {
           this.page =  0;
         }
-        if (type === 'prev') {
-          this.page =  this.pageSize;
-        }
+        this.adjustPageSize(type);
         if (!(<any>this.chapter).content) {
           (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
-        this.pageTransform(this.page);
-        this.adjustPageSize();
         window.scrollTo(0, 0);
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
@@ -162,6 +159,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
       return;
     }
     this.pageTransform(this.page);
+    this.el.nativeElement.querySelector('.inner').style.transition = 'transform .1s';
   }
 
   pageTransform(page) {
@@ -171,10 +169,20 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.el.nativeElement.querySelector('.inner').style.transform = `translateX(-${this.transformX}px)`;
   }
 
-  adjustPageSize() {
-    if (this.pageSize === 0) {
+  adjustPageSize(type?: string) {
+    setTimeout(() => {
       this.pageSize = Math.floor(document.body.querySelector('.inner').scrollWidth / (window.innerWidth - 16));
-    }
+      if (type === 'next') {
+        this.page =  0;
+      }
+      if (type === 'prev') {
+        this.page =  this.pageSize;
+      }
+      if (this.page > this.pageSize) {
+        this.page = this.pageSize;
+      }
+      this.pageTransform(this.page);
+    }, 0);
   }
 
   ngOnDestroy() {
