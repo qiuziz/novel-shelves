@@ -54,7 +54,7 @@ var LocalStorage = new LocalStorageTools();
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"book-detail\">\n  <div class=\"info\">\n    <img class=\"cover\" [src]=\"book.cover || ''\" alt=\"{{book.name}}\">\n    <div class=\"cell\">\n      <h2 class=\"title\">{{book.name}}</h2>\n      <p class=\"author book-meta\">{{book.author}}</p>\n      <p class=\"category book-meta\">{{book.category}}</p>\n      <p class=\"state book-meta\">{{book.state}}</p>\n    </div>\n  </div>\n  <div class=\"btn\">\n    <button nz-button nzType=\"primary\">开始阅读</button>\n    <button nz-button nzType=\"default\">加入书架</button>\n    <button nz-button nzType=\"default\" [routerLink]=\" '/book/' + book.id + '/catalog'\">查看目录</button>\n  </div>\n  <div class=\"intro\" [innerHTML]=\"book.intro\">\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"book-detail\">\n  <div class=\"info\">\n    <img class=\"cover\" [src]=\"book.cover || ''\" alt=\"{{book.name}}\">\n    <div class=\"cell\">\n      <h2 class=\"title\">{{book.name}}</h2>\n      <p class=\"author book-meta\">{{book.author}}</p>\n      <p class=\"category book-meta\">{{book.category}}</p>\n      <p class=\"state book-meta\">{{book.state}}</p>\n    </div>\n  </div>\n  <div class=\"btn\">\n    <button nz-button nzType=\"primary\" (click)=\"read()\">开始阅读</button>\n    <button nz-button nzType=\"default\">加入书架</button>\n    <button nz-button nzType=\"default\" [routerLink]=\" '/book/' + book.id + '/catalog'\">查看目录</button>\n  </div>\n  <div class=\"intro\" [innerHTML]=\"book.intro\">\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -83,6 +83,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _core_http_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../core/http/http.service */ "./src/app/core/http/http.service.ts");
 /* harmony import */ var _common_local_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/local-storage */ "./src/app/common/local-storage.ts");
+/* harmony import */ var ng_zorro_antd__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ng-zorro-antd */ "./node_modules/ng-zorro-antd/esm5/antd.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -96,11 +97,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var BookDetailComponent = /** @class */ (function () {
-    function BookDetailComponent(httpService, route) {
+    function BookDetailComponent(httpService, router, message, route) {
         this.httpService = httpService;
+        this.router = router;
+        this.message = message;
         this.route = route;
         this.book = {};
+        this.chapter = {};
     }
     BookDetailComponent.prototype.ngOnInit = function () {
         var id = this.route.snapshot.params['id'];
@@ -108,11 +113,40 @@ var BookDetailComponent = /** @class */ (function () {
     };
     BookDetailComponent.prototype.getBookDetail = function (id) {
         var _this = this;
-        this.httpService.get('getBook', { id: id }).subscribe(function (res) {
-            _this.book = res;
-            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('book', _this.book);
-            document.title = _this.book.name;
-        });
+        var book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book') || {};
+        if (book.id === parseInt(id, 10)) {
+            this.book = book;
+            document.title = this.book.name;
+        }
+        else {
+            this.httpService.get('getBook', { id: id }).subscribe(function (res) {
+                _this.book = res;
+                _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('book', _this.book);
+                document.title = _this.book.name;
+            });
+        }
+    };
+    BookDetailComponent.prototype.read = function () {
+        var _this = this;
+        var book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book');
+        var chapter = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('chapter' + book.id);
+        if (chapter) {
+            this.router.navigate(["/book/" + book.id + "/" + chapter.id]);
+        }
+        else if (book.catalog && book.catalog.length > 0) {
+            this.router.navigate(["/book/" + book.id + "/" + book.catalog[0].id]);
+        }
+        else {
+            this.httpService.get('getBookCatalog', { id: book.id })
+                .subscribe(function (res) {
+                if (res[0] && res[0].id) {
+                    _this.router.navigate(["/book/" + book.id + "/" + res[0].id]);
+                }
+                else {
+                    _this.message.error("\u6682\u65E0\u5185\u5BB9");
+                }
+            });
+        }
     };
     BookDetailComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -120,7 +154,10 @@ var BookDetailComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./book-detail.component.html */ "./src/app/container/book-detail/book-detail.component.html"),
             styles: [__webpack_require__(/*! ./book-detail.component.less */ "./src/app/container/book-detail/book-detail.component.less")]
         }),
-        __metadata("design:paramtypes", [_core_http_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_core_http_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            ng_zorro_antd__WEBPACK_IMPORTED_MODULE_4__["NzMessageService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
     ], BookDetailComponent);
     return BookDetailComponent;
 }());
@@ -436,17 +473,21 @@ var ChapterComponent = /** @class */ (function () {
     ChapterComponent.prototype.getChapter = function (bookId, chapterId, type) {
         var _this = this;
         this.el.nativeElement.querySelector('.inner').style.transition = '';
+        var chapter = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('chapter' + bookId);
+        if (chapter && parseInt(chapterId, 10) === chapter.id) {
+            this.chapter = chapter;
+            this.adjustPageSize(type);
+            return;
+        }
         this.httpService.get('getChapter', { bookId: bookId, chapterId: chapterId })
             .subscribe(function (res) {
             _this.chapter = res;
-            if (type === 'next') {
-                _this.page = 0;
-            }
+            _this.page = 0;
             _this.adjustPageSize(type);
             if (!_this.chapter.content) {
                 _this.chapter.content = "\n\t\t\t<div>\u5F53\u524D\u7AE0\u8282\u6682\u65E0\u5185\u5BB9</div>";
             }
-            window.scrollTo(0, 0);
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('chapter' + bookId, _this.chapter);
             _this.location.replaceState("/book/" + bookId + "/" + chapterId);
         });
     };
