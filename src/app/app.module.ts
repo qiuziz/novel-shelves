@@ -24,7 +24,7 @@ registerLocaleData(zh);
     HttpClientModule,
     AppRoutingModule,
     NgZorroAntdModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },

@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "phantom": "phantomjs ./spider/utils/phantom.js",
+    "node_server": "PORT=8080 node ./spider/server.js",
+    "server": "concurrently \"phantomjs ./spider/utils/phantom.js\" \"PORT=8080 node ./spider/server.js\" ",
     "start": "ng serve --proxy-config proxy.conf.js --disable-host-check --host 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
