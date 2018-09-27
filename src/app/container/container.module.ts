@@ -9,6 +9,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { ChapterComponent } from './chapter/chapter.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
+import { TabbarComponent } from '../components/tabbar/tabbar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     CatalogComponent,
     ChapterComponent,
-    ContainerComponent
+    ContainerComponent,
+    TabbarComponent
   ],
   imports: [
     ContainerRoutingModule,
