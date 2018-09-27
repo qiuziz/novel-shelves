@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-20 18:31:33
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 22:04:30
+ * @Last Modified time: 2018-09-27 15:55:28
  */
 
 const request = require("../utils/request-promise");
@@ -23,22 +23,33 @@ function getBookCatalog(bookId) {
 
       let contents = [];
 
-      let dtCount = 0;
+      let dtCount = 0, main = false, step = 1; prev = null;
       dls.children().each((index, child) => {
         if (child.tagName === 'dt') {
-          dtCount++;
-        } else if (dtCount >= 2){
+          let dt = $(child);
+          if (dt.text().indexOf('最新章节') <= -1) {
+            main = true;
+          }
+        } else if (main){
+          if (dls.children()[index + 1] && dls.children()[index + 1].name === 'dt') {
+            step = 2;
+          }
           let dt = $(child)
             , url = $('a', dt).attr('href')
-            , id = book.id * 10;
+            , id = book.id * 10
+            , chapterId = id + index
+            , next = chapterId + step;
+
+          step = 1;
           contents.push({
-            id: id + index,
+            id: chapterId,
             bookId: book.id,
-            prev: index > 0 ? id + index - 1 : null,
-            next: id + index + 1,
+            prev: prev ? prev : null,
+            next: next,
             chapter: dt.text().trim(),
             url: 'https://www.qu.la' + url
           });
+          prev = chapterId;
         }
       })
       book.catalog = contents;

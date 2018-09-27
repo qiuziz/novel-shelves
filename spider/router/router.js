@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-23 12:16:09
+ * @Last Modified time: 2018-09-27 15:55:18
  */
 
 const express = require("express"),
@@ -47,12 +47,15 @@ router.get(`${basePrefix}/book/:id`, async (req, res) => {
     const findBook = await handleToMongoDB.find('book', {id});
     if (findBook) {
       book_detail = BOOK = findBook;
-      console.log(111);
     } else {
-      book_detail = BOOK = await getBook({
-        ...SEARCH_RESULTS.results.filter(book => book.id === id)[0],
-        ...SEARCH_RESULTS.urls.filter(book => book.id === id)[0]
-      });
+      book_detail = BOOK = await getBook(
+        SEARCH_RESULTS.results.length > 0 && SEARCH_RESULTS.urls > 0
+        ? {
+            ...SEARCH_RESULTS.results.filter(book => book.id === id)[0],
+            ...SEARCH_RESULTS.urls.filter(book => book.id === id)[0]
+          }
+        : {id: id, url: 'https://www.qu.la/book/' + id}
+        );
       handleToMongoDB.insert('book', book_detail);
     }
   }
@@ -68,16 +71,14 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
       res.send(catalog);
       return;
     }
-    if (BOOK.id === id && BOOK.catalog) {
+    if (BOOK.id === id && BOOK.catalog && BOOK.catalog.length > 0) {
         catalog = BOOK.catalog;
         res.send(catalog);
         return;
     }
-    const findBook = await handleToMongoDB.find('book', {id});
-    if (findBook.catalog && findBook.catalog.length > 0) {
-      BOOK = findBook;
-      console.log(222);
-    } else {
+    const findBook = await handleToMongoDB.findNode('book', {id});
+    BOOK = findBook
+    if (!(BOOK.catalog && BOOK.catalog.length > 0)) {
       BOOK = await getBookCatalog(id);
       handleToMongoDB.update('book', {id: BOOK.id}, {catalog: BOOK.catalog});
     }
@@ -111,7 +112,6 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
   if (findChapter) {
     if (findChapter.content) {
       chapter = CHAPTER = findChapter;
-      console.log(333);
     } else {
       const data = BOOK.catalog.filter(item => item.id === chapterId)[0];
       chapter = CHAPTER = await getChapter(data);

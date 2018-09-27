@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="btn">
-    <button nz-button nzType="primary">开始阅读</button>
+    <button nz-button nzType="primary" (click)="read()">开始阅读</button>
     <button nz-button nzType="default">加入书架</button>
     <button nz-button nzType="default" [routerLink]=" '/book/' + book.id + '/catalog'">查看目录</button>
   </div>

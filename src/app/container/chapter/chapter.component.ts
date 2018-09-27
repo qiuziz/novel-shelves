@@ -103,21 +103,24 @@ export class ChapterComponent implements OnInit, OnDestroy {
   getChapter(bookId, chapterId, type?: string): void {
     this.el.nativeElement.querySelector('.inner').style.transition = '';
 
+    const chapter = LocalStorage.getItem('chapter' + bookId);
+    if (chapter && parseInt(chapterId, 10) === chapter.id) {
+      this.chapter = chapter;
+      this.adjustPageSize(type);
+      return;
+    }
     this.httpService.get('getChapter', {bookId, chapterId})
       .subscribe(res => {
         this.chapter = res;
 
-        if (type === 'next') {
-          this.page =  0;
-        }
+        this.page =  0;
         this.adjustPageSize(type);
 
         if (!(<any>this.chapter).content) {
           (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
-        LocalStorage.setItem('chapter', this.chapter);
+        LocalStorage.setItem('chapter' + bookId, this.chapter);
 
-        window.scrollTo(0, 0);
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
       });
   }
