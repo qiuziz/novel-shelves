@@ -545,15 +545,13 @@ export class ShelvesComponent implements OnInit, OnDestroy {
 
   showDetail(event, book) {
     event.stopPropagation();
-    console.log(event);
-    this.visible = true;
-    this.drawerService.create<NzDrawerBodyComponent, {shelves: Array<object>}, Array<object>>({
+    this.drawerService.create<NzDrawerBodyComponent, {book: object}, object>({
       nzClosable: false,
       nzContent: NzDrawerBodyComponent,
       nzPlacement: 'bottom',
       nzHeight: 200,
       nzContentParams: {
-        shelves: this.shelves
+        book: book
       }
     });
   }
@@ -591,13 +589,13 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   template: `
     <div class="book-detail" >
       <div class="cover">
-        <img [src]="shelves[0].cover || ''" [alt]="shelves[0].name">
+        <img [src]="book.cover || ''" [alt]="book.name">
       </div>
       <div class="detail">
-        <div class="name">{{shelves[0].name}}</div>
-        <div class="info">{{shelves[0].author}}</div>
+        <div class="name">{{book.name}}</div>
+        <div class="info">{{book.author}}</div>
       </div>
-      <button nz-button class="btn">详情</button>
+      <button nz-button class="btn" (click)="goBook(book)">详情</button>
     </div>
     <ul class="book-options">
       <li>
@@ -616,14 +614,20 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   `
 })
 export class NzDrawerBodyComponent {
-  @Input() shelves = [{}];
+  @Input() book = {};
 
   constructor(
-    private drawerRef: NzDrawerRef<string>
+    private drawerRef: NzDrawerRef<string>,
+    private router: Router
   ) {
   }
 
   close(): void {
     this.drawerRef.close();
+  }
+
+  goBook(book: object): void {
+    this.close();
+    this.router.navigate([`/book/${(<any>book).id}`]);
   }
 }
