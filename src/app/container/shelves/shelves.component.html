@@ -1,0 +1,13 @@
+<div class="app-shelves">
+  <div class="list" (click)="reading(book)" *ngFor="let book of shelves; index as i">
+    <div class="cover">
+      <img [src]="book.cover || ''" [alt]="book.name">
+    </div>
+    <div class="detail">
+      <div class="name">{{book.name}}</div>
+      <i class="novel novel-config" (click)="showDetail($event, book)"></i>
+      <div class="info">{{book.category}} | {{book.author}} | {{book.state}}</div>
+      <div class="last-update">最新：{{book.lastChapter}}</div>
+    </div>
+  </div>
+</div>

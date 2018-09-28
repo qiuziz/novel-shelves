@@ -10,7 +10,7 @@ import { GlobalsService } from '../../common/globals.service';
 })
 export class TabbarComponent {
   tabs = [
-    {title: '书架', icon: 'shelf'},
+    {title: '书架', icon: 'shelf', path: '/shelves'},
     {title: '我的', icon: 'user'}
   ];
 

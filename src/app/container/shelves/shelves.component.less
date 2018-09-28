@@ -1,0 +1,134 @@
+  .list {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border-bottom: 1px solid #f0f1f2;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    .cover {
+      width: 3.375rem;
+      height: 4.5rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &:first-child {
+      margin-top: 10px;
+
+    }
+    .number {
+      flex: 0 0 40px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      background: #68aac2;
+      justify-content: center;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
+
+    .detail {
+      text-align: left;
+      width: calc(90% - 4.375rem);
+      margin-left: 1rem;
+      position: relative;
+
+      .name {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.4;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .info, .last-update {
+        font-size: .8rem;
+      }
+      .last-update {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .novel-config {
+        position: absolute;
+        right: -2rem;
+        top: 0;
+        width: 50px;
+        text-align: center;
+        height: 30px;
+      }
+    }
+  }
+    .book-options {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      justify-content: space-around;
+      margin: 1rem 0 0 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .novel-catalog {
+          font-weight: bold;
+        }
+
+        p {
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
+    }
+
+
+    .book-detail {
+      background: #F2F7FA;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      height: 5rem;
+
+      .cover {
+        width: 2.375rem;
+        height: 3rem;
+        margin: 0 0.5rem 0 1rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .detail {
+        .name {
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 1.4;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .info {
+          font-size: 12px;
+          color: #8C949F;
+        }
+      }
+
+      .btn {
+        position: absolute;
+        right: 1rem;
+        height: 25px;
+        font-size: 12px;
+        border-color: #e85c7b;
+        color: #e85c7b;
+      }
+    }
