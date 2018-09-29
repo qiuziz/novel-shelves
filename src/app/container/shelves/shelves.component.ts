@@ -598,7 +598,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
       <button nz-button class="btn" (click)="goBook(book)">详情</button>
     </div>
     <ul class="book-options">
-      <li>
+      <li (click)="goBookCatalog(book)">
         <i class="novel novel-catalog"></i>
         <p>目录</p>
       </li>
@@ -629,5 +629,10 @@ export class NzDrawerBodyComponent {
   goBook(book: object): void {
     this.close();
     this.router.navigate([`/book/${(<any>book).id}`]);
+  }
+
+  goBookCatalog(book: object): void {
+    this.close();
+    this.router.navigate([`/book/${(<any>book).id}/catalog`]);
   }
 }

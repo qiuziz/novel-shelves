@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-27 15:55:18
+ * @Last Modified time: 2018-09-29 10:48:34
  */
 
 const express = require("express"),
@@ -77,7 +77,10 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
         return;
     }
     const findBook = await handleToMongoDB.findNode('book', {id});
-    BOOK = findBook
+    BOOK = findBook;
+    if (!BOOK) {
+      BOOK = await getBook({id: id, url: 'https://www.qu.la/book/' + id});
+    }
     if (!(BOOK.catalog && BOOK.catalog.length > 0)) {
       BOOK = await getBookCatalog(id);
       handleToMongoDB.update('book', {id: BOOK.id}, {catalog: BOOK.catalog});

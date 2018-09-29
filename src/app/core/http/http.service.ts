@@ -42,9 +42,9 @@ export class HttpService {
   get(url, urlSearchParams, options?): Observable<any> {
     this.globals.loading = true;
     return this.http.request('GET', matchUrlSearchParams(Resource[url], urlSearchParams), { ...this.options, ...options })
-    .pipe(tap(() => setTimeout(() => {
+    .pipe(tap(() => {
       this.globals.loading = false;
-    })));
+    }));
   }
 
   post(url, urlSearchParams, bodyParams, options) {
