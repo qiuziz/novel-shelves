@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../core/http/http.service';
-import { LocalStorage } from '../../common/local-storage';
+import { HttpService } from '../../../core/http/http.service';
+import { LocalStorage } from '../../../common/local-storage';
 
 @Component({
   selector: 'app-catalog',

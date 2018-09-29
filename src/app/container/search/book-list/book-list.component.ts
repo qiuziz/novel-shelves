@@ -3,11 +3,11 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 18:16:48
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-19 21:30:54
+ * @Last Modified time: 2018-09-29 15:50:15
  */
 
 import { Component, Input } from '@angular/core';
-import { Novels } from '../../novels';
+import { Novels } from '../../../novels';
 import { Router } from '@angular/router';
 
 

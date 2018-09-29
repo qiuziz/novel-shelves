@@ -1,8 +1,8 @@
 import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { HttpService } from '../../core/http/http.service';
-import { LocalStorage } from '../../common/local-storage';
-import { touch, move, click } from '../../common/touch';
+import { HttpService } from '../../../core/http/http.service';
+import { LocalStorage } from '../../../common/local-storage';
+import { touch, move, click } from '../../../common/touch';
 import {Location} from '@angular/common';
 import { fromEvent } from 'rxjs';
 import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
