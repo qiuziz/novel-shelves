@@ -5,8 +5,9 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { ChapterComponent } from './chapter/chapter.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'search', pathMatch: 'full' },
   {
-    path: 'book/:id',
+    path: ':id',
       children: [
         {
           path: '',

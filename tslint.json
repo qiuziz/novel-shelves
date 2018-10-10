@@ -125,6 +125,30 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": true,
+    "directive-selector": [
+      true,
+      "attribute",
+      [
+        "app",
+        "passport",
+        "exception",
+        "layout",
+        "header"
+      ],
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      [
+        "app",
+        "passport",
+        "exception",
+        "layout",
+        "header"
+      ],
+      "kebab-case"
+    ]
   }
 }

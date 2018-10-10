@@ -12,6 +12,7 @@ import { ErrorInterceptor } from './core/http/error.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ContainerModule } from './container/container.module';
+import { LayoutModule } from './components/layout/layout.module';
 
 
 registerLocaleData(zh);
@@ -24,7 +25,6 @@ registerLocaleData(zh);
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ContainerModule,
     AppRoutingModule,
     SharedModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })

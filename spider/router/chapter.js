@@ -3,11 +3,11 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 17:18:55
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-27 15:55:30
+ * @Last Modified time: 2018-10-08 09:44:34
  */
 
 
-const request = require("../utils/request-promise");;
+const request = require("../utils/request-promise");
 
 function getBookContents(chapter) {
   if (!chapter) return {};

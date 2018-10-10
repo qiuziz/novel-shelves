@@ -3,18 +3,18 @@ import { HomeComponent } from './home.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { SearchRoutingModule } from './search-routing.module';
 import { SharedModule } from '@shared/shared.module';
-import { TabbarComponent } from '@components/tabbar/tabbar.component';
+import { LayoutModule } from '@components/layout/layout.module';
 
 const COMPONENTS = [
   HomeComponent,
-  BookListComponent,
-  TabbarComponent
+  BookListComponent
 ];
 
 @NgModule({
   imports: [
     SearchRoutingModule,
-    SharedModule
+    SharedModule,
+    LayoutModule
   ],
   declarations: [
     ...COMPONENTS
