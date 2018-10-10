@@ -388,7 +388,7 @@ var HttpService = /** @class */ (function () {
     }
     HttpService.prototype.get = function (url, urlSearchParams, options) {
         var _this = this;
-        this.globals.loading = true;
+        this.globals.loading = this.globals.loadOnce;
         return this.http.request('GET', matchUrlSearchParams(_resource_api__WEBPACK_IMPORTED_MODULE_3__["Resource"][url], urlSearchParams), __assign({}, this.options, options))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(function () {
             _this.globals.loading = false;

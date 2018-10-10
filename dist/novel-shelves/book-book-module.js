@@ -289,6 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _common_globals_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../common/globals.service */ "./src/app/common/globals.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -305,12 +306,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ChapterComponent = /** @class */ (function () {
-    function ChapterComponent(route, router, httpService, el, location) {
+    function ChapterComponent(route, router, httpService, el, globals, location) {
         this.route = route;
         this.router = router;
         this.httpService = httpService;
         this.el = el;
+        this.globals = globals;
         this.location = location;
         this.chapter = {};
         this.pageConfig = false;
@@ -332,8 +335,6 @@ var ChapterComponent = /** @class */ (function () {
         document.body.addEventListener('touchmove', function (e) {
             e.preventDefault(); // 阻止默认的处理方式(阻止下拉滑动的效果)
         }, { passive: false }); // passive 参数不能省略，用来兼容ios和android
-        this.book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book') || {};
-        document.title = this.book.name || 'NovelShelves';
         Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["fromEvent"])(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
             .subscribe(function (event) {
             _this.moveDistance = 0;
@@ -393,10 +394,12 @@ var ChapterComponent = /** @class */ (function () {
     ChapterComponent.prototype.getChapter = function (bookId, chapterId, type) {
         var _this = this;
         this.el.nativeElement.querySelector('.inner').style.transition = '';
-        var chapter = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('chapter' + bookId);
-        if (chapter && parseInt(chapterId, 10) === chapter.id) {
+        var chapter = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('chapter' + chapterId);
+        if (chapter && parseInt(chapterId, 10) === chapter.id && chapter.content) {
             this.chapter = chapter;
+            this.location.replaceState("/book/" + bookId + "/" + chapterId);
             this.adjustPageSize(type);
+            this.getNextChapter(bookId, this.chapter.next);
             return;
         }
         this.httpService.get('getChapter', { bookId: bookId, chapterId: chapterId })
@@ -407,8 +410,19 @@ var ChapterComponent = /** @class */ (function () {
             if (!_this.chapter.content) {
                 _this.chapter.content = "\n\t\t\t<div>\u5F53\u524D\u7AE0\u8282\u6682\u65E0\u5185\u5BB9</div>";
             }
-            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('chapter' + bookId, _this.chapter);
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('chapter' + chapterId, _this.chapter);
             _this.location.replaceState("/book/" + bookId + "/" + chapterId);
+            _this.getNextChapter(bookId, _this.chapter.next);
+        });
+    };
+    ChapterComponent.prototype.getNextChapter = function (bookId, chapterId) {
+        var _this = this;
+        this.globals.loadOnce = false;
+        this.httpService.get('getChapter', { bookId: bookId, chapterId: chapterId })
+            .subscribe(function (res) {
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('chapter' + chapterId, res);
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].removeItem('chapter' + (chapterId - 10));
+            _this.globals.loadOnce = true;
         });
     };
     ChapterComponent.prototype.changeFontSize = function (value) {
@@ -484,6 +498,7 @@ var ChapterComponent = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
             _core_http_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"],
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
+            _common_globals_service__WEBPACK_IMPORTED_MODULE_7__["GlobalsService"],
             _angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"]])
     ], ChapterComponent);
     return ChapterComponent;
@@ -680,7 +695,7 @@ var HttpService = /** @class */ (function () {
     }
     HttpService.prototype.get = function (url, urlSearchParams, options) {
         var _this = this;
-        this.globals.loading = true;
+        this.globals.loading = this.globals.loadOnce;
         return this.http.request('GET', matchUrlSearchParams(_resource_api__WEBPACK_IMPORTED_MODULE_3__["Resource"][url], urlSearchParams), __assign({}, this.options, options))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(function () {
             _this.globals.loading = false;

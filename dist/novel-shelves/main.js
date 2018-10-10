@@ -251,6 +251,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var GlobalsService = /** @class */ (function () {
     function GlobalsService() {
         this.loading = false;
+        this.loadOnce = true;
     }
     GlobalsService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
