@@ -40,7 +40,7 @@ export class HttpService {
    }
 
   get(url, urlSearchParams, options?): Observable<any> {
-    this.globals.loading = true;
+    this.globals.loading = this.globals.loadOnce;
     return this.http.request('GET', matchUrlSearchParams(Resource[url], urlSearchParams), { ...this.options, ...options })
     .pipe(tap(() => {
       this.globals.loading = false;

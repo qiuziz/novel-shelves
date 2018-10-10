@@ -6,6 +6,7 @@ import { touch, move, click } from '../../../common/touch';
 import {Location} from '@angular/common';
 import { fromEvent } from 'rxjs';
 import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
+import { GlobalsService } from '../../../common/globals.service';
 
 @Component({
   selector: 'app-chapter',
@@ -30,6 +31,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
     private router: Router,
     private httpService: HttpService,
     private el: ElementRef,
+    private globals: GlobalsService,
     private location: Location
    ) {   }
 
@@ -41,8 +43,6 @@ export class ChapterComponent implements OnInit, OnDestroy {
     document.body.addEventListener('touchmove', function (e) {
       e.preventDefault(); // 阻止默认的处理方式(阻止下拉滑动的效果)
     }, {passive: false}); // passive 参数不能省略，用来兼容ios和android
-    this.book = LocalStorage.getItem('book') || {};
-    document.title = (<any>this.book).name || 'NovelShelves';
 
     fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
     .subscribe(event => {
@@ -105,10 +105,14 @@ export class ChapterComponent implements OnInit, OnDestroy {
   getChapter(bookId, chapterId, type?: string): void {
     this.el.nativeElement.querySelector('.inner').style.transition = '';
 
-    const chapter = LocalStorage.getItem('chapter' + bookId);
-    if (chapter && parseInt(chapterId, 10) === chapter.id) {
+    const chapter = LocalStorage.getItem('chapter' + chapterId);
+    if (chapter && parseInt(chapterId, 10) === chapter.id && chapter.content) {
       this.chapter = chapter;
+      this.location.replaceState(`/book/${bookId}/${chapterId}`);
       this.adjustPageSize(type);
+
+      this.getNextChapter(bookId, (<any>this.chapter).next);
+
       return;
     }
     this.httpService.get('getChapter', {bookId, chapterId})
@@ -121,9 +125,21 @@ export class ChapterComponent implements OnInit, OnDestroy {
         if (!(<any>this.chapter).content) {
           (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
-        LocalStorage.setItem('chapter' + bookId, this.chapter);
+        LocalStorage.setItem('chapter' + chapterId, this.chapter);
 
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
+
+        this.getNextChapter(bookId, (<any>this.chapter).next);
+      });
+  }
+
+  getNextChapter(bookId, chapterId) {
+    this.globals.loadOnce = false;
+    this.httpService.get('getChapter', {bookId, chapterId})
+      .subscribe(res => {
+        LocalStorage.setItem('chapter' + chapterId, res);
+        LocalStorage.removeItem('chapter' + (chapterId - 10));
+        this.globals.loadOnce = true;
       });
   }
 
