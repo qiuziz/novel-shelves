@@ -31,14 +31,16 @@ export class ChapterComponent implements OnInit, OnDestroy {
     private httpService: HttpService,
     private el: ElementRef,
     private location: Location
-   ) { }
+   ) {   }
 
   ngOnInit() {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-
+    document.body.addEventListener('touchmove', function (e) {
+      e.preventDefault(); // 阻止默认的处理方式(阻止下拉滑动的效果)
+    }, {passive: false}); // passive 参数不能省略，用来兼容ios和android
     this.book = LocalStorage.getItem('book') || {};
     document.title = (<any>this.book).name || 'NovelShelves';
 

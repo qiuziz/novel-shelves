@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Location } from '@angular/common';
 import { NzMessageService } from 'ng-zorro-antd';
+import { TitleService } from '../../common/title.service';
 
 @Component({
   selector: 'layout-default',
@@ -19,8 +20,10 @@ export class LayoutComponent {
   constructor(
     router: Router,
     private _message: NzMessageService,
-    private location: Location
+    private location: Location,
+    private titleService: TitleService
   ) {
+    this.titleService.init();
     // scroll to top in change page
     router.events.subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {

@@ -3,12 +3,13 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 18:16:48
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-29 15:50:15
+ * @Last Modified time: 2018-10-10 16:22:40
  */
 
 import { Component, Input } from '@angular/core';
 import { Novels } from '../../../novels';
 import { Router } from '@angular/router';
+import { LocalStorage } from '../../../common/local-storage';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class BookListComponent {
   constructor(private router: Router) { }
 
   lookBookDetail(data): void {
+    LocalStorage.setItem('title', data.name);
     this.router.navigate([`/book/${data.id}`]);
   }
 

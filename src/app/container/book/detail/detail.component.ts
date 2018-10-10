@@ -27,12 +27,10 @@ export class BookDetailComponent implements OnInit {
     const book = LocalStorage.getItem('book') || {};
     if (book.id === parseInt(id, 10)) {
       this.book = book;
-      document.title = (<any>this.book).name;
     } else {
       this.httpService.get('getBook', {id}).subscribe(res => {
         this.book = res;
         LocalStorage.setItem('book', this.book);
-        document.title = (<any>this.book).name;
       });
     }
   }
