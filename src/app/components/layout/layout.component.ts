@@ -5,6 +5,7 @@ import {
   RouteConfigLoadStart,
   NavigationError,
 } from '@angular/router';
+import { Location } from '@angular/common';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -18,6 +19,7 @@ export class LayoutComponent {
   constructor(
     router: Router,
     private _message: NzMessageService,
+    private location: Location
   ) {
     // scroll to top in change page
     router.events.subscribe(evt => {

@@ -1,10 +1,13 @@
-<div class="app-header">
-  <div class="header">
-      <div *ngFor="let tab of tabs" [routerLink]="tab.path">
-          <div class="tab-icon">
-            <i class="{{'novel novel-' + tab.icon}}"></i>
-          </div>
-          <p>{{tab.title}}</p>
-        </div>
+<header class="header">
+  <a href="javascript:history.go(-1)" class="header-back">
+    <i class="novel novel-rightarrow"></i>
+  </a>
+  <h1 class="header-back-title">修炼狂潮</h1>
+
+  <div class="header-operate">
+    <a href="javascript:" class="icon icon-more" title="更多">
+      <i class="novel novel-more"></i>
+    </a>
   </div>
-</div>
+
+</header>
