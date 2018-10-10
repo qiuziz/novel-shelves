@@ -1,0 +1,10 @@
+<div class="app-tabbar">
+  <div class="tabbar">
+      <div *ngFor="let tab of tabs" [routerLink]="tab.path">
+          <div class="tab-icon">
+            <i class="{{'novel novel-' + tab.icon}}"></i>
+          </div>
+          <p>{{tab.title}}</p>
+        </div>
+  </div>
+</div>
