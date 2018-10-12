@@ -176,7 +176,7 @@ var HeaderComponent = /** @class */ (function () {
     }
     Object.defineProperty(HeaderComponent.prototype, "title", {
         get: function () {
-            return _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('title');
+            return _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('headerTitle');
         },
         enumerable: true,
         configurable: true

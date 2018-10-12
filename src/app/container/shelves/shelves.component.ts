@@ -36,7 +36,9 @@ export class ShelvesComponent implements OnInit, OnDestroy {
     private message: NzMessageService,
     private drawerService: NzDrawerService,
     private location: Location
-   ) { }
+   ) {
+     LocalStorage.setItem('headerTitle', '书架');
+   }
 
   ngOnInit() {
     this.getShelvesBook();

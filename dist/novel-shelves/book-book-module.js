@@ -218,6 +218,7 @@ var CatalogComponent = /** @class */ (function () {
         this.bookCatalog = [];
         this.bookId = '';
         this.book = {};
+        _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('headerTitle', '目录');
     }
     CatalogComponent.prototype.ngOnInit = function () {
         this.bookId = this.route.snapshot.params['id'];

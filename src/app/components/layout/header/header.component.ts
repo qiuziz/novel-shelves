@@ -11,7 +11,7 @@ import { LocalStorage } from '../../../common/local-storage';
 })
 export class HeaderComponent implements OnInit {
   public get title() {
-    return LocalStorage.getItem('title');
+    return LocalStorage.getItem('headerTitle');
   }
 
   constructor(private httpService: HttpService, private globals: GlobalsService) { }

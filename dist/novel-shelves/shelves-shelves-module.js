@@ -165,6 +165,7 @@ var ShelvesComponent = /** @class */ (function () {
             margin: 0,
             padding: 0,
         };
+        _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('headerTitle', '书架');
     }
     ShelvesComponent.prototype.ngOnInit = function () {
         this.getShelvesBook();

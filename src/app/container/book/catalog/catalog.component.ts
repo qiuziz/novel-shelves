@@ -12,7 +12,9 @@ export class CatalogComponent implements OnInit {
   bookCatalog = [];
   bookId = '';
   book = {};
-  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService) {
+    LocalStorage.setItem('headerTitle', '目录');
+   }
 
   ngOnInit() {
     this.bookId = this.route.snapshot.params['id'];
