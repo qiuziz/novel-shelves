@@ -88,7 +88,7 @@ var BookListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-content\">\n  <div class=\"main\" >\n    <div class=\"logo\">\n      <h1>Novel</h1>\n    </div>\n    <div class=\"search\">\n      <nz-input-group nzSearch nzSize=\"large\" [nzSuffix]=\"suffixIconButton\">\n        <input type=\"text\"\n          [(ngModel)]=\"value\"\n          nz-input\n          placeholder=\"输入书籍名称或作者名搜索\"\n          (keydown.enter)=\"onEnter($event)\"\n          (focus)=\"searchFocus($event)\">\n      </nz-input-group>\n      <ng-template #suffixIconButton>\n        <button nz-button\n          nzType=\"primary\"\n          nzSize=\"large\"\n          (click)=\"search()\"\n          nzSearch>\n          <i class=\"anticon anticon-search\"></i>\n        </button>\n      </ng-template>\n    </div>\n    <div class=\"result\">\n        <app-book-list [bookList]=\"bookList\"></app-book-list>\n    </div>\n  </div>\n  <app-tabbar></app-tabbar>\n</div>\n"
+module.exports = "<div class=\"app-content\">\n  <div class=\"main\" >\n    <div class=\"logo\">\n      <h1>Novel</h1>\n    </div>\n    <div class=\"search\">\n      <nz-input-group nzSearch nzSize=\"large\" [nzSuffix]=\"suffixIconButton\">\n        <input type=\"text\"\n          [(ngModel)]=\"value\"\n          nz-input\n          #searchInput\n          placeholder=\"输入书籍名称或作者名搜索\"\n          (keydown.enter)=\"onEnter($event)\"\n          (focus)=\"searchFocus($event)\">\n      </nz-input-group>\n      <ng-template #suffixIconButton>\n        <button nz-button\n          nzType=\"primary\"\n          nzSize=\"large\"\n          (click)=\"search()\"\n          nzSearch>\n          <i class=\"anticon anticon-search\"></i>\n        </button>\n      </ng-template>\n    </div>\n    <div class=\"result\">\n        <app-book-list [bookList]=\"bookList\"></app-book-list>\n    </div>\n  </div>\n  <app-tabbar></app-tabbar>\n</div>\n"
 
 /***/ }),
 
@@ -116,6 +116,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _core_http_http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core/http/http.service */ "./src/app/core/http/http.service.ts");
 /* harmony import */ var _common_globals_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/globals.service */ "./src/app/common/globals.service.ts");
+/* harmony import */ var _common_local_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/local-storage */ "./src/app/common/local-storage.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -128,6 +129,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(httpService, globals) {
         this.httpService = httpService;
@@ -135,11 +137,15 @@ var HomeComponent = /** @class */ (function () {
         this.bookList = [];
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.bookList = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('bookList') || [];
+        this.value = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('serachKey');
     };
     HomeComponent.prototype.search = function () {
         var _this = this;
         this.httpService.get('search', { name: this.value }).subscribe(function (res) {
             _this.bookList = res;
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('bookList', res);
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('serachKey', _this.value);
         });
     };
     HomeComponent.prototype.searchFocus = function () {
@@ -147,7 +153,12 @@ var HomeComponent = /** @class */ (function () {
     };
     HomeComponent.prototype.onEnter = function (event) {
         this.search();
+        this.searchInput.nativeElement.blur();
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('searchInput'),
+        __metadata("design:type", Object)
+    ], HomeComponent.prototype, "searchInput", void 0);
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-home',

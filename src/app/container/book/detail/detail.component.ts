@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '@core/http/http.service';
 import { LocalStorage } from '../../../common/local-storage';
@@ -12,6 +12,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class BookDetailComponent implements OnInit {
   book = {};
   chapter = {};
+
   constructor(
     private httpService: HttpService,
     private router: Router,
@@ -53,5 +54,21 @@ export class BookDetailComponent implements OnInit {
           }
         });
     }
+  }
+
+  addShelves() {
+    const book = LocalStorage.getItem('book');
+    if (book.isAdd) {
+      return;
+    }
+    this.httpService.get('addShelves', {bookId: book.id})
+      .subscribe(res => {
+        if (res.status) {
+          this.message.error(res.msg);
+        } else {
+          this.book = res;
+          LocalStorage.setItem('book', this.book);
+        }
+      });
   }
 }

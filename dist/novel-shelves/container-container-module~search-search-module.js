@@ -552,7 +552,9 @@ var Resource = {
     search: SERVICE_NAME + "/search/:name",
     getBook: SERVICE_NAME + "/book/:id",
     getBookCatalog: SERVICE_NAME + "/catalog/:id",
-    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId"
+    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId",
+    addShelves: SERVICE_NAME + "/addShelves/:bookId",
+    getShelvesBook: SERVICE_NAME + "/getShelvesBook"
 };
 
 

@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-29 10:48:34
+ * @Last Modified time: 2018-10-12 15:15:06
  */
 
 const express = require("express"),
@@ -44,7 +44,7 @@ router.get(`${basePrefix}/book/:id`, async (req, res) => {
   } else if (BOOK.id === id) {
     book_detail = BOOK;
   } else {
-    const findBook = await handleToMongoDB.find('book', {id});
+    const findBook = await handleToMongoDB.findOne('book', {id});
     if (findBook) {
       book_detail = BOOK = findBook;
     } else {
@@ -76,7 +76,7 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
         res.send(catalog);
         return;
     }
-    const findBook = await handleToMongoDB.findNode('book', {id});
+    const findBook = await handleToMongoDB.findOne('book', {id});
     BOOK = findBook;
     if (!BOOK) {
       BOOK = await getBook({id: id, url: 'https://www.qu.la/book/' + id});
@@ -88,6 +88,42 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
     catalog = BOOK.catalog;
     NEXT_START = 0;
     res.send(catalog);
+});
+
+// 将小说加入书架
+router.get(`${basePrefix}/addShelves/:id`, async (req, res) => {
+    const id = parseInt(req.params.id);
+    let result = {status: 1, msg: '操作失败'};
+    if (isNaN(id)) {
+      res.send(result);
+      return;
+    }
+    if (BOOK.id === id && BOOK.catalog && BOOK.catalog.length > 0) {
+        BOOK.isAdd = 1;
+        handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
+        res.send(BOOK);
+        return;
+    }
+    const findBook = await handleToMongoDB.findOne('book', {id});
+    BOOK = findBook;
+    if (!BOOK) {
+      BOOK = await getBook({id: id, url: 'https://www.qu.la/book/' + id});
+    }
+    if (!(BOOK.catalog && BOOK.catalog.length > 0)) {
+      BOOK = await getBookCatalog(id);
+      BOOK.isAdd = 1;
+      handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
+    }
+    res.send(BOOK);
+});
+
+// 查询书架
+router.get(`${basePrefix}/getShelvesBook`, async (req, res) => {
+    let result = [];
+
+    result = await handleToMongoDB.find('book', {isAdd: 1});
+
+    res.send(result);
 });
 
 // 根据小说id和章节id获取章节内容
@@ -104,14 +140,14 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
     return;
   }
   if (!BOOK.id) {
-    const book = await handleToMongoDB.find('book', {id: bookId});
+    const book = await handleToMongoDB.findOne('book', {id: bookId});
     if (book) {
       BOOK = book;
     } else {
       BOOK = await getBookCatalog(bookId);
     }
   }
-  const findChapter = await handleToMongoDB.find(bookId.toString(), {id: chapterId});
+  const findChapter = await handleToMongoDB.findOne(bookId.toString(), {id: chapterId});
   if (findChapter) {
     if (findChapter.content) {
       chapter = CHAPTER = findChapter;

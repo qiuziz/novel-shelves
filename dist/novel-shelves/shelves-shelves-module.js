@@ -155,7 +155,7 @@ var ShelvesComponent = /** @class */ (function () {
         this.drawerService = drawerService;
         this.location = location;
         // tslint:disable-next-line:max-line-length
-        this.shelves = [];
+        this.shelves = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('shelves') || [];
         this.visible = true;
         this.bookOptions = {
             display: 'flex',
@@ -167,6 +167,14 @@ var ShelvesComponent = /** @class */ (function () {
         };
     }
     ShelvesComponent.prototype.ngOnInit = function () {
+        this.getShelvesBook();
+    };
+    ShelvesComponent.prototype.getShelvesBook = function () {
+        var _this = this;
+        this.httpService.get('getShelvesBook').subscribe(function (res) {
+            _this.shelves = res;
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('shelves', res);
+        });
     };
     ShelvesComponent.prototype.showDetail = function (event, book) {
         event.stopPropagation();
@@ -453,7 +461,9 @@ var Resource = {
     search: SERVICE_NAME + "/search/:name",
     getBook: SERVICE_NAME + "/book/:id",
     getBookCatalog: SERVICE_NAME + "/catalog/:id",
-    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId"
+    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId",
+    addShelves: SERVICE_NAME + "/addShelves/:bookId",
+    getShelvesBook: SERVICE_NAME + "/getShelvesBook"
 };
 
 

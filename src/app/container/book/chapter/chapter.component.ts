@@ -76,7 +76,6 @@ export class ChapterComponent implements OnInit, OnDestroy {
           if (!this.pageConfig) {
             this.pageSetting = false;
           }
-          document.body.style.overflow = this.pageConfig ? 'hidden' : '';
         } else if (this.isClickLeftTop(x, y)) {
           console.log('点击屏幕左上');
           this.next('prev');
@@ -108,6 +107,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
     const chapter = LocalStorage.getItem('chapter' + chapterId);
     if (chapter && parseInt(chapterId, 10) === chapter.id && chapter.content) {
       this.chapter = chapter;
+      LocalStorage.setItem('chapter' + bookId, this.chapter);
       this.location.replaceState(`/book/${bookId}/${chapterId}`);
       this.adjustPageSize(type);
 

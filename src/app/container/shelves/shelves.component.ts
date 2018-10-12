@@ -15,7 +15,7 @@ import { NzMessageService, NzDrawerService, NzDrawerRef } from 'ng-zorro-antd';
 })
 export class ShelvesComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:max-line-length
-  shelves = [];
+  shelves = LocalStorage.getItem('shelves') || [];
   visible = true;
   @ViewChild('drawerTitle') drawerTitle;
   @ViewChild('drawerBody') drawerBody;
@@ -39,7 +39,14 @@ export class ShelvesComponent implements OnInit, OnDestroy {
    ) { }
 
   ngOnInit() {
+    this.getShelvesBook();
+  }
 
+  getShelvesBook() {
+    this.httpService.get('getShelvesBook').subscribe(res => {
+      this.shelves = res;
+      LocalStorage.setItem('shelves', res);
+    });
   }
 
   showDetail(event, book) {

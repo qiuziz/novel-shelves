@@ -8,6 +8,7 @@
         <input type="text"
           [(ngModel)]="value"
           nz-input
+          #searchInput
           placeholder="输入书籍名称或作者名搜索"
           (keydown.enter)="onEnter($event)"
           (focus)="searchFocus($event)">

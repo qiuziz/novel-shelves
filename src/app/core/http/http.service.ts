@@ -39,7 +39,7 @@ export class HttpService {
     this.options = {headers: this.headers};
    }
 
-  get(url, urlSearchParams, options?): Observable<any> {
+  get(url, urlSearchParams?, options?): Observable<any> {
     this.globals.loading = this.globals.loadOnce;
     return this.http.request('GET', matchUrlSearchParams(Resource[url], urlSearchParams), { ...this.options, ...options })
     .pipe(tap(() => {

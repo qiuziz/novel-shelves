@@ -366,7 +366,6 @@ var ChapterComponent = /** @class */ (function () {
                 if (!_this.pageConfig) {
                     _this.pageSetting = false;
                 }
-                document.body.style.overflow = _this.pageConfig ? 'hidden' : '';
             }
             else if (_this.isClickLeftTop(x, y)) {
                 console.log('点击屏幕左上');
@@ -397,6 +396,7 @@ var ChapterComponent = /** @class */ (function () {
         var chapter = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('chapter' + chapterId);
         if (chapter && parseInt(chapterId, 10) === chapter.id && chapter.content) {
             this.chapter = chapter;
+            _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('chapter' + bookId, this.chapter);
             this.location.replaceState("/book/" + bookId + "/" + chapterId);
             this.adjustPageSize(type);
             this.getNextChapter(bookId, this.chapter.next);
@@ -515,7 +515,7 @@ var ChapterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"book-detail\">\n  <div class=\"info\">\n    <img class=\"cover\" [src]=\"book.cover || ''\" alt=\"{{book.name}}\">\n    <div class=\"cell\">\n      <h2 class=\"title\">{{book.name}}</h2>\n      <p class=\"author book-meta\">{{book.author}}</p>\n      <p class=\"category book-meta\">{{book.category}}</p>\n      <p class=\"state book-meta\">{{book.state}}</p>\n    </div>\n  </div>\n  <div class=\"btn\">\n    <button nz-button nzType=\"primary\" (click)=\"read()\">开始阅读</button>\n    <button nz-button nzType=\"default\">加入书架</button>\n    <button nz-button nzType=\"default\" [routerLink]=\" '/book/' + book.id + '/catalog'\">查看目录</button>\n  </div>\n  <div class=\"intro\" [innerHTML]=\"book.intro\">\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"book-detail\">\n  <div class=\"info\">\n    <img class=\"cover\" [src]=\"book.cover || ''\" alt=\"{{book.name}}\">\n    <div class=\"cell\">\n      <h2 class=\"title\">{{book.name}}</h2>\n      <p class=\"author book-meta\">{{book.author}}</p>\n      <p class=\"category book-meta\">{{book.category}}</p>\n      <p class=\"state book-meta\">{{book.state}}</p>\n    </div>\n  </div>\n  <div class=\"btn\">\n    <button nz-button nzType=\"primary\" (click)=\"read()\">开始阅读</button>\n    <button #shelvesBtn nz-button nzType=\"default\" (click)=\"addShelves()\" [disabled]=\"book.isAdd\">{{book.isAdd ? '已在书架' : '加入书架'}}</button>\n    <button nz-button nzType=\"default\" [routerLink]=\" '/book/' + book.id + '/catalog'\">查看目录</button>\n  </div>\n  <div class=\"intro\" [innerHTML]=\"book.intro\">\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -606,6 +606,23 @@ var BookDetailComponent = /** @class */ (function () {
                 }
             });
         }
+    };
+    BookDetailComponent.prototype.addShelves = function () {
+        var _this = this;
+        var book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book');
+        if (book.isAdd) {
+            return;
+        }
+        this.httpService.get('addShelves', { bookId: book.id })
+            .subscribe(function (res) {
+            if (res.status) {
+                _this.message.error(res.msg);
+            }
+            else {
+                _this.book = res;
+                _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('book', _this.book);
+            }
+        });
     };
     BookDetailComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -760,7 +777,9 @@ var Resource = {
     search: SERVICE_NAME + "/search/:name",
     getBook: SERVICE_NAME + "/book/:id",
     getBookCatalog: SERVICE_NAME + "/catalog/:id",
-    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId"
+    getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId",
+    addShelves: SERVICE_NAME + "/addShelves/:bookId",
+    getShelvesBook: SERVICE_NAME + "/getShelvesBook"
 };
 
 
