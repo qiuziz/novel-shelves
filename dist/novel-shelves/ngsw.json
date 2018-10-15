@@ -11,12 +11,12 @@
         "/2.145adf68b88d918ce97d.js",
         "/3.ab2b8057fb4cdcd7f020.js",
         "/4.bd582d94deddc98dd7fc.js",
-        "/common.7630307b9f82693816a8.js",
+        "/common.072fba518c85aff049f1.js",
         "/favicon.ico",
         "/index.html",
         "/main.176d397ec28d708d5318.js",
         "/polyfills.ab7a98aee75aa25d9edb.js",
-        "/runtime.10953b7a66cb1cd3499d.js",
+        "/runtime.6377730886f5f692305a.js",
         "/styles.6ec83b603a73ce0a518f.css"
       ],
       "patterns": [
@@ -46,7 +46,7 @@
         "\\/.*",
         "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
-      "strategy": "freshness",
+      "strategy": "performance",
       "maxSize": 100,
       "maxAge": 2592000000,
       "timeoutMs": 10000,
@@ -65,12 +65,12 @@
     "/assets/icons/icon-192x192.png": "c0e78fd60eaa57d24cf49047c97a0c5902e786e1",
     "/assets/icons/icon-72x72.png": "d01d77648e01ea0f5a98295b35a5063b4364f67c",
     "/assets/icons/icon-96x96.png": "9d71d404fbd05ae76eab7a2ea91785352be565ed",
-    "/common.7630307b9f82693816a8.js": "69c8529fea652d4c3f788d1e0e975eed5ee7c4ee",
+    "/common.072fba518c85aff049f1.js": "6317b220162aedba8a5b1c71f9c535684a6e7c40",
     "/favicon.ico": "ed90fc98263e94e4bd6d0e2a1940db5647e6654f",
-    "/index.html": "9a7e225f536f91c0ea4830f743df8239237a8c25",
+    "/index.html": "7c0c5ca4d7ff9228d08aebc9ea7ce868b974a136",
     "/main.176d397ec28d708d5318.js": "af30cc06163acec20e9cfe820b800f827e4222e5",
     "/polyfills.ab7a98aee75aa25d9edb.js": "536eeff3d8dc48a589dfbc75c69cb75d6b4d346d",
-    "/runtime.10953b7a66cb1cd3499d.js": "ac4b832aabd3afdc65c86932fa5ef59cec339ec3",
+    "/runtime.6377730886f5f692305a.js": "f6dc502bdf28e7726e066075475c71c85fc0b1bb",
     "/styles.6ec83b603a73ce0a518f.css": "847836f01d06f3911206f3b331d43813277b4422"
   },
   "navigationUrls": [

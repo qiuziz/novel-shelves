@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-10-10 16:08:43
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-10 16:48:04
+ * @Last Modified time: 2018-10-15 17:05:50
  */
 
 
@@ -40,7 +40,7 @@ export class TitleService {
       filter((route) => route.outlet === 'primary'),
       mergeMap((route) => route.data),
       map((data) => {
-        return (data.title === 'LocalStorage' ? LocalStorage.getItem('title') : data.title) || APP_TITLE;
+        return ((data.title && data.title === 'LocalStorage') ? LocalStorage.getItem('title') : data.title) || APP_TITLE;
       })
     ).subscribe(title => {
       console.log(title);
