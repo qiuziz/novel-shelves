@@ -3,14 +3,12 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-10-10 16:08:43
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 17:05:50
+ * @Last Modified time: 2018-10-15 17:14:09
  */
 
 
 import { Injectable } from '@angular/core';
-
 import { filter, map, mergeMap } from 'rxjs/operators';
-
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LocalStorage } from './local-storage';
