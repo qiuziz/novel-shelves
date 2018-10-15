@@ -333,9 +333,8 @@ var ChapterComponent = /** @class */ (function () {
         var bookId = this.route.snapshot.params['id'], chapterId = this.route.snapshot.params['chapterId'];
         this.getChapter(bookId, chapterId);
         document.body.style.backgroundColor = '#c4b395';
-        document.body.addEventListener('touchmove', function (e) {
-            e.preventDefault(); // 阻止默认的处理方式(阻止下拉滑动的效果)
-        }, { passive: false }); // passive 参数不能省略，用来兼容ios和android
+        this.bindPreventMove = function (e) { e.preventDefault(); };
+        document.body.addEventListener('touchmove', this.bindPreventMove, { passive: false }); // passive 参数不能省略，用来兼容ios和android
         Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["fromEvent"])(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
             .subscribe(function (event) {
             _this.moveDistance = 0;
@@ -488,6 +487,7 @@ var ChapterComponent = /** @class */ (function () {
     };
     ChapterComponent.prototype.ngOnDestroy = function () {
         document.body.style.backgroundColor = '';
+        document.body.removeEventListener('touchmove', this.bindPreventMove);
     };
     ChapterComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

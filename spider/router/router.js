@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 10:55:30
+ * @Last Modified time: 2018-10-15 11:16:43
  */
 
 const express = require("express"),
@@ -173,7 +173,7 @@ async function getLastFive(chapter) {
   NEXT_START = chapter.next + 4;
   for (let i = chapter.next; i <= NEXT_START; i++) {
     const nextChapter = BOOK.catalog.filter(item => item.id === i)[0];
-    const findChapter = await handleToMongoDB.findOne(BOOK.id.toString(), {id: chapterId});
+    const findChapter = await handleToMongoDB.findOne(BOOK.id.toString(), {id: chapter.id});
     if (findChapter) {
       return;
     }

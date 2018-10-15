@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked, HostListener, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { HttpService } from '../../../core/http/http.service';
 import { LocalStorage } from '../../../common/local-storage';
@@ -25,6 +25,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   moveStart = 0;
   moveDistance = 0;
   book = {};
+  bindPreventMove;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,9 +41,8 @@ export class ChapterComponent implements OnInit, OnDestroy {
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
     document.body.style.backgroundColor = '#c4b395';
-    document.body.addEventListener('touchmove', function (e) {
-      e.preventDefault(); // 阻止默认的处理方式(阻止下拉滑动的效果)
-    }, {passive: false}); // passive 参数不能省略，用来兼容ios和android
+    this.bindPreventMove = (e: Event) => { e.preventDefault(); };
+    document.body.addEventListener('touchmove', this.bindPreventMove, {passive: false}); // passive 参数不能省略，用来兼容ios和android
 
     fromEvent(this.el.nativeElement.querySelector('.chapter'), 'touchstart')
     .subscribe(event => {
@@ -212,5 +212,6 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     document.body.style.backgroundColor = '';
+    document.body.removeEventListener('touchmove', this.bindPreventMove);
   }
 }
