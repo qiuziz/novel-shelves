@@ -15,7 +15,7 @@ import { Book, Chapter } from '@common/ts-type';
   styleUrls: ['./chapter.component.less']
 })
 export class ChapterComponent implements OnInit, OnDestroy {
-  chapter: Chapter;
+  chapter: Chapter = {};
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
@@ -25,7 +25,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   transformX = 0;
   moveStart = 0;
   moveDistance = 0;
-  book: Book;
+  book: Book = {};
   bindPreventMove;
 
   constructor(
