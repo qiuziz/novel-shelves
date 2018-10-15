@@ -11,7 +11,7 @@
           #searchInput
           placeholder="输入书籍名称或作者名搜索"
           (keydown.enter)="onEnter($event)"
-          (focus)="searchFocus($event)">
+          (focus)="searchFocus()">
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button nz-button

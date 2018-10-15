@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '@core/http/http.service';
 import { LocalStorage } from '../../../common/local-storage';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Book, Chapter } from '@common/ts-type';
 
 @Component({
   selector: 'app-detail',
@@ -10,8 +11,8 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./detail.component.less']
 })
 export class BookDetailComponent implements OnInit {
-  book = {};
-  chapter = {};
+  book: Book;
+  chapter: Chapter;
 
   constructor(
     private httpService: HttpService,

@@ -7,7 +7,7 @@ import { GlobalsService } from './common/globals.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements AfterViewChecked {
-  constructor(private changeRef: ChangeDetectorRef, private globals: GlobalsService) { }
+  constructor(private changeRef: ChangeDetectorRef, public globals: GlobalsService) { }
 
   ngAfterViewChecked() {
     this.changeRef.detectChanges();

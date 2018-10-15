@@ -20,7 +20,7 @@ export class LayoutComponent {
   constructor(
     router: Router,
     private _message: NzMessageService,
-    private location: Location,
+    public location: Location,
     private titleService: TitleService
   ) {
     this.titleService.init();

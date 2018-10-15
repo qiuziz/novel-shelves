@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 11:44:26
+ * @Last Modified time: 2018-10-15 15:41:40
  */
 
 const express = require("express"),
@@ -136,6 +136,22 @@ router.get(`${basePrefix}/shelves/:type/:id`, async (req, res) => {
 
 // 查询书架
 router.get(`${basePrefix}/getShelvesBook`, async (req, res) => {
+    let result = [];
+
+    result = await handleToMongoDB.find('book', {isAdd: 1});
+
+    res.send(result);
+});
+
+// 缓存全部章节
+router.get(`${basePrefix}/download/:id`, async (req, res) => {
+    const id = parseInt(req.params.id);
+    let book;
+    if (BOOK.id === id && BOOK.catalog && BOOK.catalog.length > 0) {
+      book = BOOK;
+    } else {
+      book = await handleToMongoDB.findOne('book', {id});
+    }
     let result = [];
 
     result = await handleToMongoDB.find('book', {isAdd: 1});

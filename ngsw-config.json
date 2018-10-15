@@ -3,12 +3,16 @@
   "assetGroups": [{
     "name": "app",
     "installMode": "prefetch",
+    "updateMode": "prefetch",
     "resources": {
       "files": [
         "/favicon.ico",
         "/index.html",
         "/*.css",
         "/*.js"
+      ],
+      "urls": [
+        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css"
       ]
     }
   }, {
@@ -24,7 +28,7 @@
   "dataGroups": [{
     "name": "data",
     "urls": [
-      "/api"
+      "/**"
     ],
     "cacheConfig": {
       "maxSize": 100,

@@ -1,12 +1,10 @@
 import { Component, OnInit, ElementRef, OnDestroy, AfterViewChecked, HostListener, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { HttpService } from '../../core/http/http.service';
-import { LocalStorage } from '../../common/local-storage';
-import { touch, move, click } from '../../common/touch';
+import { LocalStorage } from '@common/local-storage';
 import {Location} from '@angular/common';
-import { fromEvent } from 'rxjs';
-import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
 import { NzMessageService, NzDrawerService, NzDrawerRef } from 'ng-zorro-antd';
+import { Book } from '@common/ts-type';
 
 @Component({
   selector: 'app-shelves',
@@ -124,7 +122,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   `
 })
 export class NzDrawerBodyComponent {
-  @Input() book = {};
+  @Input() book: Book;
 
   constructor(
     private drawerRef: NzDrawerRef<string>,

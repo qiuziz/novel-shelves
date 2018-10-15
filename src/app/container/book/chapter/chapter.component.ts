@@ -7,6 +7,7 @@ import {Location} from '@angular/common';
 import { fromEvent } from 'rxjs';
 import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
 import { GlobalsService } from '../../../common/globals.service';
+import { Book, Chapter } from '@common/ts-type';
 
 @Component({
   selector: 'app-chapter',
@@ -14,7 +15,7 @@ import { GlobalsService } from '../../../common/globals.service';
   styleUrls: ['./chapter.component.less']
 })
 export class ChapterComponent implements OnInit, OnDestroy {
-  chapter = {};
+  chapter: Chapter;
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
@@ -24,7 +25,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   transformX = 0;
   moveStart = 0;
   moveDistance = 0;
-  book = {};
+  book: Book;
   bindPreventMove;
 
   constructor(
