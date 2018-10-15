@@ -12,7 +12,8 @@
         "/*.js"
       ],
       "urls": [
-        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css"
+        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css",
+        "https://www.qu.la/BookFiles/BookImages/**"
       ]
     }
   }, {
@@ -34,7 +35,7 @@
       "maxSize": 100,
       "maxAge": "30d",
       "timeout": "10s",
-      "strategy": "performance"
+      "strategy": "freshness"
     }
   }]
 }

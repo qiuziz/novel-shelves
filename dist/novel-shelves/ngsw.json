@@ -20,7 +20,8 @@
         "/styles.6ec83b603a73ce0a518f.css"
       ],
       "patterns": [
-        "\\/at\\.alicdn\\.com\\/t\\/font_845368_m5p2iqjbzyt\\.css"
+        "\\/at\\.alicdn\\.com\\/t\\/font_845368_m5p2iqjbzyt\\.css",
+        "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ]
     },
     {
@@ -45,7 +46,7 @@
       "patterns": [
         "\\/.*"
       ],
-      "strategy": "performance",
+      "strategy": "freshness",
       "maxSize": 100,
       "maxAge": 2592000000,
       "timeoutMs": 10000,
