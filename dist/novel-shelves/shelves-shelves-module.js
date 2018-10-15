@@ -109,7 +109,7 @@ module.exports = "<div class=\"app-shelves\">\n  <div class=\"list\" (click)=\"r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".list {\n  display: flex;\n  align-items: center;\n  justify-content: left;\n  border-bottom: 1px solid #f0f1f2;\n  width: 90%;\n  margin: 0 auto;\n  padding: 10px;\n}\n.list .cover {\n  width: 3.375rem;\n  height: 4.5rem;\n}\n.list .cover img {\n  width: 100%;\n  height: 100%;\n}\n.list:first-child {\n  margin-top: 10px;\n}\n.list .number {\n  flex: 0 0 40px;\n  height: 50px;\n  display: flex;\n  align-items: center;\n  background: #68aac2;\n  justify-content: center;\n  margin-right: 10px;\n  border-radius: 8px;\n}\n.list .detail {\n  text-align: left;\n  width: calc(90% - 4.375rem);\n  margin-left: 1rem;\n  position: relative;\n}\n.list .detail .name {\n  font-size: 16px;\n  font-weight: bold;\n  line-height: 1.4;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.list .detail .info,\n.list .detail .last-update {\n  font-size: 0.8rem;\n}\n.list .detail .last-update {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.list .detail .novel-config {\n  position: absolute;\n  right: -2rem;\n  top: 0;\n  width: 50px;\n  text-align: center;\n  height: 30px;\n}\n.book-options {\n  display: flex;\n  list-style: none;\n  align-items: center;\n  justify-content: space-around;\n  margin: 1rem 0 0 0;\n  padding: 0;\n}\n.book-options li {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.book-options li .novel-catalog {\n  font-weight: bold;\n}\n.book-options li p {\n  font-size: 12px;\n  font-weight: 300;\n}\n.book-detail {\n  background: #F2F7FA;\n  display: flex;\n  align-items: center;\n  justify-content: left;\n  height: 5rem;\n}\n.book-detail .cover {\n  width: 2.375rem;\n  height: 3rem;\n  margin: 0 0.5rem 0 1rem;\n}\n.book-detail .cover img {\n  width: 100%;\n  height: 100%;\n}\n.book-detail .detail .name {\n  font-size: 16px;\n  font-weight: bold;\n  line-height: 1.4;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.book-detail .detail .info {\n  font-size: 12px;\n  color: #8C949F;\n}\n.book-detail .btn {\n  position: absolute;\n  right: 1rem;\n  height: 25px;\n  font-size: 12px;\n  border-color: #e85c7b;\n  color: #e85c7b;\n}\n.empty {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #c5b6b6;\n  font-size: 1rem;\n}\n"
+module.exports = ".list {\n  display: flex;\n  align-items: center;\n  justify-content: left;\n  border-bottom: 1px solid #f0f1f2;\n  width: 90%;\n  margin: 0 auto;\n  padding: 10px;\n}\n.list .cover {\n  width: 3.375rem;\n  height: 4.5rem;\n}\n.list .cover img {\n  width: 100%;\n  height: 100%;\n}\n.list:first-child {\n  margin-top: 10px;\n}\n.list .number {\n  flex: 0 0 40px;\n  height: 50px;\n  display: flex;\n  align-items: center;\n  background: #68aac2;\n  justify-content: center;\n  margin-right: 10px;\n  border-radius: 8px;\n}\n.list .detail {\n  text-align: left;\n  width: calc(90% - 4.375rem);\n  margin-left: 1rem;\n  position: relative;\n}\n.list .detail .name {\n  font-size: 16px;\n  font-weight: bold;\n  line-height: 1.4;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.list .detail .info,\n.list .detail .last-update {\n  font-size: 0.8rem;\n}\n.list .detail .last-update {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.list .detail .novel-config {\n  position: absolute;\n  right: -2rem;\n  top: 0;\n  width: 50px;\n  text-align: center;\n  height: 30px;\n}\n.book-options {\n  display: flex;\n  list-style: none;\n  align-items: center;\n  justify-content: space-around;\n  margin: 1rem 0 0 0;\n  padding: 0;\n}\n.book-options li {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.book-options li .novel-catalog {\n  font-weight: bold;\n}\n.book-options li p {\n  font-size: 12px;\n  font-weight: 300;\n}\n.book-detail {\n  background: #F2F7FA;\n  display: flex;\n  align-items: center;\n  justify-content: left;\n  height: 5rem;\n  z-index: 90;\n}\n.book-detail .cover {\n  width: 2.375rem;\n  height: 3rem;\n  margin: 0 0.5rem 0 1rem;\n}\n.book-detail .cover img {\n  width: 100%;\n  height: 100%;\n}\n.book-detail .detail .name {\n  font-size: 16px;\n  font-weight: bold;\n  line-height: 1.4;\n  overflow: hidden;\n  white-space: nowrap;\n  text-overflow: ellipsis;\n}\n.book-detail .detail .info {\n  font-size: 12px;\n  color: #8C949F;\n}\n.book-detail .btn {\n  position: absolute;\n  right: 1rem;\n  height: 25px;\n  font-size: 12px;\n  border-color: #e85c7b;\n  color: #e85c7b;\n}\n.empty {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #c5b6b6;\n  font-size: 1rem;\n}\n"
 
 /***/ }),
 
@@ -154,8 +154,6 @@ var ShelvesComponent = /** @class */ (function () {
         this.message = message;
         this.drawerService = drawerService;
         this.location = location;
-        // tslint:disable-next-line:max-line-length
-        this.shelves = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('shelves') || [];
         this.visible = true;
         this.bookOptions = {
             display: 'flex',
@@ -167,13 +165,19 @@ var ShelvesComponent = /** @class */ (function () {
         };
         _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('headerTitle', '书架');
     }
+    Object.defineProperty(ShelvesComponent.prototype, "shelves", {
+        // tslint:disable-next-line:max-line-length
+        get: function () {
+            return _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('shelves') || [];
+        },
+        enumerable: true,
+        configurable: true
+    });
     ShelvesComponent.prototype.ngOnInit = function () {
         this.getShelvesBook();
     };
     ShelvesComponent.prototype.getShelvesBook = function () {
-        var _this = this;
         this.httpService.get('getShelvesBook').subscribe(function (res) {
-            _this.shelves = res;
             _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('shelves', res);
         });
     };
@@ -184,6 +188,7 @@ var ShelvesComponent = /** @class */ (function () {
             nzContent: NzDrawerBodyComponent,
             nzPlacement: 'bottom',
             nzHeight: 200,
+            nzZIndex: 90,
             nzContentParams: {
                 book: book
             }
@@ -241,8 +246,10 @@ var ShelvesComponent = /** @class */ (function () {
 }());
 
 var NzDrawerBodyComponent = /** @class */ (function () {
-    function NzDrawerBodyComponent(drawerRef, router) {
+    function NzDrawerBodyComponent(drawerRef, message, httpService, router) {
         this.drawerRef = drawerRef;
+        this.message = message;
+        this.httpService = httpService;
         this.router = router;
         this.book = {};
     }
@@ -257,6 +264,21 @@ var NzDrawerBodyComponent = /** @class */ (function () {
         this.close();
         this.router.navigate(["/book/" + book.id + "/catalog"]);
     };
+    NzDrawerBodyComponent.prototype.delete = function (book) {
+        var _this = this;
+        this.httpService.get('shelvesOptions', { type: 'delete', bookId: book.id })
+            .subscribe(function (res) {
+            if (res.status) {
+                _this.message.error(res.msg);
+            }
+            else {
+                _this.close();
+                _this.httpService.get('getShelvesBook').subscribe(function (shelves) {
+                    _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('shelves', shelves);
+                });
+            }
+        });
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
@@ -265,9 +287,11 @@ var NzDrawerBodyComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-drawer-body',
             styles: [__webpack_require__(/*! ./shelves.component.less */ "./src/app/container/shelves/shelves.component.less")],
-            template: "\n    <div class=\"book-detail\" >\n      <div class=\"cover\">\n        <img [src]=\"book.cover || ''\" [alt]=\"book.name\">\n      </div>\n      <div class=\"detail\">\n        <div class=\"name\">{{book.name}}</div>\n        <div class=\"info\">{{book.author}}</div>\n      </div>\n      <button nz-button class=\"btn\" (click)=\"goBook(book)\">\u8BE6\u60C5</button>\n    </div>\n    <ul class=\"book-options\">\n      <li (click)=\"goBookCatalog(book)\">\n        <i class=\"novel novel-catalog\"></i>\n        <p>\u76EE\u5F55</p>\n      </li>\n      <li>\n        <i class=\"novel novel-download\"></i>\n        <p>\u7F13\u5B58</p>\n      </li>\n      <li>\n        <i class=\"novel novel-delete\"></i>\n        <p>\u5220\u9664</p>\n      </li>\n    </ul>\n  "
+            template: "\n    <div class=\"book-detail\" >\n      <div class=\"cover\">\n        <img [src]=\"book.cover || ''\" [alt]=\"book.name\">\n      </div>\n      <div class=\"detail\">\n        <div class=\"name\">{{book.name}}</div>\n        <div class=\"info\">{{book.author}}</div>\n      </div>\n      <button nz-button class=\"btn\" (click)=\"goBook(book)\">\u8BE6\u60C5</button>\n    </div>\n    <ul class=\"book-options\">\n      <li (click)=\"goBookCatalog(book)\">\n        <i class=\"novel novel-catalog\"></i>\n        <p>\u76EE\u5F55</p>\n      </li>\n      <li>\n        <i class=\"novel novel-download\"></i>\n        <p>\u7F13\u5B58</p>\n      </li>\n      <li (click)=\"delete(book)\">\n        <i class=\"novel novel-delete\"></i>\n        <p>\u5220\u9664</p>\n      </li>\n    </ul>\n  "
         }),
         __metadata("design:paramtypes", [ng_zorro_antd__WEBPACK_IMPORTED_MODULE_5__["NzDrawerRef"],
+            ng_zorro_antd__WEBPACK_IMPORTED_MODULE_5__["NzMessageService"],
+            _core_http_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], NzDrawerBodyComponent);
     return NzDrawerBodyComponent;
@@ -463,7 +487,7 @@ var Resource = {
     getBook: SERVICE_NAME + "/book/:id",
     getBookCatalog: SERVICE_NAME + "/catalog/:id",
     getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId",
-    addShelves: SERVICE_NAME + "/addShelves/:bookId",
+    shelvesOptions: SERVICE_NAME + "/shelves/:type/:bookId",
     getShelvesBook: SERVICE_NAME + "/getShelvesBook"
 };
 

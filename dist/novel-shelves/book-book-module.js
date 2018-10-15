@@ -615,7 +615,7 @@ var BookDetailComponent = /** @class */ (function () {
         if (book.isAdd) {
             return;
         }
-        this.httpService.get('addShelves', { bookId: book.id })
+        this.httpService.get('shelvesOptions', { type: 'add', bookId: book.id })
             .subscribe(function (res) {
             if (res.status) {
                 _this.message.error(res.msg);
@@ -780,7 +780,7 @@ var Resource = {
     getBook: SERVICE_NAME + "/book/:id",
     getBookCatalog: SERVICE_NAME + "/catalog/:id",
     getChapter: SERVICE_NAME + "/chapter/:bookId/:chapterId",
-    addShelves: SERVICE_NAME + "/addShelves/:bookId",
+    shelvesOptions: SERVICE_NAME + "/shelves/:type/:bookId",
     getShelvesBook: SERVICE_NAME + "/getShelvesBook"
 };
 
