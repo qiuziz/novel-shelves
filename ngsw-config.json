@@ -12,8 +12,7 @@
         "/*.js"
       ],
       "urls": [
-        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css",
-        "https://www.qu.la/BookFiles/BookImages/**"
+        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css"
       ]
     }
   }, {
@@ -29,7 +28,8 @@
   "dataGroups": [{
     "name": "data",
     "urls": [
-      "/**"
+      "/**",
+      "https://www.qu.la/BookFiles/BookImages/**"
     ],
     "cacheConfig": {
       "maxSize": 100,
