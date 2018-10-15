@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 17:18:55
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-08 09:44:34
+ * @Last Modified time: 2018-10-15 10:56:37
  */
 
 
@@ -17,7 +17,6 @@ function getBookContents(chapter) {
     let chapterContent = $('#content');
       $(chapterContent).children().remove('script,div');
 
-    // saveToDB(chapterContent.html());
     result = {
       id: chapter.id,
       bookId: chapter.bookId,

@@ -17,7 +17,9 @@ export class BookDetailComponent implements OnInit {
     private httpService: HttpService,
     private router: Router,
     private message: NzMessageService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      LocalStorage.setItem('headerTitle', '详情');
+    }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
@@ -57,7 +59,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   addShelves() {
-    const book = LocalStorage.getItem('book');
+    const book = LocalStorage.getItem('book') || {};
     if (book.isAdd) {
       return;
     }

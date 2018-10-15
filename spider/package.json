@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "async": "^2.6.1",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
     "mongodb": "^3.1.4",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sleep": "^5.2.3"
   }
 }

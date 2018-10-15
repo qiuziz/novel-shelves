@@ -568,6 +568,7 @@ var BookDetailComponent = /** @class */ (function () {
         this.route = route;
         this.book = {};
         this.chapter = {};
+        _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].setItem('headerTitle', '详情');
     }
     BookDetailComponent.prototype.ngOnInit = function () {
         var id = this.route.snapshot.params['id'];
@@ -610,7 +611,7 @@ var BookDetailComponent = /** @class */ (function () {
     };
     BookDetailComponent.prototype.addShelves = function () {
         var _this = this;
-        var book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book');
+        var book = _common_local_storage__WEBPACK_IMPORTED_MODULE_3__["LocalStorage"].getItem('book') || {};
         if (book.isAdd) {
             return;
         }

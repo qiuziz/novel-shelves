@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-12 15:15:06
+ * @Last Modified time: 2018-10-15 10:55:30
  */
 
 const express = require("express"),
@@ -12,6 +12,7 @@ const express = require("express"),
     search = require('./search-novel.js'),
     getBook = require('./book'),
     getChapter = require('./chapter'),
+    getAllchapter = require('./getAllchapter'),
     getBookCatalog = require('./catalog');
 
 // 路由前缀
@@ -49,7 +50,7 @@ router.get(`${basePrefix}/book/:id`, async (req, res) => {
       book_detail = BOOK = findBook;
     } else {
       book_detail = BOOK = await getBook(
-        SEARCH_RESULTS.results.length > 0 && SEARCH_RESULTS.urls > 0
+        SEARCH_RESULTS.results.length > 0 && SEARCH_RESULTS.urls.length > 0
         ? {
             ...SEARCH_RESULTS.results.filter(book => book.id === id)[0],
             ...SEARCH_RESULTS.urls.filter(book => book.id === id)[0]
@@ -76,7 +77,7 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
         res.send(catalog);
         return;
     }
-    const findBook = await handleToMongoDB.findOne('book', {id});
+    const findBook = await handleToMongoDB.findOneNode('book', {id});
     BOOK = findBook;
     if (!BOOK) {
       BOOK = await getBook({id: id, url: 'https://www.qu.la/book/' + id});
@@ -102,6 +103,7 @@ router.get(`${basePrefix}/addShelves/:id`, async (req, res) => {
         BOOK.isAdd = 1;
         handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
         res.send(BOOK);
+        getAllchapter(BOOK.id);
         return;
     }
     const findBook = await handleToMongoDB.findOne('book', {id});
@@ -115,6 +117,7 @@ router.get(`${basePrefix}/addShelves/:id`, async (req, res) => {
       handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
     }
     res.send(BOOK);
+    getAllchapter(BOOK.id);
 });
 
 // 查询书架
@@ -169,7 +172,11 @@ async function getLastFive(chapter) {
   if (NEXT_START > 0 && NEXT_START >= chapter.next) return;
   NEXT_START = chapter.next + 4;
   for (let i = chapter.next; i <= NEXT_START; i++) {
-    let nextChapter = BOOK.catalog.filter(item => item.id === i)[0];
+    const nextChapter = BOOK.catalog.filter(item => item.id === i)[0];
+    const findChapter = await handleToMongoDB.findOne(BOOK.id.toString(), {id: chapterId});
+    if (findChapter) {
+      return;
+    }
     let result = await getChapter(nextChapter);
     handleToMongoDB.insert(result.bookId.toString(), {...result, _id:result.id});
   }
