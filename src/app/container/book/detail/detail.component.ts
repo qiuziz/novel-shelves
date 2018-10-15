@@ -63,7 +63,7 @@ export class BookDetailComponent implements OnInit {
     if (book.isAdd) {
       return;
     }
-    this.httpService.get('addShelves', {bookId: book.id})
+    this.httpService.get('shelvesOptions', {type: 'add', bookId: book.id})
       .subscribe(res => {
         if (res.status) {
           this.message.error(res.msg);

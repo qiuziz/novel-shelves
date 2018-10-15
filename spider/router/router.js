@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 11:16:43
+ * @Last Modified time: 2018-10-15 11:44:26
  */
 
 const express = require("express"),
@@ -92,18 +92,26 @@ router.get(`${basePrefix}/catalog/:id`, async (req, res) => {
 });
 
 // 将小说加入书架
-router.get(`${basePrefix}/addShelves/:id`, async (req, res) => {
-    const id = parseInt(req.params.id);
+router.get(`${basePrefix}/shelves/:type/:id`, async (req, res) => {
+    const type = req.params.type, id = parseInt(req.params.id);
     let result = {status: 1, msg: '操作失败'};
     if (isNaN(id)) {
       res.send(result);
       return;
     }
+    if (type !== 'add' && type !== 'delete') {
+      res.send(result);
+      return;
+    }
+    if (type === 'add' && BOOK.isAdd) {
+      res.send({status: 1, msg: '已在书架'});
+      return;
+    }
     if (BOOK.id === id && BOOK.catalog && BOOK.catalog.length > 0) {
-        BOOK.isAdd = 1;
+        BOOK.isAdd = type === 'add' ? 1 : 0;
         handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
         res.send(BOOK);
-        getAllchapter(BOOK.id);
+        type === 'add' && getAllchapter(BOOK.id);
         return;
     }
     const findBook = await handleToMongoDB.findOne('book', {id});
@@ -111,13 +119,19 @@ router.get(`${basePrefix}/addShelves/:id`, async (req, res) => {
     if (!BOOK) {
       BOOK = await getBook({id: id, url: 'https://www.qu.la/book/' + id});
     }
+    if (type === 'add' && BOOK.isAdd) {
+      res.send({status: 1, msg: '已在书架'});
+      return;
+    }
     if (!(BOOK.catalog && BOOK.catalog.length > 0)) {
       BOOK = await getBookCatalog(id);
-      BOOK.isAdd = 1;
-      handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
     }
+
+    BOOK.isAdd = type === 'add' ? 1 : 0;
+    handleToMongoDB.update('book', {id: BOOK.id}, BOOK);
+
     res.send(BOOK);
-    getAllchapter(BOOK.id);
+    type === 'add' && getAllchapter(BOOK.id);
 });
 
 // 查询书架

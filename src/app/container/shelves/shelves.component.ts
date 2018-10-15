@@ -15,7 +15,9 @@ import { NzMessageService, NzDrawerService, NzDrawerRef } from 'ng-zorro-antd';
 })
 export class ShelvesComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:max-line-length
-  shelves = LocalStorage.getItem('shelves') || [];
+  public get shelves() {
+    return LocalStorage.getItem('shelves') || [];
+  }
   visible = true;
   @ViewChild('drawerTitle') drawerTitle;
   @ViewChild('drawerBody') drawerBody;
@@ -46,7 +48,6 @@ export class ShelvesComponent implements OnInit, OnDestroy {
 
   getShelvesBook() {
     this.httpService.get('getShelvesBook').subscribe(res => {
-      this.shelves = res;
       LocalStorage.setItem('shelves', res);
     });
   }
@@ -58,6 +59,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
       nzContent: NzDrawerBodyComponent,
       nzPlacement: 'bottom',
       nzHeight: 200,
+      nzZIndex: 90,
       nzContentParams: {
         book: book
       }
@@ -114,7 +116,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
         <i class="novel novel-download"></i>
         <p>缓存</p>
       </li>
-      <li>
+      <li (click)="delete(book)">
         <i class="novel novel-delete"></i>
         <p>删除</p>
       </li>
@@ -126,6 +128,8 @@ export class NzDrawerBodyComponent {
 
   constructor(
     private drawerRef: NzDrawerRef<string>,
+    private message: NzMessageService,
+    private httpService: HttpService,
     private router: Router
   ) {
   }
@@ -142,5 +146,19 @@ export class NzDrawerBodyComponent {
   goBookCatalog(book: object): void {
     this.close();
     this.router.navigate([`/book/${(<any>book).id}/catalog`]);
+  }
+
+  delete(book) {
+    this.httpService.get('shelvesOptions', {type: 'delete', bookId: book.id})
+    .subscribe(res => {
+      if (res.status) {
+        this.message.error(res.msg);
+      } else {
+        this.close();
+        this.httpService.get('getShelvesBook').subscribe(shelves => {
+          LocalStorage.setItem('shelves', shelves);
+        });
+      }
+    });
   }
 }

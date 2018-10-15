@@ -11,7 +11,7 @@ export const Resource: Object = {
   getBook: `${SERVICE_NAME}/book/:id`,
   getBookCatalog: `${SERVICE_NAME}/catalog/:id`,
   getChapter: `${SERVICE_NAME}/chapter/:bookId/:chapterId`,
-  addShelves: `${SERVICE_NAME}/addShelves/:bookId`,
+  shelvesOptions: `${SERVICE_NAME}/shelves/:type/:bookId`,
   getShelvesBook: `${SERVICE_NAME}/getShelvesBook`
 };
 
