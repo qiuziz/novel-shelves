@@ -43,8 +43,8 @@
     {
       "name": "data",
       "patterns": [
-        "\\/api\\/.*",
-        "\\/BookImages\\/.*"
+        "\\/.*",
+        "\\/!index\\.html"
       ],
       "strategy": "performance",
       "maxSize": 100,

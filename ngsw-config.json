@@ -28,8 +28,8 @@
   "dataGroups": [{
     "name": "data",
     "urls": [
-      "/api/**",
-      "/BookImages/**"
+      "/**",
+      "!index.html"
     ],
     "cacheConfig": {
       "maxSize": 100,
