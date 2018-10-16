@@ -19,7 +19,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
-  day = false;
+  day = LocalStorage.getItem('day') || false;
   page = LocalStorage.getItem('page') || 0;
   pageSize = 0;
   transformX = 0;
@@ -168,6 +168,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.el.nativeElement.querySelector('.page-header').style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
     document.body.style.color = this.day ? 'rgba(255,255,255,.5)' : '#33373d';
     this.el.nativeElement.querySelector('.page-header').style.color = this.day ? 'rgba(255,255,255,.5)' : 'rgba(0,0,0,.4)';
+    LocalStorage.setItem('day', this.day);
   }
 
   next(type?: string) {
