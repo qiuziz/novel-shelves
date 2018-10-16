@@ -41,7 +41,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
-    document.body.style.backgroundColor = '#c4b395';
+    document.body.style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
     this.bindPreventMove = (e: Event) => { e.preventDefault(); };
     document.body.addEventListener('touchmove', this.bindPreventMove, {passive: false}); // passive 参数不能省略，用来兼容ios和android
 
