@@ -43,7 +43,7 @@
     {
       "name": "data",
       "patterns": [
-        "\\/.*",
+        "\\/api\\/.*",
         "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
       "strategy": "performance",
