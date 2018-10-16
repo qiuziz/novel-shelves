@@ -28,7 +28,8 @@
   "dataGroups": [{
     "name": "data",
     "urls": [
-      "/**"
+      "/**",
+      "https://www.qu.la/BookFiles/BookImages/**"
     ],
     "cacheConfig": {
       "maxSize": 100,

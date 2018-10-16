@@ -43,7 +43,8 @@
     {
       "name": "data",
       "patterns": [
-        "\\/.*"
+        "\\/.*",
+        "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
       "strategy": "performance",
       "maxSize": 100,
