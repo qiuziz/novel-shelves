@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 15:41:40
+ * @Last Modified time: 2018-10-16 16:13:05
  */
 
 const express = require("express"),
@@ -122,9 +122,6 @@ router.get(`${basePrefix}/shelves/:type/:id`, async (req, res) => {
     if (type === 'add' && BOOK.isAdd) {
       res.send({status: 1, msg: '已在书架'});
       return;
-    }
-    if (!(BOOK.catalog && BOOK.catalog.length > 0)) {
-      BOOK = await getBookCatalog(id);
     }
 
     BOOK.isAdd = type === 'add' ? 1 : 0;

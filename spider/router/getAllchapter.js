@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-15 17:42:12
+ * @Last Modified time: 2018-10-16 16:17:35
  */
 
 const
@@ -34,13 +34,13 @@ async function getAllchapter(id) {
 }
 
 async function getFiveChapter(data, callback) {
-  const chapter = await handleToMongoDB.findOneNode(chapter.bookId.toString(), {id: chapterId});
+  const chapter = await handleToMongoDB.findOneNode(data.bookId.toString(), {id: data.id});
   if (chapter) {
     callback(null, data.title);
     return;
   }
   let result = await getChapter(data);
-  result && handleToMongoDB.insert(chapter.bookId.toString(), {...result, _id: result.id});
+  result && handleToMongoDB.insert(data.bookId.toString(), {...result, _id: result.id});
   callback(null, data.title);
 }
 
