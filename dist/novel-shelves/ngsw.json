@@ -44,7 +44,7 @@
       "name": "data",
       "patterns": [
         "\\/api\\/.*",
-        "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
+        "\\/BookImages\\/.*"
       ],
       "strategy": "performance",
       "maxSize": 100,

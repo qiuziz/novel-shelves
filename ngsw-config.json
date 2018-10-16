@@ -29,7 +29,7 @@
     "name": "data",
     "urls": [
       "/api/**",
-      "https://www.qu.la/BookFiles/BookImages/**"
+      "/BookImages/**"
     ],
     "cacheConfig": {
       "maxSize": 100,
