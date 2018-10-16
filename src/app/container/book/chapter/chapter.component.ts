@@ -41,7 +41,9 @@ export class ChapterComponent implements OnInit, OnDestroy {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
-    document.body.style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
+
+    this.changeStyle();
+
     this.bindPreventMove = (e: Event) => { e.preventDefault(); };
     document.body.addEventListener('touchmove', this.bindPreventMove, {passive: false}); // passive 参数不能省略，用来兼容ios和android
 
@@ -164,11 +166,15 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   dayNight() {
     this.day = !this.day;
+    this.changeStyle();
+    LocalStorage.setItem('day', this.day);
+  }
+
+  changeStyle() {
     document.body.style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
     this.el.nativeElement.querySelector('.page-header').style.backgroundColor = this.day ? '#1a1a1a' : '#c4b395';
     document.body.style.color = this.day ? 'rgba(255,255,255,.5)' : '#33373d';
     this.el.nativeElement.querySelector('.page-header').style.color = this.day ? 'rgba(255,255,255,.5)' : 'rgba(0,0,0,.4)';
-    LocalStorage.setItem('day', this.day);
   }
 
   next(type?: string) {
