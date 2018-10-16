@@ -14,7 +14,7 @@
         "/common.1d9ffcf7a89191fd7f63.js",
         "/favicon.ico",
         "/index.html",
-        "/main.e011f24b83974da03b25.js",
+        "/main.394716166bd1758e3a66.js",
         "/polyfills.ab7a98aee75aa25d9edb.js",
         "/runtime.30210627a6cc44076375.js",
         "/styles.6ec83b603a73ce0a518f.css"
@@ -43,7 +43,7 @@
     {
       "name": "data",
       "patterns": [
-        "\\/.*",
+        "\\/api\\/.*",
         "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
       "strategy": "performance",
@@ -67,8 +67,8 @@
     "/assets/icons/icon-96x96.png": "9d71d404fbd05ae76eab7a2ea91785352be565ed",
     "/common.1d9ffcf7a89191fd7f63.js": "ee15c1db77c10654611fa526f1477e87e9a36e95",
     "/favicon.ico": "ed90fc98263e94e4bd6d0e2a1940db5647e6654f",
-    "/index.html": "215d6c713f544e0cadaddaf2ec475b9ced1a598a",
-    "/main.e011f24b83974da03b25.js": "af30cc06163acec20e9cfe820b800f827e4222e5",
+    "/index.html": "a7a454aebdc61d7cc206981e82dd26f8904a6035",
+    "/main.394716166bd1758e3a66.js": "cf3f382a2f297cec6f9205e05d78807b49ccf987",
     "/polyfills.ab7a98aee75aa25d9edb.js": "536eeff3d8dc48a589dfbc75c69cb75d6b4d346d",
     "/runtime.30210627a6cc44076375.js": "2999b68044a255d4af74bfc9afb0448a328ec6c7",
     "/styles.6ec83b603a73ce0a518f.css": "847836f01d06f3911206f3b331d43813277b4422"
