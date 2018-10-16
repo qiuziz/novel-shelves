@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('searchInput') searchInput;
   constructor(
     private httpService: HttpService,
-    private globals: GlobalsService) { }
+    private globals: GlobalsService) {
+      LocalStorage.setItem('headerTitle', '搜索');
+    }
 
   ngOnInit() {
     this.bookList = LocalStorage.getItem('bookList') || [];

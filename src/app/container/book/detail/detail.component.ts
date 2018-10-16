@@ -11,7 +11,7 @@ import { Book, Chapter } from '@common/ts-type';
   styleUrls: ['./detail.component.less']
 })
 export class BookDetailComponent implements OnInit {
-  book: Book;
+  book: Book = {isAdd: 0};
   chapter: Chapter;
 
   constructor(

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Novels } from '../../../novels';
-import { HttpService } from '../../../core/http/http.service';
-import { GlobalsService } from '../../../common/globals.service';
 import { LocalStorage } from '../../../common/local-storage';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'layout-header',
@@ -14,11 +13,19 @@ export class HeaderComponent implements OnInit {
     return LocalStorage.getItem('headerTitle');
   }
 
-  constructor(private httpService: HttpService, private globals: GlobalsService) { }
+  public get noHeaderBack() {
+    return this.location.path() !== '/shelves';
+  }
+
+  constructor(private router: Router, public location: Location) { }
 
   ngOnInit() {
     // const book = LocalStorage.getItem('book') || {};
     // this.title = book.name || '';
+  }
+
+  search() {
+    this.router.navigate([`/search`]);
   }
 
 }

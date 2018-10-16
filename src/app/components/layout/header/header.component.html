@@ -1,11 +1,14 @@
 <header class="header">
-  <a href="javascript:history.go(-1)" class="header-back">
+  <a href="javascript:history.go(-1)" *ngIf="noHeaderBack" class="header-back">
     <i class="novel novel-rightarrow"></i>
   </a>
-  <h1 class="header-back-title">{{title}}</h1>
+  <h1 class="header-back-title" [ngClass]="{'no-back': !noHeaderBack}">{{title}}</h1>
 
   <div class="header-operate">
-    <a href="javascript:" class="icon icon-more" title="更多">
+    <a href="javascript:" class="icon" title="搜索" (click)="search()">
+        <i class="anticon anticon-search"></i>
+    </a>
+    <a href="javascript:" class="icon" title="更多">
       <i class="novel novel-more"></i>
     </a>
   </div>

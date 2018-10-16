@@ -5,7 +5,6 @@ import {
   RouteConfigLoadStart,
   NavigationError,
 } from '@angular/router';
-import { Location } from '@angular/common';
 import { NzMessageService } from 'ng-zorro-antd';
 import { TitleService } from '../../common/title.service';
 
@@ -19,8 +18,7 @@ export class LayoutComponent {
 
   constructor(
     router: Router,
-    private _message: NzMessageService,
-    public location: Location,
+    private message: NzMessageService,
     private titleService: TitleService
   ) {
     this.titleService.init();
@@ -31,7 +29,7 @@ export class LayoutComponent {
       }
       if (evt instanceof NavigationError) {
         this.isFetching = false;
-        _message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+        this.message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
         return;
       }
       if (!(evt instanceof NavigationEnd)) {

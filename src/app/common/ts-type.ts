@@ -8,7 +8,7 @@ export class Book {
   author?: string;
   category?: string;
   state?: string;
-  isAdd?: string;
+  isAdd?: number;
   catalog?: object[];
 }
 
