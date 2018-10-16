@@ -381,6 +381,10 @@ MIT
 date-fns is licensed under the [MIT license](http://kossnocorp.mit-license.org).
 Read more about MIT at [TLDRLegal](https://tldrlegal.com/license/mit-license).
 
+@angular/service-worker@6.1.8
+MIT
+MIT
+
 @angular/forms@6.1.6
 MIT
 MIT

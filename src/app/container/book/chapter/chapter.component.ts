@@ -27,6 +27,10 @@ export class ChapterComponent implements OnInit, OnDestroy {
   moveDistance = 0;
   book: Book = {};
   bindPreventMove;
+  maskTitle = '';
+  progressSet = false;
+  catalog = [];
+  currentChapter = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +45,8 @@ export class ChapterComponent implements OnInit, OnDestroy {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
     this.getChapter(bookId, chapterId);
+
+    this.getBookCatalog(bookId);
 
     this.changeStyle();
 
@@ -136,6 +142,16 @@ export class ChapterComponent implements OnInit, OnDestroy {
       });
   }
 
+  getBookCatalog(bookId) {
+    const book = LocalStorage.getItem('book') || {};
+    if (!(book.catalog && book.catalog.length > 0)) {
+      this.httpService.get('getBookCatalog', {id: bookId})
+      .subscribe(res => {
+        this.catalog = res;
+      });
+    }
+  }
+
   getNextChapter(bookId, chapterId) {
     this.globals.loadOnce = false;
     this.httpService.get('getChapter', {bookId, chapterId})
@@ -152,8 +168,15 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.adjustPageSize();
   }
 
+  changeProgress(value) {
+    const bookId = this.route.snapshot.params['id'];
+    this.getChapter(bookId, this.catalog[value].id);
+  }
+
+
   pageSet(event) {
     this.pageSetting = !this.pageSetting;
+    this.progressSet = false;
   }
 
   goCatalog() {

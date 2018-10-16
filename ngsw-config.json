@@ -10,9 +10,6 @@
         "/index.html",
         "/*.css",
         "/*.js"
-      ],
-      "urls": [
-        "at.alicdn.com/t/font_845368_m5p2iqjbzyt.css"
       ]
     }
   }, {
@@ -22,6 +19,9 @@
     "resources": {
       "files": [
         "/assets/**"
+      ],
+      "urls": [
+        "https://at.alicdn.com/t/font_845368_m5p2iqjbzyt.css"
       ]
     }
   }],

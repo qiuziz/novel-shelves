@@ -5,6 +5,7 @@ import { LocalStorage } from '@common/local-storage';
 import {Location} from '@angular/common';
 import { NzMessageService, NzDrawerService, NzDrawerRef } from 'ng-zorro-antd';
 import { Book } from '@common/ts-type';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-shelves',
@@ -35,6 +36,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
     private el: ElementRef,
     private message: NzMessageService,
     private drawerService: NzDrawerService,
+    private swUpdate: SwUpdate,
     private location: Location
    ) {
      LocalStorage.setItem('headerTitle', '书架');
@@ -47,6 +49,9 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   getShelvesBook() {
     this.httpService.get('getShelvesBook').subscribe(res => {
       LocalStorage.setItem('shelves', res);
+      if (this.swUpdate.isEnabled) {
+        this.reading(this.shelves[0]);
+      }
     });
   }
 
@@ -69,6 +74,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   }
 
   reading(book) {
+    if (!book) { return; }
     const chapter = LocalStorage.getItem('chapter' + book.id);
     if (chapter) {
       this.router.navigate([`/book/${book.id}/${chapter.id}`]);

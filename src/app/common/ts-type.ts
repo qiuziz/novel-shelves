@@ -9,7 +9,7 @@ export class Book {
   category?: string;
   state?: string;
   isAdd?: number;
-  catalog?: object[];
+  catalog?: any[];
 }
 
 export class Chapter {
