@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-17 14:42:58
+ * @Last Modified time: 2018-10-17 15:35:52
  */
 
 const express = require("express"),
@@ -173,7 +173,7 @@ router.get(`${basePrefix}/chapter/:bookId/:chapterId`, async (req, res) => {
     res.send(chapter);
     return;
   }
-  if (BOOK.id === bookId && CHAPTER.id === chapterId) {
+  if (BOOK.id === bookId && CHAPTER.id === chapterId && CHAPTER.content) {
     chapter = CHAPTER;
     res.send(chapter);
     return;
