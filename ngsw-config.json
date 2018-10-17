@@ -29,8 +29,6 @@
     "name": "data",
     "urls": [
       "/api/**",
-      "!/api/chapter/**",
-      "!/api/download/**",
       "https://www.qu.la/BookFiles/BookImages/**"
     ],
     "cacheConfig": {
