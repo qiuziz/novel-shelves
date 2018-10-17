@@ -43,8 +43,9 @@
     {
       "name": "data",
       "patterns": [
-        "\\/!\\/api\\/chapter\\/.*",
         "\\/api\\/.*",
+        "\\/!\\/api\\/chapter\\/.*",
+        "\\/!\\/api\\/download\\/.*",
         "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
       "strategy": "performance",

@@ -28,8 +28,9 @@
   "dataGroups": [{
     "name": "data",
     "urls": [
-      "!/api/chapter/**",
       "/api/**",
+      "!/api/chapter/**",
+      "!/api/download/**",
       "https://www.qu.la/BookFiles/BookImages/**"
     ],
     "cacheConfig": {
