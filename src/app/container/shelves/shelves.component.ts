@@ -49,9 +49,6 @@ export class ShelvesComponent implements OnInit, OnDestroy {
   getShelvesBook() {
     this.httpService.get('getShelvesBook').subscribe(res => {
       LocalStorage.setItem('shelves', res);
-      if (this.swUpdate.isEnabled) {
-        this.reading(this.shelves[0]);
-      }
     });
   }
 
