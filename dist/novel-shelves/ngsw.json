@@ -7,16 +7,16 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/1.3e8c24f4aad3d638857c.js",
-        "/2.c42b3bc4c69cb5e532e3.js",
+        "/1.6c9b8c8c7f41da0c421c.js",
+        "/2.0385b9499e186561c321.js",
         "/3.f0289a8704a0fa6bb587.js",
         "/4.20648b0510a0d04b7959.js",
-        "/common.1d9ffcf7a89191fd7f63.js",
+        "/common.2f9e070b1dd2d749ab2a.js",
         "/favicon.ico",
         "/index.html",
-        "/main.a7b66a1d9239596e66e3.js",
+        "/main.06a6737ea2e722a863c4.js",
         "/polyfills.ab7a98aee75aa25d9edb.js",
-        "/runtime.8896d43e023e2cda6a14.js",
+        "/runtime.1b01f1c4a24ed1002f3d.js",
         "/styles.f37bc0e59e3b3f7836b9.css"
       ],
       "patterns": []
@@ -43,7 +43,6 @@
     {
       "name": "data",
       "patterns": [
-        "\\/api\\/.*",
         "https:\\/\\/www\\.qu\\.la\\/BookFiles\\/BookImages\\/.*"
       ],
       "strategy": "performance",
@@ -54,8 +53,8 @@
     }
   ],
   "hashTable": {
-    "/1.3e8c24f4aad3d638857c.js": "3183ccdb794c94b4013b669769686728eb8cd484",
-    "/2.c42b3bc4c69cb5e532e3.js": "81c02d545fc98cfd0df13e32607c095ba41fbc0a",
+    "/1.6c9b8c8c7f41da0c421c.js": "2f93a73fd89875282156794491fd3e6abf2acfae",
+    "/2.0385b9499e186561c321.js": "b937b41af11f825a47a13ab1ef4162a53fba235f",
     "/3.f0289a8704a0fa6bb587.js": "0883f4627ffeed3406df14126ae9f4988e64e850",
     "/4.20648b0510a0d04b7959.js": "eb1ddbe01aade21088e3df2ac75503f0a18b1a30",
     "/assets/default-cover.jpeg": "d60cd90d0196027355fa6b24369c1204c2c3eefe",
@@ -65,12 +64,12 @@
     "/assets/icons/icon-192x192.png": "c0e78fd60eaa57d24cf49047c97a0c5902e786e1",
     "/assets/icons/icon-72x72.png": "d01d77648e01ea0f5a98295b35a5063b4364f67c",
     "/assets/icons/icon-96x96.png": "9d71d404fbd05ae76eab7a2ea91785352be565ed",
-    "/common.1d9ffcf7a89191fd7f63.js": "ee15c1db77c10654611fa526f1477e87e9a36e95",
+    "/common.2f9e070b1dd2d749ab2a.js": "71eb0c20256a28c35e078de66aaa0c8bcc984fc7",
     "/favicon.ico": "ed90fc98263e94e4bd6d0e2a1940db5647e6654f",
-    "/index.html": "7daa92aa81104609b099b7039dbb75914be7c4d4",
-    "/main.a7b66a1d9239596e66e3.js": "f443ba4a89b35fddbfcf1fdc887bec21889913c6",
+    "/index.html": "50f7e309c9397ed6ba42f5ce8d49f5fac42283e5",
+    "/main.06a6737ea2e722a863c4.js": "36ac66fab55e91d48c6eb923487010a50e296a60",
     "/polyfills.ab7a98aee75aa25d9edb.js": "536eeff3d8dc48a589dfbc75c69cb75d6b4d346d",
-    "/runtime.8896d43e023e2cda6a14.js": "f3e0bbe7ac6179f8ba6d55a29c093e3eb526f6ac",
+    "/runtime.1b01f1c4a24ed1002f3d.js": "5baa7fd91527fb0e5968d90a7065d66b5a2f3550",
     "/styles.f37bc0e59e3b3f7836b9.css": "26e2f205aea585f70f58a22e917ea47b2b33ba24"
   },
   "navigationUrls": [

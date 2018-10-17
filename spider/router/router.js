@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-16 16:13:05
+ * @Last Modified time: 2018-10-17 13:17:59
  */
 
 const express = require("express"),
@@ -13,6 +13,7 @@ const express = require("express"),
     getBook = require('./book'),
     getChapter = require('./chapter'),
     getAllchapter = require('./getAllchapter'),
+    cache = require('./cache'),
     getBookCatalog = require('./catalog');
 
 // 路由前缀
@@ -143,17 +144,12 @@ router.get(`${basePrefix}/getShelvesBook`, async (req, res) => {
 // 缓存全部章节
 router.get(`${basePrefix}/download/:id`, async (req, res) => {
     const id = parseInt(req.params.id);
-    let book;
-    if (BOOK.id === id && BOOK.catalog && BOOK.catalog.length > 0) {
-      book = BOOK;
-    } else {
-      book = await handleToMongoDB.findOne('book', {id});
-    }
-    let result = [];
-
-    result = await handleToMongoDB.find('book', {isAdd: 1});
-
-    res.send(result);
+    const isCache = await cache(id);
+    res.send(
+      isCache
+       ? {status: 1, url: `/assets/${id}.json`, msg: '缓存成功'}
+       : {status: 0, msg: '缓存成功'}
+      );
 });
 
 // 根据小说id和章节id获取章节内容

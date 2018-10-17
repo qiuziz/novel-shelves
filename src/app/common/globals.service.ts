@@ -6,4 +6,5 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
   loading = false;
   loadOnce = true;
+  data = {};
 }

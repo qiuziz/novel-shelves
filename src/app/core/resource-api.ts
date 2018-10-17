@@ -12,6 +12,9 @@ export const Resource: Object = {
   getBookCatalog: `${SERVICE_NAME}/catalog/:id`,
   getChapter: `${SERVICE_NAME}/chapter/:bookId/:chapterId`,
   shelvesOptions: `${SERVICE_NAME}/shelves/:type/:bookId`,
-  getShelvesBook: `${SERVICE_NAME}/getShelvesBook`
+  getShelvesBook: `${SERVICE_NAME}/getShelvesBook`,
+  download: `${SERVICE_NAME}/download/:id`,
+
+  loadData: `assets/:jsonName`,
 };
 

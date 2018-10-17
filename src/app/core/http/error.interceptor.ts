@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-22 21:11:55
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-09-22 22:14:19
+ * @Last Modified time: 2018-10-16 21:35:59
  */
 
 import { Injectable, Injector } from '@angular/core';
@@ -22,6 +22,7 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { GlobalsService } from '../../common/globals.service';
+import { HttpService } from '@core/http/http.service';
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
@@ -30,6 +31,7 @@ import { GlobalsService } from '../../common/globals.service';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private injector: Injector,
+    private httpService: HttpService,
     private globals: GlobalsService
   ) {}
 
@@ -70,7 +72,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     | HttpResponse<any>
     | HttpUserEvent<any>
   > {
-
     return next.handle(req).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要

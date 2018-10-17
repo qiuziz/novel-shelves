@@ -116,7 +116,7 @@ export class ShelvesComponent implements OnInit, OnDestroy {
         <i class="novel novel-catalog"></i>
         <p>目录</p>
       </li>
-      <li>
+      <li (click)="download(book)">
         <i class="novel novel-download"></i>
         <p>缓存</p>
       </li>
@@ -162,6 +162,17 @@ export class NzDrawerBodyComponent {
         this.httpService.get('getShelvesBook').subscribe(shelves => {
           LocalStorage.setItem('shelves', shelves);
         });
+      }
+    });
+  }
+
+  download(book) {
+    this.httpService.get('download', {id: book.id})
+    .subscribe(res => {
+      if (res.status) {
+        this.message.error(res.msg);
+      } else {
+        this.close();
       }
     });
   }

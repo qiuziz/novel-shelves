@@ -4,8 +4,8 @@ import { HttpService } from '../../../core/http/http.service';
 import { LocalStorage } from '../../../common/local-storage';
 import { touch, move, click } from '../../../common/touch';
 import {Location} from '@angular/common';
-import { fromEvent } from 'rxjs';
-import { throttleTime, debounceTime, tap, map } from 'rxjs/operators';
+import { fromEvent, of, Observable, zip } from 'rxjs';
+import { throttleTime, debounceTime, tap, map, mergeMap } from 'rxjs/operators';
 import { GlobalsService } from '../../../common/globals.service';
 import { Book, Chapter } from '@common/ts-type';
 
@@ -31,6 +31,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
   progressSet = false;
   catalog = [];
   currentChapter = 1;
+  allChapter = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +45,9 @@ export class ChapterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const bookId = this.route.snapshot.params['id'],
     chapterId = this.route.snapshot.params['chapterId'];
+
+
+
     this.getChapter(bookId, chapterId);
 
     this.getBookCatalog(bookId);
@@ -94,6 +98,18 @@ export class ChapterComponent implements OnInit, OnDestroy {
       });
   }
 
+  loadData(bookId, chapterId, type?: string): Observable<any> {
+    return this.httpService.get('loadData', {jsonName: `${bookId}.json`})
+    .pipe(mergeMap(res => {
+      if (res && res[chapterId]) {
+        console.log(111);
+        return of(res[chapterId]);
+      }
+      console.log(222);
+      return this.httpService.get('getChapter', {bookId, chapterId});
+    }));
+  }
+
   isClickCenter (x, y) {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
@@ -120,25 +136,26 @@ export class ChapterComponent implements OnInit, OnDestroy {
       this.location.replaceState(`/book/${bookId}/${chapterId}`);
       this.adjustPageSize(type);
 
-      this.getNextChapter(bookId, (<any>this.chapter).next);
+      this.getNextChapter(bookId, this.chapter.next);
 
       return;
     }
-    this.httpService.get('getChapter', {bookId, chapterId})
+
+    this.loadData(bookId, chapterId, type)
       .subscribe(res => {
         this.chapter = res;
 
         this.page =  0;
         this.adjustPageSize(type);
 
-        if (!(<any>this.chapter).content) {
-          (<any>this.chapter).content = `\n\t\t\t<div>当前章节暂无内容</div>`;
+        if (!this.chapter.content) {
+          this.chapter.content = `\n\t\t\t<div>当前章节暂无内容</div>`;
         }
         LocalStorage.setItem('chapter' + chapterId, this.chapter);
 
         this.location.replaceState(`/book/${bookId}/${chapterId}`);
 
-        this.getNextChapter(bookId, (<any>this.chapter).next);
+        this.getNextChapter(bookId, this.chapter.next);
       });
   }
 
@@ -154,7 +171,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
 
   getNextChapter(bookId, chapterId) {
     this.globals.loadOnce = false;
-    this.httpService.get('getChapter', {bookId, chapterId})
+    this.loadData(bookId, chapterId)
       .subscribe(res => {
         LocalStorage.setItem('chapter' + chapterId, res);
         LocalStorage.removeItem('chapter' + (chapterId - 10));

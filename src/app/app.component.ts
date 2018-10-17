@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef, AfterViewChecked, OnInit } from '@angular/core';
 import { GlobalsService } from './common/globals.service';
 import { SwUpdate } from '@angular/service-worker';
+import { HttpService } from '@core/http/http.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { SwUpdate } from '@angular/service-worker';
 export class AppComponent implements OnInit, AfterViewChecked {
   constructor(
     private changeRef: ChangeDetectorRef,
+    private httpService: HttpService,
     private swUpdate: SwUpdate,
     public globals: GlobalsService) { }
 
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
         console.log('new version is', event.current);
       });
     }
+
   }
   ngAfterViewChecked() {
     this.changeRef.detectChanges();
