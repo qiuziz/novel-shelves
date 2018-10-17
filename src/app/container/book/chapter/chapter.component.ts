@@ -85,6 +85,7 @@ export class ChapterComponent implements OnInit, OnDestroy {
           this.pageConfig = !this.pageConfig;
           if (!this.pageConfig) {
             this.pageSetting = false;
+            this.progressSet = false;
           }
         } else if (this.isClickLeftTop(x, y)) {
           console.log('点击屏幕左上');
