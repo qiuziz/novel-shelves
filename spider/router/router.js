@@ -3,11 +3,12 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-17 14:33:35
+ * @Last Modified time: 2018-10-17 14:42:58
  */
 
 const express = require("express"),
-		router = express(),
+    router = express(),
+    fs = require('fs'),
     handleToMongoDB = require('../utils/handleToMongoDB'),
     search = require('./search-novel.js'),
     getBook = require('./book'),
@@ -143,13 +144,25 @@ router.get(`${basePrefix}/getShelvesBook`, async (req, res) => {
 
 // 缓存全部章节
 router.get(`${basePrefix}/download/:id`, async (req, res) => {
-    const id = parseInt(req.params.id);
-    const isCache = await cache(id);
-    res.send(
-      isCache
-       ? {status: 1, url: `/assets/${id}.json`, msg: '缓存成功'}
-       : {status: 0, msg: '缓存失败'}
-      );
+  const id = parseInt(req.params.id);
+
+  const chapterList = await handleToMongoDB.find(id.toString(), {});
+  let data = {};
+  chapterList.forEach(chapter => {
+    data[chapter.id] = chapter;
+  });
+  fs.writeFile(`./dist/novel-shelves/assets/${id}.json`, JSON.stringify(data), function(err){
+    if(err) {
+      console.log(err);
+      res.send({status: 0, msg: '缓存失败'});
+      return false;
+    }
+    else {
+      console.log('写文件操作成功');
+      res.send({status: 1, url: `/assets/${id}.json`, msg: '缓存成功'});
+      return true;
+    }
+  })
 });
 
 // 根据小说id和章节id获取章节内容

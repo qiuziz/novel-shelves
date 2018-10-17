@@ -166,7 +166,7 @@ export class NzDrawerBodyComponent {
   download(book) {
     this.httpService.get('download', {id: book.id})
     .subscribe(res => {
-      if (res.status) {
+      if (!res.status) {
         this.message.error(res.msg);
       } else {
         this.close();
