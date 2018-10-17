@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-07 15:14:58
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-17 13:34:37
+ * @Last Modified time: 2018-10-17 14:33:42
  */
 
 const
@@ -20,12 +20,12 @@ async function cache(id) {
   });
   return fs.writeFile(`./dist/novel-shelves/assets/${id}.json`, JSON.stringify(data), function(err){
     if(err) {
-      return false;
       console.log(err);
+      return false;
     }
     else {
-      return true;
       console.log('写文件操作成功');
+      return true;
     }
   })
 }

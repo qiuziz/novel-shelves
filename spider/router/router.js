@@ -3,7 +3,7 @@
  * @Github: <https://github.com/qiuziz>
  * @Date: 2018-09-06 13:52:20
  * @Last Modified by: qiuz
- * @Last Modified time: 2018-10-17 13:17:59
+ * @Last Modified time: 2018-10-17 14:33:35
  */
 
 const express = require("express"),
@@ -148,7 +148,7 @@ router.get(`${basePrefix}/download/:id`, async (req, res) => {
     res.send(
       isCache
        ? {status: 1, url: `/assets/${id}.json`, msg: '缓存成功'}
-       : {status: 0, msg: '缓存成功'}
+       : {status: 0, msg: '缓存失败'}
       );
 });
 
