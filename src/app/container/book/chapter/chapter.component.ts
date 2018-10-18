@@ -15,7 +15,9 @@ import { Book, Chapter } from '@common/ts-type';
   styleUrls: ['./chapter.component.less']
 })
 export class ChapterComponent implements OnInit, OnDestroy {
-  chapter: Chapter = {};
+  chapter: Chapter = {
+    id: 1
+  };
   pageConfig = false;
   fontSize = LocalStorage.getItem('fontSize') || 16;
   pageSetting = false;
@@ -30,7 +32,11 @@ export class ChapterComponent implements OnInit, OnDestroy {
   maskTitle = '';
   progressSet = false;
   catalog = [];
-  currentChapter = 1;
+  public get currentChapter() {
+    return (this.chapter.id - this.catalog[0].id) || 1;
+  }
+
+  currentTip = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -175,6 +181,11 @@ export class ChapterComponent implements OnInit, OnDestroy {
     this.getChapter(bookId, this.catalog[value].id);
   }
 
+  changeTip(value) {
+    this.currentTip = this.catalog[value].chapter;
+  }
+
+  tipFormatter = () => this.currentTip || this.chapter.title;
 
   pageSet(event) {
     this.pageSetting = !this.pageSetting;
